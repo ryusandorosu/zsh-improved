@@ -123,8 +123,7 @@ function update_command_status() {
     local reset_font="%{$fg_no_bold[white]%}";
     COMMAND_RESULT=$1;
     export COMMAND_RESULT=$COMMAND_RESULT
-    if $COMMAND_RESULT;
-    then
+    if $COMMAND_RESULT; then
         arrow="%{$fg_bold[$main_prompt_color_arrow]%}❱";
     else
         arrow="%{$fg_bold[red]%}❱";
@@ -150,8 +149,7 @@ output_command_execute_after() {
     local resolved;
     resolved=$(_resolve_script_display_cmd "$LAST_CMD_RAW" 2>/dev/null);
     local color_cmd="";
-    if $1;
-    then
+    if $1; then
         color_cmd="$fg_no_bold[$cost_prompt_color_command]";
     else
         color_cmd="$fg_no_bold[red]";
@@ -179,21 +177,25 @@ output_command_execute_after() {
     local cost=$(bc -l <<<"${time_end}-${COMMAND_TIME_BEGIN}");
     COMMAND_TIME_BEGIN="-20200325"
     local length_cost=${#cost};
-    if [ "$length_cost" = "4" ];
-    then
+    if [ "$length_cost" = "4" ]; then
         cost="0${cost}"
     fi
     cost="${cost_prompt_bracket_open}cost ${cost}s${cost_prompt_bracket_close}"
     local color_cost="$fg_no_bold[$cost_prompt_color_cost]";
     cost="${color_cost}${cost}${color_reset}";
 
-    echo -e "${time} ${cost} ${cmd}";
+    # exit code
+    [[ "$last_cmd_return_code" == 0 ]] && local color_exit="$fg_no_bold[$cost_prompt_color_cost]" || local color_exit="$fg_no_bold[red]";
+    exitcode="${color_exit}${last_cmd_return_code}:${color_reset}"
+
+    echo -e "${time} ${cost} ${exitcode} ${cmd}";
 }
 
 
 # command execute before
 # REF: http://zsh.sourceforge.net/Doc/Release/Functions.html
 preexec() { # cspell:disable-line
+    exitcode="$?"
     COMMAND_TIME_BEGIN="$(current_time_millis)";
     # to show commands which aliases replace
     LAST_CMD_RAW="$1";
@@ -229,10 +231,9 @@ current_time_millis() {
 # REF: http://zsh.sourceforge.net/Doc/Release/Functions.html
 precmd() { # cspell:disable-line
     # last_cmd
-    local last_cmd_return_code=$?;
+    last_cmd_return_code=$?; #was local
     local last_cmd_result=true;
-    if [ "$last_cmd_return_code" = "0" ];
-    then
+    if [ "$last_cmd_return_code" = "0" ]; then
         last_cmd_result=true;
     else
         last_cmd_result=false;
