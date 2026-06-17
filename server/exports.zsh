@@ -3,3 +3,5 @@ export PATH=$PATH:$HOME/zsh_settings/server/commands
 export PATH="$PATH:/usr/sbin:/sbin"
 # Created by `pipx` on 2026-03-02 18:33:34
 export PATH="$PATH:/home/ryusandorosu/.local/bin"
+#Homebrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
