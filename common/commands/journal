@@ -1,0 +1,11 @@
+#!/bin/bash
+. $HOME/zsh_settings/common/cmd_display.sh
+
+zsh_cmd="sudo journalctl -u $1 \
+| tac \
+| grep \
+--max-count=1 \
+--before-context=10000 \
+--regexp='-- Boot' \
+| tac"
+zsh_eval "$zsh_cmd"

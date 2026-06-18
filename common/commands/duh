@@ -1,0 +1,7 @@
+#!/bin/bash
+. $HOME/zsh_settings/common/cmd_display.sh
+
+zsh_cmd="du -ah $1 \
+| sort -rh \
+| head -32"
+zsh_eval "$zsh_cmd"
