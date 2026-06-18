@@ -7,5 +7,7 @@ zsh_cmd="sudo journalctl -u $1 \
 --max-count=1 \
 --before-context=10000 \
 --regexp='-- Boot' \
-| tac"
+| tac \
+"
+# | grep "$(date '+%b %d')"
 zsh_eval "$zsh_cmd"
