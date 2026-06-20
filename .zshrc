@@ -6,7 +6,13 @@ export ZSH="$HOME/.oh-my-zsh"
 [[ "$OS_ID" == ubuntu ]] && ZSH_THEME="passion"
 [[ "$OS_ID" == Darwin ]] && ZSH_THEME="passion"
 [[ "$(whoami)" == root ]] && ZSH_DISABLE_COMPFIX=true
-plugins=(git extract zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(
+  git
+  sudo
+  extract
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
 
