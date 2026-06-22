@@ -7,7 +7,7 @@ if [[ "$os_id" == "debian" && -z "$2" ]]; then
   playbook=server
   verbosity=-vv
 elif [[ "$os_id" == "debian" && -n "$2" ]]; then
-  [[ "$2" != asus || "$2" != honor ]] && echo "$(basename $0): second argument accepts only 'asus' or 'honor' option" && exit 1
+  [[ "$2" != asus && "$2" != honor ]] && echo "$(basename $0): second argument accepts only 'asus' or 'honor' option" && exit 1
   deployhost=$2
   playbook=windows
   verbosity=-vvv
@@ -16,11 +16,17 @@ elif [[ "$os_id" == "ubuntu" && -z "$2" ]]; then
   playbook=server
   verbosity=-vv
 elif [[ "$os_id" == "ubuntu" && -n "$2" ]]; then
-  [[ "$2" != win ]] && echo "$(basename $0): second argument accepts only 'win' option" && exit 1
-  [[ "$(hostname)" == DESKTOP-5EFI5KM ]] && deployhost=local-asus
-  [[ "$(hostname)" == DESKTOP-2MJ0UCN ]] && deployhost=local-honor
-  playbook=windows
-  verbosity=-vvv
+  [[ "$2" != win && "$2" != wsl ]] && echo "$(basename $0): second argument accepts only 'win' or 'wsl' option" && exit 1
+  if [[ "$2" == win ]]; then
+    [[ "$(hostname)" == DESKTOP-5EFI5KM ]] && deployhost=local-asus
+    [[ "$(hostname)" == DESKTOP-2MJ0UCN ]] && deployhost=local-honor
+    playbook=windows
+    verbosity=-vvv
+  elif [[ "$2" == wsl ]]; then
+    deployhost=wsl
+    playbook=wsl
+    verbosity=-vv
+  fi
 fi
 git -C /home/ryusandorosu/homeserver-ansible/ pull
 
