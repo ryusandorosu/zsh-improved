@@ -3,5 +3,6 @@
 
 zsh_cmd="du -ah $1 \
 | sort -rh \
-| head -32"
+| head -32 \
+"
 zsh_eval "$zsh_cmd"

@@ -1,0 +1,9 @@
+#!/bin/bash
+. $HOME/zsh_settings/common/cmd_display.sh
+
+[[ -z "$2" ]] && dest="."
+zsh_cmd="find $dest -type f \
+| xargs -r \
+sed -i $1 \
+"
+zsh_eval "$zsh_cmd"
