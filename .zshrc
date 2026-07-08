@@ -6,13 +6,17 @@ export ZSH="$HOME/.oh-my-zsh"
 [[ "$OS_ID" == ubuntu ]] && ZSH_THEME="passion"
 [[ "$OS_ID" == Darwin ]] && ZSH_THEME="passion"
 [[ "$(whoami)" == root ]] && ZSH_DISABLE_COMPFIX=true
+
 plugins=(
   git
+  fzf
   sudo
   extract
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
+# sudo plugin: adds 'sudo' in front of a typed command by esc+esc
+
 source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
 
