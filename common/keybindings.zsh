@@ -1,6 +1,6 @@
 function backward-kill-to-space() {
   local old_wordchars=$WORDCHARS
-  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>:\'
+  WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>:\|'
   zle backward-kill-word
   WORDCHARS=$old_wordchars
 }
