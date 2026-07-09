@@ -15,7 +15,6 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
-# sudo plugin: adds 'sudo' in front of a typed command by esc+esc
 
 source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
@@ -24,22 +23,18 @@ ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
 for file in ~/zsh_settings/common/*.zsh; do
   source "$file"
 done
-case "$OS_ID" in
-  debian)
-    for file in ~/zsh_settings/server/*.zsh; do
-      source "$file"
-    done
-    ;;
-  ubuntu)
-    for file in ~/zsh_settings/wsl/*.zsh; do
-      source "$file"
-    done
-    ;;
-  Darwin)
-    for file in ~/zsh_settings/macos/*.zsh; do
-      source "$file"
-    done
-    ;;
-esac
+if [[ "$OS_ID" == debian ]]; then
+  for file in ~/zsh_settings/server/*.zsh; do
+    source "$file"
+  done
+elif [[ "$OS_ID" == ubuntu ]]; then
+  for file in ~/zsh_settings/wsl/*.zsh; do
+    source "$file"
+  done
+elif [[ "$OS_ID" == Darwin ]]; then
+  for file in ~/zsh_settings/macos/*.zsh; do
+    source "$file"
+  done
+fi
 
 [[ $ZSH_THEME == "passion" ]] && source "$ZSH/themes/passion.zsh-theme"
