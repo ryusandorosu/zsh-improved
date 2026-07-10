@@ -5,6 +5,14 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="passion"
 [[ "$(whoami)" == root ]] && ZSH_DISABLE_COMPFIX=true
 
+[[ "$OS_ID" != Darwin ]] && {
+  local fzfversion=$(
+    /home/linuxbrew/.linuxbrew/Cellar/fzf/*/bin/fzf --version \
+    | cut -d' ' -f1
+  )
+  export FZF_BASE=/home/linuxbrew/.linuxbrew/Cellar/fzf/$fzfversion/shell
+}
+
 plugins=(
   git
   fzf
@@ -23,6 +31,7 @@ if [[ "$OS_ID" != Darwin ]] && [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; t
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
   )"
 fi
+
 for file in ~/zsh_settings/common/*.zsh; do source "$file"; done
 if [[ "$OS_ID" == debian ]]; then
   for file in ~/zsh_settings/server/*.zsh; do source "$file"; done
