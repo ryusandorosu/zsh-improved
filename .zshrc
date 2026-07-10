@@ -25,24 +25,16 @@ if [[ "$OS_ID" != Darwin ]] && [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; t
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
   )"
 fi
-for file in ~/zsh_settings/common/*.zsh; do
-  source "$file"
-done
+for file in ~/zsh_settings/common/*.zsh; do source "$file"; done
 if [[ "$OS_ID" == debian ]]; then
-  for file in ~/zsh_settings/server/*.zsh; do
-    source "$file"
-  done
+  for file in ~/zsh_settings/server/*.zsh; do source "$file"; done
 elif [[ "$OS_ID" == ubuntu ]]; then
-  for file in ~/zsh_settings/wsl/*.zsh; do
-    source "$file"
-  done
+  for file in ~/zsh_settings/wsl/*.zsh; do source "$file"; done
 elif [[ "$OS_ID" == Darwin ]]; then
   [[ ! -d /Users/kaycekey/goinfre/.brew ]] && /Users/kaycekey/Desktop/install_brew.sh
   [[ ! -d /opt/goinfre/kaycekey/.brew/Cellar/coreutils ]] && brew install coreutils
   [[ ! -d /opt/goinfre/kaycekey/.brew/Cellar/fzf ]] && brew install fzf
-  for file in ~/zsh_settings/macos/*.zsh; do
-    source "$file"
-  done
+  for file in ~/zsh_settings/macos/*.zsh; do source "$file"; done
 fi
 
 [[ $ZSH_THEME == "passion" ]] && source "$ZSH/themes/passion.zsh-theme"
