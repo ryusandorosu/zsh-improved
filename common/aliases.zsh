@@ -7,4 +7,4 @@ alias gitc='git -C'
 alias gitls='git ls-files'
 alias sudo='sudo '
 alias diffs='diff -sy --color'
-alias gitlog="git log --oneline | fzf --multi --preview 'git show {+1}'"
+alias gitlog="git log --oneline | fzf --multi --style=full --preview 'git show --color {+1}'"
