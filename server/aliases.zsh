@@ -1,5 +1,6 @@
 # common
 alias etcgit='sudo git -C /etc'
+alias fd='fdfind'
 
 # fail2ban
 alias banlist='sudo fail2ban-client status $1'
