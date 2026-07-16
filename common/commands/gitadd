@@ -2,7 +2,7 @@
 source $ZSHREP/common/cmd_display.sh
 source $ZSHREP/common/fuzzy_presets.sh
 
-# git status --short = git status --porcelain ~= git diff --name-status; --untracked-files(=normal); --renames; --find-renames
+# git status --short = git status --porcelain = git diff-files --name-status ~= git diff --name-status; --untracked-files(=normal); --renames; --find-renames
 # git diff --name-only; git diff --compact-summary; --word-diff=color; --color-moved=default; --diff-algorithm=default; --find-renames
 
 if [[ -z "$1" ]]; then
@@ -10,7 +10,7 @@ if [[ -z "$1" ]]; then
   [[ -f ".gitignore" ]] && gitignore_arg="-X .gitignore" || gitignore_arg=""
   # bat_view_git_escaped "{}"
   git_diff_view "" "{}"
-  bind_exec "git add" "{+}"
+  bind_exec_escaped "git add" "{+}"
   bind_fileinfo_escaped "{}"
 
   zsh_cmd="git ls-files -om $gitignore_arg \
@@ -28,7 +28,7 @@ else
   repo_path=$(git -C "$1" rev-parse --show-toplevel)
   # bat_view_git_escaped "$repo_path/{}"
   git_diff_view "$repo_path" "$repo_path/{}" #also possible just {}
-  bind_exec "git -C "$1" add" "$repo_path/{+}"
+  bind_exec_escaped "git -C "$1" add" "$repo_path/{+}"
   bind_fileinfo_escaped "$repo_path/{}"
 
   zsh_cmd="git -C "$1" ls-files -om $gitignore_arg \

@@ -6,7 +6,7 @@ source $ZSHREP/common/fuzzy_presets.sh
 if [[ -z "$1" ]]; then
 
   bat_view_git_escaped "{}"
-  bind_exec "$editor" "{}"
+  bind_exec_escaped "$editor" "{}"
   bind_fileinfo_escaped "{}"
 
   zsh_cmd="git ls-files --full-name \
@@ -18,7 +18,7 @@ else
   repo_path=$(git -C "$1" rev-parse --show-toplevel)
 
   bat_view_git_escaped "$repo_path/{}"
-  bind_exec "$editor" "$repo_path/{}"
+  bind_exec_escaped "$editor" "$repo_path/{}"
   bind_fileinfo_escaped "$repo_path/{}"
 
   zsh_cmd="git $repo_root ls-files --full-name \

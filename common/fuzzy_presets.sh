@@ -21,6 +21,12 @@ bind_fileinfo_escaped() {
 bind_exec() {
   enter_become=(
     --bind
+    "enter:become("$1" "$2")"
+  )
+}
+bind_exec_escaped() {
+  enter_become=(
+    --bind
     \'enter:become\("$1" "$2"\)\'
   )
 }
