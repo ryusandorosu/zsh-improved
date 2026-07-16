@@ -4,14 +4,26 @@ source $ZSHREP/common/fuzzy_presets.sh
 [[ "$(which nvim)" ]] && editor=nvim || editor=vim
 
 if [[ -z "$1" ]]; then
-  bat_view_git_escaped "{2}"
-  bind_exec "$editor" "{2}"
-  zsh_cmd="gitls | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}""
+
+  bat_view_git_escaped "{}"
+  bind_exec "$editor" "{}"
+  bind_fileinfo_escaped "{}"
+
+  zsh_cmd="git ls-files --full-name \
+    | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}" "${file_brief[@]}" "
+
 else
+
+  repo_root="-C $1"
   repo_path=$(git -C "$1" rev-parse --show-toplevel)
-  bat_view_git_escaped "$repo_path/{2}"
-  bind_exec "$editor" "$repo_path/{2}"
-  zsh_cmd="gitls "$1" | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}""
+
+  bat_view_git_escaped "$repo_path/{}"
+  bind_exec "$editor" "$repo_path/{}"
+  bind_fileinfo_escaped "$repo_path/{}"
+
+  zsh_cmd="git $repo_root ls-files --full-name \
+    | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}" "${file_brief[@]}" "
+
 fi
 
 zsh_eval "$zsh_cmd"
