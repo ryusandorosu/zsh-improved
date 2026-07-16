@@ -3,10 +3,10 @@
 [[ "$(which nvim)" ]] && editor=nvim || editor=vim
 
 if [[ -z "$1" ]]; then
-  zsh_cmd="gitls | fzf --style=full --preview 'batcat --color=always {2}' --bind 'enter:become($editor {2})'"
+  zsh_cmd="gitls | fzf --style=full --preview 'batcat --style=changes --color=always {2}' --bind 'enter:become($editor {2})'"
 else
   repo_path=$(git -C "$1" rev-parse --show-toplevel)
-  zsh_cmd="gitls "$1" | fzf --style=full --preview 'batcat --color=always $repo_path/{2}' --bind 'enter:become($editor $repo_path/{2})'"
+  zsh_cmd="gitls "$1" | fzf --style=full --preview 'batcat --style=changes --color=always $repo_path/{2}' --bind 'enter:become($editor $repo_path/{2})'"
 fi
 
 zsh_eval "$zsh_cmd"
