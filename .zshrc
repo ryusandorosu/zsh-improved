@@ -1,3 +1,4 @@
+export ZSHREP="$(dirname $(readlink ~/.zshrc))"
 [[ -f "/etc/os-release" ]] && OS_ID=$(grep '^ID=' /etc/os-release | cut -d= -f2) || OS_ID=$(uname)
 
 # Main settings

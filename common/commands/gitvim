@@ -1,12 +1,20 @@
 #!/bin/bash
-. $HOME/zsh_settings/common/cmd_display.sh
+source $ZSHREP/common/cmd_display.sh
+source $ZSHREP/common/fuzzy_presets.sh
 [[ "$(which nvim)" ]] && editor=nvim || editor=vim
 
 if [[ -z "$1" ]]; then
-  zsh_cmd="gitls | fzf --style=full --preview 'batcat --style=changes --color=always {2}' --bind 'enter:become($editor {2})'"
+  bat_view_git_escaped "{2}"
+  bind_exec "$editor" "{2}"
+  zsh_cmd="gitls | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}""
+  # gitls | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}"
 else
   repo_path=$(git -C "$1" rev-parse --show-toplevel)
-  zsh_cmd="gitls "$1" | fzf --style=full --preview 'batcat --style=changes --color=always $repo_path/{2}' --bind 'enter:become($editor $repo_path/{2})'"
+  bat_view_git_escaped "$repo_path/{2}"
+  bind_exec "$editor" "$repo_path/{2}"
+  zsh_cmd="gitls "$1" | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}""
+  # gitls "$1" | fzf "${fzstyle[@]}" "${bat_view[@]}" "${enter_become[@]}"
 fi
 
 zsh_eval "$zsh_cmd"
+# zsh_eval "${zsh_cmd[@]}"
