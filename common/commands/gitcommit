@@ -1,0 +1,4 @@
+#!/bin/bash
+. $HOME/zsh_settings/common/cmd_display.sh
+[[ -z "$2" ]] && zsh_cmd="git commit -m $1" || zsh_cmd="git -C $2 commit -m $1"
+zsh_eval "$zsh_cmd"

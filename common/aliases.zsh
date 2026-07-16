@@ -3,12 +3,11 @@ alias listen='sudo ss -tulpn | grep'
 alias sed-crlf="sed -i 's/\r$//'"
 alias bat='batcat'
 alias lah='ls -lah'
-alias gitc='git -C'
 alias sudo='sudo '
 alias diffs='diff -sy --color'
 alias rgrep='rgrep --color=auto --line-number'
 
-alias gitcommit='git commit -m'
+alias gitc='git -C'
 alias gitgrep='git grep --heading --line-number --before-context=2 --after-context=1' # --function-context is exclusive with --*context flags
 #fzf-using aliases:
 alias gitgrepf="git grep . | fzf --style=full --preview 'git grep --heading --function-context --line-number --color {3}'"
