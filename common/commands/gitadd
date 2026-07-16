@@ -3,12 +3,20 @@
 
 if [[ -z "$1" ]]; then
   [[ -f ".gitignore" ]] && gitignore_arg="-X .gitignore" || gitignore_arg=""
-  zsh_cmd="git ls-files -om $gitignore_arg | fzf --style=full --preview 'batcat --style=changes,numbers --color=always {}' --bind 'enter:become(git add {})'"
+  zsh_cmd="git ls-files -om $gitignore_arg \
+    | fzf --style=full \
+      --preview 'batcat --style=changes,numbers --color=always {+}' \
+      --bind 'enter:become(git add {+})' \
+      --multi"
 else
   repo_path=$(git -C "$1" rev-parse --show-toplevel)
   gitignore="$repo_path/.gitignore"
   [[ -f "$gitignore" ]] && gitignore_arg="-X $gitignore" || gitignore_arg=""
-  zsh_cmd="git -C "$1" ls-files -om $gitignore_arg | fzf --style=full --preview 'batcat --style=changes,numbers --color=always $repo_path/{}' --bind 'enter:become(git -C "$1" add $repo_path/{})'"
+  zsh_cmd="git -C "$1" ls-files -om $gitignore_arg \
+    | fzf --style=full \
+      --preview 'batcat --style=changes,numbers --color=always $repo_path/{+}' \
+      --bind 'enter:become(git -C "$1" add $repo_path/{+})' \
+      --multi"
 fi
 
 zsh_eval "$zsh_cmd"
