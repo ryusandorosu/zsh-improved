@@ -1,9 +1,10 @@
 #!/bin/bash
 source $ZSHREP/common/cmd_display.sh
 
+sedpattern="$1"
 [[ -z "$2" ]] && dest="."
 zsh_cmd="find $dest -type f \
 | xargs -r \
-sed -i $1 \
+sed -i \"${sedpattern}\" \
 "
 zsh_eval "$zsh_cmd"

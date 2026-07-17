@@ -1,5 +1,5 @@
 #!/bin/bash
-source $ZSHREP/common/fuzzy_presets.sh
+source $ZSHREP/common/fzf/presets.sh
 
 # git status --short = git status --porcelain = git diff-files --name-status ~= git diff --name-status; --untracked-files(=normal); --renames; --find-renames
 # git diff --name-only; git diff --compact-summary; --word-diff=color; --color-moved=default; --diff-algorithm=default; --find-renames

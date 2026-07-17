@@ -1,5 +1,5 @@
 #!/bin/bash
-source $ZSHREP/common/fuzzy_presets.sh
+source $ZSHREP/common/fzf/presets.sh
 
 if [[ -z "$1" ]]; then
 
