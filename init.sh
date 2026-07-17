@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# shell_process="$(ps -p $$ | awk '{print $NF}' | awk 'NR==2')"
 
 link_func() {
   local source="$1"
@@ -47,7 +48,11 @@ create_symlink() {
 create_symlink ~/.zshrc
 
 zsh ~/.zshrc
-echo "Installation done."
+if [[ "$(git -C "$destination" status --short)" ]] && [[ "$(readlink ~/.zshrc)" == "$destination/.zshrc" ]]; then
+  echo "Installation done."
+else
+  echo "Error occured during installation."
+fi
 
 # sudo --login
 # create_symlink /root/.zshrc
