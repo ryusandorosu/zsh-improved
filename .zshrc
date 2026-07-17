@@ -6,13 +6,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="passion"
 [[ "$(whoami)" == root ]] && ZSH_DISABLE_COMPFIX=true
 
-[[ "$OS_ID" != Darwin ]] && {
-  local fzfversion=$(
-    /home/linuxbrew/.linuxbrew/Cellar/fzf/*/bin/fzf --version \
-    | cut -d' ' -f1
-  )
-  export FZF_BASE=/home/linuxbrew/.linuxbrew/Cellar/fzf/$fzfversion/shell
-}
+source $ZSHREP/init/fzf.zsh
 
 plugins=(
   git
