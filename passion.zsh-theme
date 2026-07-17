@@ -14,8 +14,8 @@ cost_prompt_bracket_close=' |'
 
 source $ZSHREP/common/cmd_display.sh
 SCRIPT_DIRS=(
-    "$HOME/zsh_settings/common/commands"
-    "$HOME/zsh_settings/server/commands"
+    "$ZSHREP/common/commands"
+    "$ZSHREP/server/commands"
 )
 
 function _resolve_script_display_cmd() {
@@ -75,16 +75,6 @@ function login_info() {
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
         ip="$(ifconfig | grep ^en1 -A 4 | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | head -1)";
-    elif [[ "$OSTYPE" == "cygwin" ]]; then
-        # POSIX compatibility layer and Linux environment emulation for Windows
-    elif [[ "$OSTYPE" == "msys" ]]; then
-        # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-    elif [[ "$OSTYPE" == "win32" ]]; then
-        # I'm not sure this can happen.
-    elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        # ...
-    else
-        # Unknown.
     fi
     local color_reset="%{$reset_color%}";
     echo "${color}[%n@${ip}]${color_reset}";
@@ -212,16 +202,6 @@ current_time_millis() {
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
         time_millis="$(gdate +%s.%3N)";
-    elif [[ "$OSTYPE" == "cygwin" ]]; then
-        # POSIX compatibility layer and Linux environment emulation for Windows
-    elif [[ "$OSTYPE" == "msys" ]]; then
-        # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-    elif [[ "$OSTYPE" == "win32" ]]; then
-        # I'm not sure this can happen.
-    elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        # ...
-    else
-        # Unknown.
     fi
     echo $time_millis;
 }
@@ -258,10 +238,6 @@ setopt PROMPT_SUBST; # cspell:disable-line
 #REF: https://stackoverflow.com/questions/26526175/zsh-menu-completion-causes-problems-after-zle-reset-prompt
 TMOUT=1;
 TRAPALRM() { # cspell:disable-line
-    # $(git_prompt_info) cost too much time which will raise stutters when inputting. so we need to disable it in this occurrence.
-    # if [ "$WIDGET" != "expand-or-complete" ] && [ "$WIDGET" != "self-insert" ] && [ "$WIDGET" != "backward-delete-char" ]; then
-    # black list will not enum it completely. even some pipe broken will appear.
-    # so we just put a white list here.
     if [ "$WIDGET" = "" ] || [ "$WIDGET" = "accept-line" ] ; then
         zle reset-prompt;
     fi
