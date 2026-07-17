@@ -12,7 +12,7 @@ link_custom_theme_to_omz() {
   local source=$ZSHREP/$1
   local link=$ZSH/$1
   [[ ! -L $link ]] || [[ $(readlink $link) != $source ]] && {
-    ln -s $source $link
+    ln -fs $source $link
   }
 }
 for theme in "${custom_themes[@]}"; do
