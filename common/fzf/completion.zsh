@@ -18,7 +18,7 @@ _fzf_ssh_hosts() {
 }
 _fzf_complete_ssh() {
   _fzf_complete --prompt="ssh> " \
-  --preview='ping -c1 $(ssh -G {} | grep "^hostname " | cut -d" " -f2)' \
+  --preview='ping -c1 $(ssh -G {} 2>/dev/null | grep "^hostname " | cut -d" " -f2)' \
   -- "$@" < <(_fzf_ssh_hosts)
 }
 _fzf_complete_autossh() { _fzf_complete_ssh "$@"; }
