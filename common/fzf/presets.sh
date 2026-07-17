@@ -31,6 +31,7 @@ tree_view=(
   --preview
   'tree -C {} | head -200'
 )
+# -L 2
 
 preview_bat() {
   local style
