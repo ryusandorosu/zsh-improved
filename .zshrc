@@ -3,11 +3,10 @@ export ZSHREP="$(dirname $(readlink ~/.zshrc))"
 
 # Main settings
 export ZSH="$HOME/.oh-my-zsh"
-[[ "$OS_ID" != Darwin ]] && source $ZSHREP/init/apt.zsh
 source $ZSHREP/init/omz.zsh
-
+[[ "$OS_ID" != Darwin ]] && source $ZSHREP/init/apt.zsh
+[[ "$(whoami)" == root ]] && source $ZSHREP/init/root.zsh
 ZSH_THEME="passion"
-[[ "$(whoami)" == root ]] && ZSH_DISABLE_COMPFIX=true
 
 source $ZSHREP/init/fzf.zsh
 

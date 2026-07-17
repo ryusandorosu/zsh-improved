@@ -2,15 +2,16 @@
   sh -c "$(
     curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
   )"
-  chsh -s $(which zsh)
+  # [[ $SHELL != $(which zsh) ]] && chsh -s $(which zsh)
 }
 
 custom_themes=(
   themes/passion.zsh-theme
 )
 link_custom_theme_to_omz() {
-  local source=$ZSHREP/$1
-  local link=$ZSH/$1
+  local source="$ZSHREP/$1"
+  local link="$ZSH/$1"
+  [[ "$(whoami)" == root ]] && link="/root/.oh-my-zsh/$1"
   [[ ! -L $link ]] || [[ $(readlink $link) != $source ]] && {
     ln -fs $source $link
   }
