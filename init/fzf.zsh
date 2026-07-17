@@ -1,3 +1,5 @@
+source $ZSHREP/init/definitions.zsh
+
 define_fzf_location_for_zsh() {
   local brewpath="$1"
   local fzfversion=$(
@@ -8,7 +10,7 @@ define_fzf_location_for_zsh() {
 }
 
 [[ "$OS_ID" != Darwin ]] && {
-  define_fzf_location_for_zsh /home/linuxbrew/.linuxbrew
+  define_fzf_location_for_zsh $linuxbrew_location
 } || {
-  define_fzf_location_for_zsh /opt/goinfre/kaycekey/.brew
+  define_fzf_location_for_zsh $goinfre_brew_location
 }

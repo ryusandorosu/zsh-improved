@@ -21,11 +21,7 @@ source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
 
 # Custom settings
-if [[ "$OS_ID" != Darwin ]] && [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-  /bin/bash -c "$(
-    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-  )"
-fi
+source $ZSHREP/init/brew.zsh # TO CHECK MACOS
 
 for file in $ZSHREP/common/*.zsh; do source "$file"; done
 for file in $ZSHREP/common/fzf/*.zsh; do source "$file"; done
@@ -36,15 +32,6 @@ if [[ "$OS_ID" == debian ]]; then
 elif [[ "$OS_ID" == ubuntu ]]; then
   for file in $ZSHREP/wsl/*.zsh; do source "$file"; done
 elif [[ "$OS_ID" == Darwin ]]; then
-  [[ ! -d /Users/kaycekey/goinfre/.brew ]] && /Users/kaycekey/Desktop/install_brew.sh
-  # to check it
-  brew_packages=(
-    coreutils
-    fzf
-  )
-  for formulae in "${brew_packages[@]}"; do
-    [[ ! -d /opt/goinfre/kaycekey/.brew/Cellar/$formulae ]] && brew install "$formulae"
-  done
   for file in $ZSHREP/macos/*.zsh; do source "$file"; done
 fi
 
