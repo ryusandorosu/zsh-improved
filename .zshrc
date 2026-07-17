@@ -34,6 +34,8 @@ if [[ "$OS_ID" != Darwin ]] && [[ ! -f /home/linuxbrew/.linuxbrew/bin/brew ]]; t
 fi
 
 for file in ~/zsh_settings/common/*.zsh; do source "$file"; done
+for file in ~/zsh_settings/common/fzf/*.zsh; do source "$file"; done
+
 if [[ "$OS_ID" == debian ]]; then
   for file in ~/zsh_settings/server/*.zsh; do source "$file"; done
 elif [[ "$OS_ID" == ubuntu ]]; then
