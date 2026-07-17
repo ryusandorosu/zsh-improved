@@ -48,13 +48,13 @@ create_symlink() {
 create_symlink ~/.zshrc
 
 zsh ~/.zshrc
-if [[ "$(git -C "$destination" status --short)" ]] && [[ "$(readlink ~/.zshrc)" == "$destination/.zshrc" ]]; then
+if [[ "$(git -C "$destination" checkout)" ]] && [[ "$(readlink ~/.zshrc)" == "$destination/.zshrc" ]]; then
   echo "Installation done."
 else
   echo "Error occured during installation."
-  if [[ ! "$(git -C "$destination" status --short)" ]]; then
+  if [[ ! "$(git -C "$destination" checkout)" ]]; then
     echo "The repo has not been cloned successfully:"
-    echo "$(git -C "$destination" status --short)"
+    echo "$(git -C "$destination" checkout)"
   fi
   if [[ "$(readlink ~/.zshrc)" != "$destination/.zshrc" ]]; then
     echo "The symlink has not been created successfully:"
