@@ -51,3 +51,4 @@ echo "Installation done."
 
 # sudo --login
 # create_symlink /root/.zshrc
+# rm -r "$destination/$(basename $repo | sed 's/.git//')" # костыль, так как при запуске скрипта от обычного пользователя создаётся ссылка в репозитории. лучше напрямую с рута или через ансибл
