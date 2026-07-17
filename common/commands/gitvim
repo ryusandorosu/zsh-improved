@@ -1,18 +1,12 @@
 #!/bin/bash
-source $ZSHREP/common/cmd_display.sh
 source $ZSHREP/common/fuzzy_presets.sh
 
 if [[ -z "$1" ]]; then
 
-  # previef_git_escaped "{}"
-  # bind_exec_escaped "$editor" "{}"
-  # bind_fileinfo_escaped "{}"
-  previef_git "{}"
+  preview_bat "{}" git
   bind_exec "$(get_editor)" "{}"
   bind_fileinfo "{}"
 
-  # zsh_cmd="git ls-files --full-name \
-  #   | fzf "${fzstyle[@]}" "${previef[@]}" "${bindexec[@]}" "${file_brief[@]}" "
   cmd=(
     git
     ls-files
@@ -30,15 +24,10 @@ else
   elif [[ -f "$1" ]]; then repo_root="-C $(dirname $1)"; fi
   repo_path=$(git $repo_root rev-parse --show-toplevel)
 
-  # previef_git_escaped "$repo_path/{}"
-  # bind_exec_escaped "$editor" "$repo_path/{}"
-  # bind_fileinfo_escaped "$repo_path/{}"
-  previef_git "$repo_path/{}"
+  preview_bat "$repo_path/{}" git
   bind_exec "$(get_editor)" "$repo_path/{}"
   bind_fileinfo "$repo_path/{}"
 
-  # zsh_cmd="git $repo_root ls-files --full-name \
-  #   | fzf "${fzstyle[@]}" "${previef[@]}" "${bindexec[@]}" "${file_brief[@]}" "
   cmd=(
     git
     $repo_root
@@ -52,5 +41,3 @@ else
         "${bindexec[@]}"
 
 fi
-
-# zsh_eval "$zsh_cmd"

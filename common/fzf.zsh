@@ -9,7 +9,7 @@ alias lfind="locate -b . | fzf --style=full --preview='fzf-preview.sh {}' --bind
 
 fvim() {
   local file=$(
-    previef_simple "{}"; bind_fileinfo "{}"
+    preview_bat "{}"; bind_fileinfo "{}"
     fasd -f | awk '{print $2}' |
     fzf --tac "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"
   ) || return
@@ -31,22 +31,23 @@ _fzf_comprun() {
   case "$command" in
     cd)       bind_fileinfo "{}"
               fzf "${fzstyle[@]}" "${tree_view[@]}" "${briefinfo[@]}"   "$@" ;;
-    # lah)      fzf "${fzstyle[@]}" "${tree_view[@]}" "${briefinfo[@]}"   "$@" ;;
+    lah)      bind_fileinfo "{}"
+              fzf "${fzstyle[@]}" "${tree_view[@]}" "${briefinfo[@]}"   "$@" ;;
 
     gitc)     bind_fileinfo "{}"
               fasd -d | awk '{print $2}' \
                 | fzf --tac "${fzstyle[@]}" \
                   "${tree_view[@]}" "${briefinfo[@]}"                   "$@" ;;
 
-    vim|nvim)     previef_simple "{}"; bind_fileinfo "{}"
-              fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"    "$@" ;;
+    vim|nvim) preview_bat "{}"; bind_fileinfo "{}"
+              fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"     "$@" ;;
 
     # gitvim ~/repo/ <enter> - correct
     # gitvim ~/repo/** <tab> - opens second instance of fzf. to solve as for cdf|fvim - open nvim directly from here and not call gitvim script. possibly this also not needed at all here
-    gitvim)   previef_git "{}"; bind_fileinfo "{}"
-              fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"    "$@" ;;
+    gitvim)   preview_bat "{}" git; bind_fileinfo "{}"
+              fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"     "$@" ;;
 
-    ssh|autossh)  fzf "${fzstyle[@]}" --preview='ping -c1 {}'               "$@" ;;
+    ssh|autossh)  fzf "${fzstyle[@]}" --preview='ping -c1 {}'           "$@" ;;
 
     *)        bind_fileinfo "{}"
                   fzf "${fzstyle[@]}" --preview='fzf-preview.sh {}' \
