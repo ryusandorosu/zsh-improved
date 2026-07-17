@@ -3,6 +3,8 @@ export ZSHREP="$(dirname $(readlink ~/.zshrc))"
 
 # Main settings
 export ZSH="$HOME/.oh-my-zsh"
+source $ZSHREP/init/omz.zsh
+
 ZSH_THEME="passion"
 [[ "$(whoami)" == root ]] && ZSH_DISABLE_COMPFIX=true
 

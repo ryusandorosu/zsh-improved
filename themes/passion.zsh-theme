@@ -1,5 +1,4 @@
 #original: https://github.com/ChesterYue/ohmyzsh-theme-passion
-#ln -s ~/zsh_settings/passion.zsh-theme ~/.oh-my-zsh/themes/passion.zsh-theme
 main_prompt_color_time=$main_prompt_color
 main_prompt_color_path=$main_prompt_color
 main_prompt_color_git=$main_prompt_color
