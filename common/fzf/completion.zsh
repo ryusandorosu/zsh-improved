@@ -18,7 +18,23 @@ _fzf_ssh_hosts() {
 }
 _fzf_complete_ssh() {
   _fzf_complete --prompt="ssh> " \
-  --preview='ping -c1 $(ssh -G {} 2>/dev/null | grep "^hostname " | cut -d" " -f2)' \
+  --preview '
+  ssh -G {} 2>/dev/null |
+  awk "
+  /^hostname / {host=\$2}
+  /^user /     {user=\$2}
+  /^port /     {port=\$2}
+  END {
+    print \"Host:\",host
+    print \"User:\",user
+    print \"Port:\",port
+    print \"\"
+  }
+  "
+
+  host=$(ssh -G {} 2>/dev/null | awk "/^hostname /{print \$2; exit}")
+  ping -c1 "$host"
+  ' \
   -- "$@" < <(_fzf_ssh_hosts)
 }
 _fzf_complete_autossh() { _fzf_complete_ssh "$@"; }
