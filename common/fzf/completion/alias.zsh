@@ -1,9 +1,3 @@
-# Если позже захотите то же самое для which/unfunction (посмотреть, что реально скрывается за именем) — паттерн идентичный, просто источник кандидатов будет ${(k)functions} вместо ${(k)aliases}.
-# _fzf_complete_unalias() {
-#   _fzf_complete -- "$@" < <(print -rl -- "${(k)aliases[@]}" | sort)
-# }
-# _fzf_complete_alias() { _fzf_complete_unalias "$@"; }
-
 _fzf_complete_alias() {
   _fzf_complete --prompt="alias> " \
     --delimiter='\t' \
@@ -15,6 +9,8 @@ _fzf_complete_alias() {
       done | sort | grep -vP '^\s+'
     )
 }
+
 _fzf_complete_alias_post()   { cut -f1; }
+
 _fzf_complete_unalias()      { _fzf_complete_alias "$@"; }
 _fzf_complete_unalias_post() { _fzf_complete_alias_post; }

@@ -17,6 +17,9 @@ _fzf_comprun() {
 
     alias|unalias)  fzf "${fzstyle[@]}" --preview='printf "%s\n" {2}'   "$@" ;;
 
+    whence)   fzf "${fzstyle[@]}" \
+               --preview='print {} | sed -r "s/^\w+\s+//"'              "$@" ;;
+
     *)        bind_fileinfo "{}"
               fzf "${fzstyle[@]}" --preview='fzf-preview.sh {}' \
                   "${briefinfo[@]}"                                     "$@" ;;
