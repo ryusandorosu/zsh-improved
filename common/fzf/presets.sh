@@ -46,6 +46,13 @@ preview_bat() {
   )
 }
 
+preview_battree() {
+  previef=(
+    --preview
+    "test -d $1 && tree -C $1 | head -200 || bat --color=always $1"
+  )
+}
+
 git_diff_view() {
   local repo_root
   [[ -n "$1" ]] && repo_root="-C $1" || repo_root=""

@@ -12,6 +12,9 @@ _fzf_comprun() {
 
     ssh|autossh)  fzf "${fzstyle[@]}"                                   "$@" ;;
 
+    cp|mv)    preview_battree "{}"; bind_fileinfo "{}"
+              fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"     "$@" ;;
+
     *)        bind_fileinfo "{}"
                   fzf "${fzstyle[@]}" --preview='fzf-preview.sh {}' \
                   "${briefinfo[@]}"                                     "$@" ;;
