@@ -4,7 +4,7 @@ _fzf_comprun() {
   local command=$1
   shift
   case "$command" in
-    cd|lah)   bind_fileinfo "{}"
+    cd|lah|l|ls|lsa)              bind_fileinfo "{}"
               fzf "${fzstyle[@]}" "${tree_view[@]}" "${briefinfo[@]}"   "$@" ;;
 
     vim|nvim) preview_bat "{}"; bind_fileinfo "{}"
@@ -16,8 +16,6 @@ _fzf_comprun() {
               fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"     "$@" ;;
 
     alias|unalias)  fzf "${fzstyle[@]}" --preview='printf "%s\n" {2}'   "$@" ;;
-    # alias|unalias)      fzf "${fzstyle[@]}" --preview='alias {}'        "$@" ;;
-    # alias|unalias)  fzf "${fzstyle[@]}" --preview="zsh -ic 'alias {}'"  "$@" ;;
 
     *)        bind_fileinfo "{}"
               fzf "${fzstyle[@]}" --preview='fzf-preview.sh {}' \

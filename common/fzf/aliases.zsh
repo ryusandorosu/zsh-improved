@@ -1,2 +1,2 @@
-lah() { command /usr/bin/ls -laAhH "$@"; } # apparently there already was an 'l'/'lsa' aliases with the same 'ls -lah'
+lah() { command /usr/bin/ls -laAhH "$@"; }
 alias lah='lah --color=tty'
