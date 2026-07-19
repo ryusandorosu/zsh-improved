@@ -4,15 +4,15 @@ _fzf_comprun() {
   local command=$1
   shift
   case "$command" in
-    cd|lah|l|ls|lsa)              bind_fileinfo "{}"
+    cd|lah|l|ls|lsa)                               bind_fileinfo "{}"
               fzf "${fzstyle[@]}" "${tree_view[@]}" "${briefinfo[@]}"   "$@" ;;
 
-    vim|nvim) preview_bat "{}"; bind_fileinfo "{}"
+    vim|nvim)                  preview_bat "{}"; bind_fileinfo "{}"
               fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"     "$@" ;;
 
     ssh|autossh)  fzf "${fzstyle[@]}"                                   "$@" ;;
 
-    cp|mv)    preview_battree "{}"; bind_fileinfo "{}"
+    cp|mv)                 preview_battree "{}"; bind_fileinfo "{}"
               fzf "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"     "$@" ;;
 
     alias|unalias)  fzf "${fzstyle[@]}" --preview='printf "%s\n" {2}'   "$@" ;;
@@ -20,7 +20,7 @@ _fzf_comprun() {
     whence)   fzf "${fzstyle[@]}" \
                --preview='print {} | sed -r "s/^\w+\s+//"'              "$@" ;;
 
-    which)    fzf "${fzstyle[@]}" --preview='which {}'                  "$@" ;;
+    which)    fzf "${fzstyle[@]}"                   "$@" ;;
 
     *)        bind_fileinfo "{}"
               fzf "${fzstyle[@]}" --preview='fzf-preview.sh {}' \

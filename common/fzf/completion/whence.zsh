@@ -15,17 +15,32 @@ _fzf_complete_whence_post() {
   cut -f1
 }
 
+# /home/ryusandorosu/.local/bin seems like belongs not only to python
+# /snap/bin
 _fzf_complete_which() {
   _fzf_complete --prompt="which> " \
+    --preview='
+    which {}
+    [[ -L $(which {}) ]] && {
+      echo -n "Linked to: "
+      realpath $(which {})
+    }
+    case "$(dirname $(which {}))" in
+      /bin|/sbin|/usr/bin|/usr/sbin) apt-cache show $(dpkg -S {} | cut -d: -f1) ;;
+      /home/linuxbrew/.linuxbrew/bin) brew info {} ;;
+      $HOME/.local/bin) pip show {} ;;
+    esac
+    ' \
     -- "$@" < <(
       local dir
-      for dir in $path; do # $PATH spelling is not recognized
+      print -rl -- /home/linuxbrew/.linuxbrew/bin/*(N:t)
+      # $PATH spelling is not recognized
+      local path+=""
+      for dir in $path; do
         [[ "$dir" == /mnt/c/* ]] && continue
         if [[ -d "$dir" ]]; then
-          # local bin="$(fd "." --type x "$dir")"
           [[ "$(fd "." --type x "$dir")" == "" ]] && continue
-          # print -rl -- $(basename "$bin")
-          print -rl -- ${dir}/*(N*:t)
+          print -rl -- ${dir}/*(N:t)
         fi
       done | sort -u
     )
