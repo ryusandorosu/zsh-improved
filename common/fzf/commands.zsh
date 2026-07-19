@@ -6,6 +6,7 @@ fvim() {
     fasd -f | awk '{print $2}' |
     fzf --tac "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"
   ) || return
+  [[ -z "$file" ]] && return
   command "$(get_editor)" "$file"
 }
 
@@ -39,19 +40,19 @@ gitlog() {
 alias gitshow='gitlog'
 
 ffind() {
-  bind_fileinfo "{}"
+  preview_battree "{}"; bind_fileinfo "{}"
   fd . '/' | \
   fzf "${fzstyle[@]}" \
       "${briefinfo[@]}" \
-      --preview='fzf-preview.sh {}'
+      "${previef[@]}"
 }
 
 lfind() {
-  bind_fileinfo "{}"
+  preview_battree "{}"; bind_fileinfo "{}"
   locate -b . | \
   fzf "${fzstyle[@]}" \
       "${briefinfo[@]}" \
-      --preview='fzf-preview.sh {}'
+      "${previef[@]}"
 }
 
 neovim() {
