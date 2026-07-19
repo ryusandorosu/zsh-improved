@@ -5,8 +5,10 @@ _fzf_git_repos() {
 }
 
 _fzf_complete_gitls() {
-  _fzf_complete --prompt="git> " \
-    "${tree_view[@]}" \
+  preview_tree "{}"
+  _fzf_complete \
+    --prompt="git> " \
+    "${previef[@]}" \
     -- "$@" < <(_fzf_git_repos)
 }
 

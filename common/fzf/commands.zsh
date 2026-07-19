@@ -11,9 +11,9 @@ fvim() {
 
 cdf() {
   local dir=$(
-    bind_fileinfo "{}"
+    preview_tree "{}"; bind_fileinfo "{}"
     fasd -d | awk '{print $2}' |
-    fzf --tac "${fzstyle[@]}" "${tree_view[@]}" "${briefinfo[@]}"
+    fzf --tac "${fzstyle[@]}" "${previef[@]}" "${briefinfo[@]}"
   ) || return
   cd "$dir"
 }
