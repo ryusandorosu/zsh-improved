@@ -28,17 +28,24 @@ _fzf_complete_which() {
       *brew/bin)                                                   brew info {} ;;
       /snap/bin|/usr/bin/snap)                                     snap info {} ;;
       $HOME/.local/bin)
-        local bin={}
-        local record=$(
-          rg -loP "(/?\.\.)+/bin/$bin(,??)" $HOME/.local/lib/python3.*/site-packages/*.dist-info/RECORD
-        )
-        local pkgdir=${record:h}
-        local pkgname=${${${pkgdir:t}%.dist-info}%-[0-9]*}
-                                                              pip show $pkgname ;;
-       /usr/local/bin)
+        [[ ! -L $(which {}) ]] && {
+          local bin={}
+          local record=$(
+            rg -loP "(/?\.\.)+/bin/$bin(,??)" $HOME/.local/lib/python3.*/site-packages/*.dist-info/RECORD
+          )
+          local pkgdir=${record:h}
+          local pkgname=${${${pkgdir:t}%.dist-info}%-[0-9]*}
+                                                              pip show $pkgname
+        } || {
+          # pipx info: local mode
+          local venvpack=$(dirname $(dirname $whichlinked))
+                                bat --color=always $venvpack/pipx_metadata.json
+        }                                                                       ;;
+      /usr/local/bin)
         [[ -L $(which {}) ]] && {
           local locallib=$(cut -d/ -f5 <<< $whichlinked)
           case $locallib in
+            # npm info: global mode
             node_modules)              npm info $(cut -d/ -f6 <<< $whichlinked) ;;
           esac
         }                                                                       ;;
