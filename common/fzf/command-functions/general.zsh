@@ -1,5 +1,9 @@
 source $ZSHREP/common/fzf/presets.sh
 
+[[ $(alias lah) ]] && unalias lah
+lah() { command /usr/bin/ls -laAh "$@"; }
+alias lah='lah --color=tty'
+
 fvim() {
   local file=$(
     preview_bat "{}"; bind_fileinfo "{}"

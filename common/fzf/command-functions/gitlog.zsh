@@ -12,7 +12,7 @@ gitlog() {
   else
     if [[ -d "$1" ]]; then repo_flag="-C $1";
     elif [[ -f "$1" ]]; then repo_flag="-C $(dirname $1)"; fi
-    repo_path="$(git -C $1 rev-parse --show-toplevel)/"
+    repo_path="$(git -C $1 rev-parse --show-toplevel)"
     preview_git show "$repo_path" "{+1}"
     cmd=(
       git

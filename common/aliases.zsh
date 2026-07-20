@@ -9,3 +9,4 @@ alias ripgrep='rg'
 
 alias gitc='git -C'
 alias gitgrep='git grep --heading --line-number --before-context=2 --after-context=1'
+alias gitstatus='gitadd status'
