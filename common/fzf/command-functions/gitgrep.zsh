@@ -1,6 +1,7 @@
 source $ZSHREP/common/fzf/presets.sh
 
-# git diff --name-only; git diff --compact-summary; --word-diff=color; --color-moved=default; --diff-algorithm=default; --find-renames
+# git diff --name-only; git diff --compact-summary; --color-moved=default; --diff-algorithm=default; --find-renames
+# ^ same for git show ^, may be useful for gitlog.zsh / preview_git()
 # idk why $repo_path substitution in cmd array and separately as a variable doesnt work properly in these functions unlike in gitadd/gitvim. sort out it later.
 
 gitgrepf() {

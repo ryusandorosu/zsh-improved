@@ -57,19 +57,29 @@ preview_battree() {
 }
 
 # git
-git_diff_preview() {
-  local repo_root=$1
-  local selected=$2
-  local revision=$3
-  local repo_flag
-  local path
+preview_git() {
+  local gitcommand=$1
+  local select
 
+  local repo_root=$2
+  local repo_flag
   [[ -n "$repo_root" ]] && repo_flag="-C $repo_root" || repo_flag=""
-  [[ -z "$revision" ]] && revision=$(git $repo_flag rev-parse --abbrev-ref --symbolic-full-name @{u}) #|| revision=HEAD
-  [[ -n "$revision" ]] && path="'$revision' -- '$selected'" || path="$selected"
+
+  case $gitcommand in
+  diff)
+    local revision=$4
+    [[ -z "$revision" ]] && revision=$(git $repo_flag rev-parse --abbrev-ref --symbolic-full-name @{u}) #|| revision=HEAD
+    local path=$3
+    [[ -n "$revision" ]] && select="'$revision' -- '$path'" || select="$path"
+    ;;
+  show)
+    local commit=$3
+    select=$commit
+    ;;
+  esac
 
   previewcmd=(
     --preview
-    "git $repo_flag diff --color=always --word-diff=color $path"
+    "git $repo_flag $gitcommand --color=always --word-diff=color $select"
   )
 }

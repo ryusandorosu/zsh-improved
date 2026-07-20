@@ -27,7 +27,7 @@ zsh_eval "${zsh_cmd[@]}"
 ### does the same as gitadd's 'git ls-files':
 # _fzf_complete_gitstatus() {
 #   local revision=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) || revision=HEAD
-#   git_diff_preview "" "{}" "$revision"
+#   preview_git "" "{}" "$revision"
 #   _fzf_complete --prompt="git status> " "${previewcmd[@]}" \
 #     -- "$@" < <(
 #       git status --porcelain --untracked-files=all | sed -E 's/^.{3}//'
