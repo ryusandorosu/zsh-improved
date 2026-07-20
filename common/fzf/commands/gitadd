@@ -1,40 +1,45 @@
 #!/bin/bash
 source $ZSHREP/common/fzf/presets.sh
 
-# git status --short = git status --porcelain = git diff-files --name-status ~= git diff --name-status; --untracked-files(=normal); --renames; --find-renames
-# git diff --name-only; git diff --compact-summary; --word-diff=color; --color-moved=default; --diff-algorithm=default; --find-renames
-
 if [[ -z "$1" ]]; then
 
-  [[ -f ".gitignore" ]] && gitignore_arg="-X .gitignore" || gitignore_arg=""
+  gitignore=".gitignore"
+  [[ -f "$gitignore" ]] && gitignore_arg="-X $gitignore" || gitignore_arg=""
+
+  repo_flag=""
+
   # preview_bat "{}" git
-  git_diff_view "" "{}"
+  git_diff_preview "" "{}"
   bind_exec "git add" "{+}"
   bind_fileinfo "{}"
-
-  git ls-files -om $gitignore_arg \
-    | fzf "${fzstyle[@]}" \
-      "${previewcmd[@]}" \
-      "${briefinfo[@]}" \
-      "${bindexec[@]}" \
-      --multi
 
 else
 
   gitignore="$repo_path/.gitignore"
   [[ -f "$gitignore" ]] && gitignore_arg="-X $gitignore" || gitignore_arg=""
 
-  repo_path=$(git -C "$1" rev-parse --show-toplevel)
+  if [[ -d "$1" ]]; then repo_flag="-C $1";
+  elif [[ -f "$1" ]]; then repo_flag="-C $(dirname $1)"; fi
+  repo_path="$(git -C $1 rev-parse --show-toplevel)"
+
   # preview_bat "$repo_path/{}" git
-  git_diff_view "$repo_path" "$repo_path/{}" # "{}"
+  git_diff_preview "$repo_path" "$repo_path/{}" # "{}"
   bind_exec "git -C "$1" add" "$repo_path/{+}"
   bind_fileinfo "$repo_path/{}"
 
-  git -C "$1" ls-files -om $gitignore_arg \
-    | fzf "${fzstyle[@]}" \
-      "${previewcmd[@]}" \
-      "${briefinfo[@]}" \
-      "${bindexec[@]}" \
-      --multi
-
 fi
+
+cmd=(
+  git
+  $repo_flag
+  ls-files
+  -om
+  $gitignore_arg
+)
+
+"${cmd[@]}" | \
+fzf "${fzstyle[@]}" \
+    "${previewcmd[@]}" \
+    "${briefinfo[@]}" \
+    "${bindexec[@]}" \
+    --multi

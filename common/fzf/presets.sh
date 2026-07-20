@@ -56,7 +56,8 @@ preview_battree() {
   )
 }
 
-git_diff_view() {
+# git
+git_diff_preview() {
   local repo_root
   [[ -n "$1" ]] && repo_root="-C '$1'" || repo_root=""
   previewcmd=(

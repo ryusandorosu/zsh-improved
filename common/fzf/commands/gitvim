@@ -3,41 +3,32 @@ source $ZSHREP/common/fzf/presets.sh
 
 if [[ -z "$1" ]]; then
 
+  repo_flag=""
   preview_bat "{}" git
   bind_exec "$(get_editor)" "{}"
   bind_fileinfo "{}"
 
-  cmd=(
-    git
-    ls-files
-    --full-name
-  )
-  "${cmd[@]}" | \
-    fzf "${fzstyle[@]}" \
-        "${previewcmd[@]}" \
-        "${briefinfo[@]}" \
-        "${bindexec[@]}"
-
 else
 
-  if [[ -d "$1" ]]; then repo_root="-C $1";
-  elif [[ -f "$1" ]]; then repo_root="-C $(dirname $1)"; fi
-  repo_path=$(git $repo_root rev-parse --show-toplevel)
+  if [[ -d "$1" ]]; then repo_flag="-C $1";
+  elif [[ -f "$1" ]]; then repo_flag="-C $(dirname $1)"; fi
+  repo_path="$(git -C $1 rev-parse --show-toplevel)"
 
   preview_bat "$repo_path/{}" git
   bind_exec "$(get_editor)" "$repo_path/{}"
   bind_fileinfo "$repo_path/{}"
 
-  cmd=(
-    git
-    $repo_root
-    ls-files
-    --full-name
-  )
-  "${cmd[@]}" | \
-    fzf "${fzstyle[@]}" \
-        "${previewcmd[@]}" \
-        "${briefinfo[@]}" \
-        "${bindexec[@]}"
-
 fi
+
+cmd=(
+  git
+  $repo_flag
+  ls-files
+  --full-name
+)
+
+"${cmd[@]}" | \
+fzf "${fzstyle[@]}" \
+    "${previewcmd[@]}" \
+    "${briefinfo[@]}" \
+    "${bindexec[@]}"
