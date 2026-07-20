@@ -58,10 +58,18 @@ preview_battree() {
 
 # git
 git_diff_preview() {
-  local repo_root
-  [[ -n "$1" ]] && repo_root="-C '$1'" || repo_root=""
+  local repo_root=$1
+  local selected=$2
+  local revision=$3
+  local repo_flag
+  local path
+
+  [[ -n "$repo_root" ]] && repo_flag="-C $repo_root" || repo_flag=""
+  [[ -z "$revision" ]] && revision=$(git $repo_flag rev-parse --abbrev-ref --symbolic-full-name @{u}) #|| revision=HEAD
+  [[ -n "$revision" ]] && path="'$revision' -- '$selected'" || path="$selected"
+
   previewcmd=(
     --preview
-    "git $repo_root diff --color=always --word-diff=color '$2'"
+    "git $repo_flag diff --color=always --word-diff=color $path"
   )
 }

@@ -23,6 +23,7 @@ _fzf_complete_gitls() {
 
 _fzf_complete_gitc()      { _fzf_complete_gitls "$@"; }
 _fzf_complete_gitadd()    { _fzf_complete_gitls "$@"; }
+_fzf_complete_gitstatus() { _fzf_complete_gitls "$@"; }
 _fzf_complete_gitvim()    { _fzf_complete_gitls "$@"; }
 
 _fzf_complete_gitlog()    { _fzf_complete_gitls "$@"; }

@@ -1,0 +1,49 @@
+#!/bin/bash
+source $ZSHREP/common/cmd_display.sh
+# git ls-files -t: sefi-deprecated option. alternatives: git status --porcelain; git status --short; git diff-files --name-status; git diff --name-status (less-like)
+# also git status: --renames; --find-renames
+
+# [[ -z "$1" ]] && zsh_cmd="git ls-files -t --full-name" || zsh_cmd="git -C $1 ls-files -t --full-name"
+# zsh_eval "$zsh_cmd"
+
+if [[ -z "$1" ]]; then
+  zsh_cmd=(
+    git
+    ls-files
+    -t
+    --full-name
+  )
+else
+  zsh_cmd=(
+    git
+    -C $1
+    ls-files
+    -t
+    --full-name
+  )
+fi
+zsh_eval "${zsh_cmd[@]}"
+
+### does the same as gitadd's 'git ls-files':
+# _fzf_complete_gitstatus() {
+#   local revision=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}) || revision=HEAD
+#   git_diff_preview "" "{}" "$revision"
+#   _fzf_complete --prompt="git status> " "${previewcmd[@]}" \
+#     -- "$@" < <(
+#       git status --porcelain --untracked-files=all | sed -E 's/^.{3}//'
+#     )
+# }
+
+### claude's version:
+# _fzf_complete_git_status() {
+#   _fzf_complete --prompt="status> " \
+#     --preview='
+#       revision=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null) || revision=HEAD
+#       if git ls-files --error-unmatch -- {} >/dev/null 2>&1; then
+#         git diff --color=always --word-diff=color "$revision" -- {}
+#       else
+#         bat --color=always {}
+#       fi
+#     ' \
+#     -- "$@" < <(_fzf_git_status_files)
+# }

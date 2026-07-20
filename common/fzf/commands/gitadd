@@ -1,5 +1,6 @@
 #!/bin/bash
 source $ZSHREP/common/fzf/presets.sh
+[[ -n "$1" && "$1" == status ]] && shift
 
 if [[ -z "$1" ]]; then
 
@@ -23,12 +24,13 @@ else
   repo_path="$(git -C $1 rev-parse --show-toplevel)"
 
   # preview_bat "$repo_path/{}" git
-  git_diff_preview "$repo_path" "$repo_path/{}" # "{}"
+  git_diff_preview "$repo_path" "$repo_path/{}"
   bind_exec "git -C "$1" add" "$repo_path/{+}"
   bind_fileinfo "$repo_path/{}"
 
 fi
 
+# git status --untracked-files(=all) == git ls-files -om
 cmd=(
   git
   $repo_flag
