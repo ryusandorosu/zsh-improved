@@ -18,6 +18,8 @@ _fzf_complete_whence_post() {
 _fzf_complete_which() {
   _fzf_complete --prompt="which> " \
     --preview='
+    export HOMEBREW_COLOR=1
+    export FORCE_COLOR=1
     which {}
     [[ -L $(which {}) ]] && {
       local whichlinked=$(realpath $(which {}))
