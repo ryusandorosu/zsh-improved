@@ -19,27 +19,6 @@ cdf() {
   cd "$dir"
 }
 
-gitgrepf() {
-  git grep . | \
-  fzf "${fzstyle[@]}" \
-  --preview 'git grep --heading --function-context --line-number --color {3}'
-   # --function-context: is exclusive with --*context flags
-}
-
-gitgrepb() {
-  git grep --line-number . | \
-  fzf "${fzstyle[@]}" \
-  --preview 'bat --color=always --style=numbers --highlight-line=$(echo {1} | cut -d: -f2) $(echo {1} | cut -d: -f1)'
-}
-
-# similar to glgp alias
-gitlog() {
-  git log --oneline | \
-  fzf "${fzstyle[@]}" --multi \
-  --preview 'git show --color {+1}'
-}
-alias gitshow='gitlog'
-
 ffind() {
   preview_battree "{}"; bind_fileinfo "{}"
   fd . '/' | \
