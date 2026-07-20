@@ -1,7 +1,10 @@
 #!/bin/bash
 ZSH_SCRIPT_CMD_FILE="$HOME/.zsh_cmd_display"
 function zsh_eval() {
-  if [[ -n "$1" ]]; then
+  if [[ $# > 1 ]]; then
+    echo "$@" > "$HOME/.zsh_cmd_display"
+    eval "$@"
+  elif [[ -n "$1" ]]; then
     echo "$1" > "$HOME/.zsh_cmd_display"
     eval "$1"
   else
