@@ -5,7 +5,7 @@ link_func() {
   local source="$1"
   local link="$2"
   if [[ ! -L "$link" ]] || [[ "$(readlink $link)" != "$source" ]]; then
-    ln -ifsv "$source" "$link"
+    ln -fsv "$source" "$link"
   fi
 }
 
@@ -16,7 +16,7 @@ read -e -i "$destination" -p "Choose a destination to clone or remain the defaul
 [[ ! -d "$destination/.git" ]] && {
   git clone "$repo" "$destination"
 } || {
-  echo "Cancelled. A repo is already cloned here: $destination"
+  echo "Skipped. A repo is already cloned here: $destination"
 }
 
 create_symlink() {
@@ -34,7 +34,7 @@ create_symlink() {
 
   elif [[ -L "$zshrc" ]] && [[ "$(readlink $zshrc)" == "$destination/.zshrc" ]]; then
 
-    echo -n "Cancelled. $zshrc is already linked to the repo: "
+    echo -n "Skipped. $zshrc is already linked to the repo: "
     readlink "$zshrc"
 
   else

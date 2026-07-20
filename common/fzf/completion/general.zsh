@@ -28,10 +28,10 @@ _fzf_complete_pwd() {
   fi
 }
 
-_fzf_complete_lah() { _fzf_complete_pwd d "$@"; }
-_fzf_complete_l()   { _fzf_complete_lah "$@"; }
-_fzf_complete_ls()  { _fzf_complete_lah "$@"; }
-_fzf_complete_lsa() { _fzf_complete_lah "$@"; }
+_fzf_complete_ls() { _fzf_complete_pwd d "$@"; }
+_fzf_complete_l()   { _fzf_complete_ls "$@"; }
+_fzf_complete_lsa() { _fzf_complete_ls "$@"; }
+_fzf_complete_lah()  { _fzf_complete_ls "$@"; }
 
 _fzf_complete_cat() { _fzf_complete_pwd f "$@"; }
 _fzf_complete_bat() { _fzf_complete_cat "$@"; }
