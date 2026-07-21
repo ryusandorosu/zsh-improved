@@ -1,11 +1,5 @@
-source $ZSHREP/common/fzf/presets/previews/filedirs.sh
-source $ZSHREP/common/fzf/presets/previews/git.sh
-
-get_editor() {
-  local editor
-  [[ -f "$(which nvim)" ]] && editor=nvim || editor=vim
-  echo "$editor"
-}
+source $ZSHREP/fzf/presets/previews/filedirs.sh
+source $ZSHREP/fzf/presets/previews/git.sh
 
 # options
 fzfdefaults=(
@@ -31,4 +25,10 @@ bind_exec() {
     --bind
     "enter:become($1 $2)"
   )
+}
+
+_get_editor() {
+  local editor
+  [[ -f "$(which nvim)" ]] && editor=nvim || editor=vim
+  echo "$editor"
 }

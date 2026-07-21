@@ -1,4 +1,4 @@
-source $ZSHREP/common/fzf/presets/main.sh
+source $ZSHREP/fzf/presets/main.sh
 
 # similar to glgp alias
 gitlog() {

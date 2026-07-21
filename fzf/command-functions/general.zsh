@@ -1,4 +1,4 @@
-source $ZSHREP/common/fzf/presets/main.sh
+source $ZSHREP/fzf/presets/main.sh
 
 [[ $(alias lah) ]] && unalias lah
 lah() { command /usr/bin/ls -laAh "$@"; }
@@ -11,7 +11,7 @@ fvim() {
     fzf --tac "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"
   ) || return
   [[ -z "$file" ]] && return
-  command "$(get_editor)" "$file"
+  command "$(_get_editor)" "$file"
 }
 
 cdf() {

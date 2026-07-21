@@ -1,5 +1,5 @@
 export PATH=$PATH:$ZSHREP/common/commands
-export PATH=$PATH:$ZSHREP/common/fzf/commands
+export PATH=$PATH:$ZSHREP/fzf/command-scripts
 # custom ansible template renderer
 export PATH=$PATH:$HOME/homeserver-ansible/tools
 

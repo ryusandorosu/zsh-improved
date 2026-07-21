@@ -26,8 +26,8 @@ ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
 source $ZSHREP/init/brew.zsh # TO CHECK MACOS
 
 for file in $ZSHREP/common/*.zsh; do source "$file"; done
-for file in $ZSHREP/common/fzf/*.zsh; do source "$file"; done
-for file in $ZSHREP/common/fzf/*/*.zsh; do source "$file"; done
+for file in $ZSHREP/fzf/*.zsh; do source "$file"; done
+for file in $ZSHREP/fzf/*/*.zsh; do source "$file"; done
 
 if [[ "$OS_ID" == debian ]]; then
   for file in $ZSHREP/server/*.zsh; do source "$file"; done
