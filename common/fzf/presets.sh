@@ -9,6 +9,7 @@ get_editor() {
 # options
 fzstyle=(
   --style=full
+  --preview-window='right,58%,wrap-word'
 )
 
 # binds
@@ -31,9 +32,8 @@ bind_exec() {
 preview_tree() {
   previewcmd=(
     --preview
-    "tree -C '$1' | head -200"
+    "tree -C '$1' | head -500"
   )
-  # -L 2
 }
 
 preview_bat() {
@@ -45,14 +45,14 @@ preview_bat() {
   fi
   previewcmd=(
     --preview
-    "bat $style --color=always '$1'"
+    "bat $style --color=always '$1' | head -1000"
   )
 }
 
 preview_battree() {
   previewcmd=(
     --preview
-    "test -d '$1' && tree -C '$1' | head -200 || bat --color=always '$1'"
+    "test -d '$1' && tree -C '$1' | head -500 || bat --color=always '$1' | head -1000"
   )
 }
 
@@ -81,5 +81,7 @@ preview_git() {
   previewcmd=(
     --preview
     "git $repo_flag $gitcommand --color=always --word-diff=color $select"
+    --preview-window
+    'right,67%,wrap-word'
   )
 }
