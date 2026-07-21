@@ -45,12 +45,14 @@ else
 
 fi
 
-# $repo_flag stopped working here too
+### $repo_flag stopped working here too
+### --find-renames has no effect -_-
 # cmd=(
 #   git
 #   $repo_flag
 #   status
 #   --porcelain
+#   --find-renames
 #   $gitignore_arg
 # )
 

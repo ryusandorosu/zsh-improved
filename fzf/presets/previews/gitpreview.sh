@@ -21,12 +21,14 @@ preview_git() {
   esac
 
   # to add a case when a file is staged (M) and differ it from modified but unstaged (M). when: one of already staged files has been changed (MM), staged ones are not previewed and no bind_gitinfo output as well
+  # to add a case whan a file is deleted. "fatal: ambiguous argument 'fzf/presets/previews/git.sh': unknown revision or path not in the working tree."
+  # to add a case whan a file is renamed (R). preview gets an old name as {2}, while new name is seems to be {3}. (RM) = modified after being staged, a different case
   previewcmd=(
     --preview
     "
     __status='$4'
     case \"\$__status\" in
-      '??') bat --color=always --style=changes,numbers '$path' | head -500 ;;
+      '??'|A) bat --color=always --style=changes,numbers '$path' | head -500 ;;
       *)    git $repo_flag $gitcommand --color=always --word-diff=color $select ;;
     esac
     "
