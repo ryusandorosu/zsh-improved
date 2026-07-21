@@ -29,7 +29,7 @@ preview_git() {
     __status='$4'
     case \"\$__status\" in
       '??'|A) bat --color=always --style=changes,numbers '$path' | head -500 ;;
-      *)    git $repo_flag $gitcommand --color=always --word-diff=color $select ;;
+      *)    git $repo_flag $gitcommand --color=always --word-diff=plain $select ;;
     esac
     "
     --preview-window
