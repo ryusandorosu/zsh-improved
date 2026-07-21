@@ -1,5 +1,5 @@
 #!/bin/bash
-source $ZSHREP/common/fzf/presets.sh
+source $ZSHREP/common/fzf/presets/main.sh
 [[ -n "$1" && "$1" == status ]] && shift
 
 if [[ -z "$1" ]]; then

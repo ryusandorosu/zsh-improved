@@ -1,4 +1,4 @@
-source $ZSHREP/common/fzf/presets.sh
+source $ZSHREP/common/fzf/presets/main.sh
 
 [[ $(alias lah) ]] && unalias lah
 lah() { command /usr/bin/ls -laAh "$@"; }

@@ -1,4 +1,4 @@
-source $ZSHREP/common/fzf/presets.sh
+source $ZSHREP/common/fzf/presets/main.sh
 
 _fzf_comprun() {
   local command=$1
