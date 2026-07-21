@@ -7,27 +7,20 @@ if [[ -z "$1" ]]; then
   gitignore=".gitignore"
   [[ -f "$gitignore" ]] && gitignore_arg="-X $gitignore" || gitignore_arg=""
 
-  repo_flag=""
+  repo_flag=()
 
   # preview_bat "{2}" git
   preview_git diff "" "{2}" "{1}"
   bind_exec "git add" "{+2}"
   bind_gitinfo "" "{2}" "{1}"
 
-  cmd=(
-    git
-    status
-    --porcelain
-    $gitignore_arg
-  )
-
 else
 
   gitignore="$repo_path/.gitignore"
   [[ -f "$gitignore" ]] && gitignore_arg="-X $gitignore" || gitignore_arg=""
 
-  if [[ -d "$1" ]]; then repo_flag="-C $1";
-  elif [[ -f "$1" ]]; then repo_flag="-C $(dirname $1)"; fi
+  if   [[ -d "$1" ]]; then repo_flag=(-C $1);
+  elif [[ -f "$1" ]]; then repo_flag=(-C $(dirname $1)); fi
   repo_path="$(git -C $1 rev-parse --show-toplevel)"
 
   # preview_bat "$repo_path/{2}" git
@@ -35,26 +28,17 @@ else
   bind_exec "git -C "$1" add" "$repo_path/{+2}"
   bind_gitinfo "$repo_path" "$repo_path/{2}" "{1}"
 
-  cmd=(
-    git
-    -C $1
-    status
-    --porcelain
-    $gitignore_arg
-  )
-
 fi
 
-### $repo_flag stopped working here too
 ### --find-renames has no effect -_-
-# cmd=(
-#   git
-#   $repo_flag
-#   status
-#   --porcelain
-#   --find-renames
-#   $gitignore_arg
-# )
+cmd=(
+  git
+  "${repo_flag[@]}"
+  status
+  --porcelain
+  --find-renames
+  $gitignore_arg
+)
 
 "${cmd[@]}" | \
 fzf "${fzfdefaults[@]}" \
