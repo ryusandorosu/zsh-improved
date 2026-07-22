@@ -24,6 +24,21 @@ _fzf_complete_pwd() {
   fi
 }
 
+_fzf_fasd() {
+  local type="$1"
+  shift
+  local base=$(_fzf_base_dir "$prefix")
+  local expanded=${~base}
+  if [[ $base == . ]]; then
+    _fzf_complete -- "$@" < <(fasd $type | awk '{print $2}' | tac)
+  else
+    _fzf_complete -- "$@" < <(fasd $type | awk '{print $2}' | tac | grep $expanded | while IFS= read -r line; do print -r -- "${base}${line#$expanded}"; done)
+  fi
+}
+
+_fzf_complete_fvim()  { _fzf_fasd -f "$@"; }
+_fzf_complete_cdf()   { _fzf_fasd -d "$@"; }
+
 # --walker=[file][,dir][,follow][,hidden]
 _fzf_complete_ls()  { _fzf_complete_pwd d "$@"; }
 _fzf_complete_l()   { _fzf_complete_ls "$@"; }

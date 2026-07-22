@@ -4,13 +4,13 @@ _fzf_comprun() {
   local command=$1
   shift
   case "$command" in
-    cd|l|ls|lsa|lah)          preview_tree "{}"; bind_fileinfo "{}"
+    cd|cdf|l|ls|lsa|lah)       preview_tree "{}"; bind_fileinfo "{}"
        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"     "$@" ;;
 
-    vim|nvim)                 preview_bat "{}";  bind_fileinfo "{}"
+    vim|nvim|fvim)             preview_bat "{}";  bind_fileinfo "{}"
        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"     "$@" ;;
 
-    ssh|autossh)                            fzf "${fzfdefaults[@]}"     "$@" ;;
+    ssh|autossh)               fzf "${fzfdefaults[@]}"                  "$@" ;;
 
     cp|mv)                 preview_battree "{}"; bind_fileinfo "{}"
        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"     "$@" ;;
