@@ -12,24 +12,25 @@ cost_prompt_bracket_open=''
 cost_prompt_bracket_close=' |'
 
 source $ZSHREP/common/cmd_display.sh
-SCRIPT_DIRS=(
-    "$ZSHREP/common/commands"
-    "$ZSHREP/server/commands"
-    "$ZSHREP/fzf/command-scripts"
-)
+# SCRIPT_DIRS=(
+#     "$ZSHREP/common/commands"
+#     "$ZSHREP/server/commands"
+#     "$ZSHREP/fzf/command-scripts"
+#     "$ZSHREP/fzf/command-functions"
+# )
 
 function _resolve_script_display_cmd() {
-    local raw_cmd="$1"
-    local cmd_name="${raw_cmd%% *}"
-    local cmd_args="${raw_cmd#* }"
-    [[ "$cmd_args" == "$cmd_name" ]] && cmd_args=""
+    # local raw_cmd="$1"
+    # local cmd_name="${raw_cmd%% *}"
+    # local cmd_args="${raw_cmd#* }"
+    # [[ "$cmd_args" == "$cmd_name" ]] && cmd_args=""
 
-    # look for scripts in certain dirs to enable eval show
-    local script_path=""
-    for dir in "${SCRIPT_DIRS[@]}"; do
-        [[ -f "$dir/$cmd_name" ]] && { script_path="$dir/$cmd_name"; break; }
-    done
-    [[ -z "$script_path" ]] && return 1
+    # ### look for scripts in certain dirs to enable eval show
+    # local script_path=""
+    # for dir in "${SCRIPT_DIRS[@]}"; do
+    #     [[ -f "$dir/$cmd_name" ]] && { script_path="$dir/$cmd_name"; break; }
+    # done
+    # [[ -z "$script_path" ]] && return 1
 
     # read hook file to display eval command
     if [[ -f "$ZSH_SCRIPT_CMD_FILE" ]]; then
