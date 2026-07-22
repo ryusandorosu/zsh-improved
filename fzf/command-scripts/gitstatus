@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 source $ZSHREP/fzf/presets/main.sh
 
-# listed in $ZSHREP/common/aliases.zsh
 if [[ $# == 1 ]]; then
 
   git_commands=(
