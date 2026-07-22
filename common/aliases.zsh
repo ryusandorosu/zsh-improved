@@ -9,4 +9,8 @@ alias ripgrep='rg'
 
 alias gitc='git -C'
 alias gitgrep='git grep --heading --line-number --before-context=2 --after-context=1'
-alias gitstatus='gitadd status'
+
+# $ZSHREP/fzf/command-scripts/gitstatus:
+alias gitadd='gitstatus add'
+alias gitrestore='gitstatus restore'
+alias gitstaged='gitstatus restore --staged'

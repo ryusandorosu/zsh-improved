@@ -1,6 +1,32 @@
 #!/usr/bin/env zsh
 source $ZSHREP/fzf/presets/main.sh
-[[ -n "$1" && "$1" == status ]] && shift
+
+# listed in $ZSHREP/common/aliases.zsh
+if [[ $# == 1 ]]; then
+
+  git_commands=(
+    add
+    restore
+  )
+  for subcmd in "${git_commands[@]}"; do
+    [[ "$1" == "$subcmd" ]] && gitsubcmd="$1"
+  done
+  shift
+
+elif [[ $# == 2 ]]; then
+
+  git_commands=(
+    restore
+    --staged
+  )
+  for subcmd in "${git_commands[@]}"; do
+    for arg in "$@"; do
+      [[ "$arg" == "$subcmd" ]] && gitsubcmd="$@"
+    done
+  done
+  shift 2
+
+else gitsubcmd="add"; fi
 
 gitcmd=(git)
 
@@ -16,7 +42,7 @@ preview_git diff "$repo_path" "${repo_path}{2}" "{1}"
 bind_gitinfo "$repo_path" "${repo_path}{2}" "{1}"
 
 execcmd=("${gitcmd[@]}")
-execcmd+=(add)
+execcmd+=("$gitsubcmd")
 bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
 
 ### --find-renames has no effect -_-
