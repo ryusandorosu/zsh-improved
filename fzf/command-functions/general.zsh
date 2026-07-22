@@ -27,28 +27,33 @@ cdf() {
 }
 
 ffind() {
+  local pattern
+  [[ -z "$1" ]] && pattern="." || pattern="$1"
+
   preview_battree "{}"; bind_fileinfo "{}"
-  fd . '/' | \
-  fzf "${fzfdefaults[@]}" \
-      "${briefinfo[@]}" \
-      "${previewcmd[@]}"
+  fd "$pattern" '/' \
+  | fzf "${fzfdefaults[@]}" \
+        "${briefinfo[@]}" \
+        "${previewcmd[@]}"
 }
 
 lfind() {
+  local pattern
+  [[ -z "$1" ]] && pattern="." || pattern="$1"
+
   preview_battree "{}"; bind_fileinfo "{}"
-  locate -b . | \
-  fzf "${fzfdefaults[@]}" \
-      "${briefinfo[@]}" \
-      "${previewcmd[@]}"
+  locate -b "$pattern" \
+  | fzf "${fzfdefaults[@]}" \
+        "${briefinfo[@]}" \
+        "${previewcmd[@]}"
 }
 
 neovim() {
+  local pattern
+  [[ -z "$1" ]] && pattern="." || pattern="$1"
+  cmd=(locate -b "$pattern")
+
   preview_bat "{}"; bind_fileinfo "{}"; bind_exec nvim "{}"
-  cmd=(
-    locate
-    -b
-    .
-  )
   "${cmd[@]}" \
   | fzf "${fzfdefaults[@]}" \
         "${previewcmd[@]}" \
