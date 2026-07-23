@@ -15,8 +15,9 @@ gitgrepf() {
 
   "${cmd[@]}" \
   | fzf "${fzfdefaults[@]}" \
-    --preview ''${(j: :)gitcmd[@]}' --heading --function-context --line-number --color {3}'
+    --preview ''${(j: :)gitcmd[@]}' --heading --function-context --line-number --color' #{3} -- to fix it!
    # --function-context: is exclusive with --*context flags
+   # --show-function: try
 }
 
 gitgrepb() {
@@ -33,5 +34,8 @@ gitgrepb() {
 
   "${gitcmd[@]}" \
   | fzf "${fzfdefaults[@]}" \
-    --preview 'bat --color=always --style=changes,numbers --highlight-line=$(cut -d: -f2 <<< {1}) '$repo_path'$(cut -d: -f1 <<< {1})'
+    --preview "$(_cmd_bat_preview "$repo_path'\$(cut -d: -f1 <<< {1})'" gitline)"
+
+    # --preview "$(_cmd_bat_preview "$repo_path'\$(cut -d: -f1 <<< {1})'" git) --highlight-line=\$(cut -d: -f2 <<< {1})" # has preview, but: zsh:7: command not found: --highlight-line=1
+    # --preview 'bat --color=always --style=changes,numbers --highlight-line=$(cut -d: -f2 <<< {1}) '$repo_path'$(cut -d: -f1 <<< {1})'
 }
