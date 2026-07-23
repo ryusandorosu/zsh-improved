@@ -35,5 +35,5 @@ gitgrepb() {
   "${gitcmd[@]}" \
   | fzf "${fzfdefaults[@]}" \
     --delimiter : \
-    --preview "$(_cmd_bat_preview "${repo_path}{1}" git --highlight-line={2})"
+    --preview "$(_cmd_bat_preview "${repo_path}{1}" git "--highlight-line={2} --diff")"
 }
