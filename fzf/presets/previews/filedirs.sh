@@ -2,18 +2,20 @@ _cmd_tree() {
   print -r -- "tree -C '$1' | head -500"
 }
 
-_cmd_bat() {
+_cmd_bat_simple() {
   local path=$1 style=$2
   print -r -- "bat $style --color=always '$path' | head -500"
 }
 
-_cmd_file_preview() {
+_cmd_bat_preview() {
   local path=$1 style=$2
+  local gitstyle="--style=changes,numbers"
+  [[ -n "$style" && "$style" == git ]] && style="$gitstyle"
   print -r -- "
     ft=\$(file --brief '$path')
     case \"\$ft\" in
-      JSON*) jq --color-output . '$path' || $(_cmd_bat "$path" "$style") ;;
-      *)     $(_cmd_bat "$path" "$style") ;;
+      JSON*) jq --color-output . '$path' || $(_cmd_bat_simple "$path" "$style") ;;
+      *)     $(_cmd_bat_simple "$path" "$style") ;;
     esac
   "
 }
@@ -23,14 +25,12 @@ preview_tree() {
 }
 
 preview_bat() {
-  local style=""
-  [[ -n "$2" && "$2" == git ]] && style="--style=changes,numbers"
-  previewcmd=( --preview "$(_cmd_file_preview "$1" "$style")" )
+  previewcmd=( --preview "$(_cmd_bat_preview "$1" "$2")" )
 }
 
 preview_battree() {
   previewcmd=(
     --preview
-    "test -d '$1' && { $(_cmd_tree "$1"); } || { $(_cmd_file_preview "$1" ""); }"
+    "test -d '$1' && { $(_cmd_tree "$1"); } || { $(_cmd_bat_preview "$1" ""); }"
   )
 }
