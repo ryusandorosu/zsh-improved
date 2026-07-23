@@ -8,11 +8,9 @@ _cmd_bat_simple() {
 }
 
 _cmd_bat_preview() {
-  local path=$1 style=$2
-  local gitstyle="--style=changes,numbers"
-  [[ -n "$style" && "$style" == git ]] && style="$gitstyle"
-  local highlight_line="$gitstyle --highlight-line=\$(cut -d: -f2 <<< {1})" # git grep --line-number
-  [[ -n "$style" && "$style" == gitline ]] && style="$highlight_line"
+  local path=$1 style=$2 opt=$3
+  [[ -n "$style" && "$style" == git ]] && style="--style=changes,numbers"
+  [[ -n "$opt"   && "$opt"   == --* ]] && style+=" $opt"
   print -r -- "
     ft=\$(file --brief '$path')
     case \"\$ft\" in

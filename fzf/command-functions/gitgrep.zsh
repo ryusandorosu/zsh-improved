@@ -34,8 +34,6 @@ gitgrepb() {
 
   "${gitcmd[@]}" \
   | fzf "${fzfdefaults[@]}" \
-    --preview "$(_cmd_bat_preview "$repo_path'\$(cut -d: -f1 <<< {1})'" gitline)"
-
-    # --preview "$(_cmd_bat_preview "$repo_path'\$(cut -d: -f1 <<< {1})'" git) --highlight-line=\$(cut -d: -f2 <<< {1})" # has preview, but: zsh:7: command not found: --highlight-line=1
-    # --preview 'bat --color=always --style=changes,numbers --highlight-line=$(cut -d: -f2 <<< {1}) '$repo_path'$(cut -d: -f1 <<< {1})'
+    --delimiter : \
+    --preview "$(_cmd_bat_preview "${repo_path}{1}" git --highlight-line={2})"
 }
