@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 source $ZSHREP/fzf/presets/main.sh
 
-if [[ $# == 1 && "$(file $1)" =~ "No such file or directory" ]]; then
+if (( $# <= 2 )) && [[ "$(file $1)" =~ "No such file or directory" ]]; then
 
   git_commands=(
     add
@@ -13,6 +13,9 @@ if [[ $# == 1 && "$(file $1)" =~ "No such file or directory" ]]; then
   shift
 
 elif [[ $# == 2 ]]; then
+# echo "debug: $1"
+# echo "debug: $2"
+# echo "debug: $3"
 
   git_commands=(
     restore
@@ -31,10 +34,11 @@ gitcmd=(git)
 
 [[ -d "$1" ]] && gitcmd+=(-C "$1")
 [[ -f "$1" ]] && gitcmd+=(-C "$(dirname $1)")
+# echo "debug: ${gitcmd[@]}"
 [[ -n "$1" ]] && repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)/"
 
 gitignore="${repo_path}.gitignore"
-[[ -f "$gitignore" ]] && gitignore_arg=(-X "$gitignore") || gitignore_arg=()
+# [[ -f "$gitignore" ]] && gitignore_arg=(-X "$gitignore") || gitignore_arg=()
 
 # preview_bat "${repo_path}{2}" git
 preview_git diff "$repo_path" "${repo_path}{2}" "{1}"
@@ -42,15 +46,17 @@ bind_gitinfo "$repo_path" "${repo_path}{2}" "{1}"
 
 execcmd=("${gitcmd[@]}")
 execcmd+=("$gitsubcmd")
+# echo "debug: ${execcmd[@]}"
 bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
 
 ### --find-renames has no effect for git status
 gitcmd+=(
   status
   --porcelain=v2
-  "${gitignore_arg[@]}"
 )
+  # "${gitignore_arg[@]}"
 
+# echo "debug: ${gitcmd[@]}"
 "${gitcmd[@]}" \
 | awk '{
     if ($1 == "?") {
