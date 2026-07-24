@@ -26,6 +26,7 @@ preview_git() {
     "
     __status='$4'
     __q='{q}'
+    __delta() { delta --paging=never --color-only; }
     __out() {
       case \"\$__status\" in
 
@@ -36,18 +37,16 @@ preview_git() {
 
         *D*)                                               exit ;;
 
-        'M.') git $repo_flag $gitcommand --cached \
-              --color=always --word-diff=plain $select          ;;
+        'M.') git $repo_flag $gitcommand \
+              --cached $select | __delta                        ;;
 
         MM)   print \"Unstaged changes:\n\"
-              git $repo_flag $gitcommand \
-              --color=always --word-diff=plain $select
+              git $repo_flag $gitcommand $select | __delta
               print \"\nStaged changes:\n\"
-              git $repo_flag $gitcommand --cached \
-              --color=always --word-diff=plain $select          ;;
+              git $repo_flag $gitcommand \
+              --cached $select | __delta                        ;;
 
-        *)    git $repo_flag $gitcommand \
-              --color=always --word-diff=plain $select          ;;
+        *)    git $repo_flag $gitcommand $select | __delta      ;;
 
       esac
     }
@@ -55,8 +54,8 @@ preview_git() {
       rg --passthru \
          --color=always \
          --colors 'match:none' \
-         --colors 'match:bg:51,51,51' \
-         --colors 'match:fg:yellow' \
+         --colors 'match:bg:yellow' \
+         --colors 'match:fg:black' \
          --colors 'match:style:bold' \
          --colors 'highlight:bg:51,51,51' \
          --smart-case \
@@ -67,6 +66,5 @@ preview_git() {
     --preview-window
     'right,67%,wrap-word'
   )
-  # possibly replace ripgrep with delta? 
   # --context=15 \ # cuts off needed commit data
 }

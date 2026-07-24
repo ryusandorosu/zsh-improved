@@ -1,7 +1,9 @@
 source $ZSHREP/init/definitions.zsh
 # to check on macos: possibly fd also needed here instead of being in linux packages
+# possibly move delta config here?
 common_brew_packages=(
   fzf
+  git-delta
 )
 
 if [[ "$OS_ID" != Darwin ]] && [[ ! -f $linuxbrew_location/bin/brew ]]; then
