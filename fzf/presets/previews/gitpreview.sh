@@ -60,7 +60,6 @@ preview_git() {
          --colors 'match:style:bold' \
          --colors 'highlight:bg:51,51,51' \
          --smart-case \
-         --context=15 \
          --fixed-strings \
          --regexp \"\$__q\"
     else __out; fi
@@ -68,5 +67,6 @@ preview_git() {
     --preview-window
     'right,67%,wrap-word'
   )
-  # possibly replace ripgrep with delta?
+  # possibly replace ripgrep with delta? 
+  # --context=15 \ # cuts off needed commit data
 }
