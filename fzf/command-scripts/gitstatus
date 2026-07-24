@@ -6,7 +6,8 @@ source $ZSHREP/fzf/presets/main.sh
 # echo "debug: $2"
 # echo "debug: $3"
 if (( $# <= 2 )) && 
- ( [[ "$(file $1)" =~ "No such file or directory" ]] && [[ "$2" != --* ]] ); then
+ ( [[ -n "$1" && "$(file $1)" =~ "No such file or directory" ]] && 
+   [[ "$2" != --* ]] ); then
 
   git_commands=(
     add

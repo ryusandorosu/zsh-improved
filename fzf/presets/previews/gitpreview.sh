@@ -24,6 +24,7 @@ preview_git() {
   previewcmd=(
     --preview
     "
+    [[ -z $select ]] && return
     __status='$4'
     __q='{q}'
     __delta() { delta --paging=never --color-only; }
