@@ -33,5 +33,3 @@ _fzf_complete_gitvim()      { _fzf_complete_gitls "$@"; }
 _fzf_complete_gitlog()      { _fzf_complete_gitls "$@"; }
 
 _fzf_complete_gitgrep()     { _fzf_complete_gitls "$@"; }
-_fzf_complete_gitgrepb()    { _fzf_complete_gitls "$@"; }
-_fzf_complete_gitgrepf()    { _fzf_complete_gitls "$@"; }

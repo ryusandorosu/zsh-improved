@@ -3,24 +3,10 @@ source $ZSHREP/fzf/presets/main.sh
 # git diff --name-only; git diff --compact-summary; --color-moved=default; --diff-algorithm=default; --find-renames
 # ^ same for git show ^, may be useful for gitlog.zsh / preview_git()
 
-# reminder that preview of this function is likely rigged. to sort out what is going on.
-gitgrepf() {
-  gitcmd=(git)
-  if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
-  elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi
+### to replace it
+### alias gitgrep='git grep --heading --line-number --before-context=2 --after-context=1'
 
-  gitcmd+=(grep)
-  cmd=("${gitcmd[@]}")
-  cmd+=(".")
-
-  "${cmd[@]}" \
-  | fzf "${fzfdefaults[@]}" \
-    --preview ''${(j: :)gitcmd[@]}' --heading --function-context --line-number --color' #{3} -- to fix it!
-   # --function-context: is exclusive with --*context flags
-   # --show-function: try
-}
-
-gitgrepb() {
+gitgrep() {
   gitcmd=(git)
   if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
   elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi
@@ -34,15 +20,8 @@ gitgrepb() {
 
   "${gitcmd[@]}" \
   | fzf "${fzfdefaults[@]}" \
-    --delimiter : \
-    --preview "$(
-      _cmd_bat_context "${repo_path}{1}" {2}
-    )"
-
-  # preview_bat_contexted "${repo_path}{1}" {2}
-  # "${gitcmd[@]}" \
-  # | fzf "${fzfdefaults[@]}" \
-  #       --delimiter : \
-  #       "${previewcmd[@]}"
-
+        --delimiter : \
+        --preview "$(
+          _cmd_bat_context "${repo_path}{1}" {2}
+        )"
 }

@@ -52,25 +52,6 @@ _cmd_bat_context() {
   "
 }
 
-# preview_bat_contexted() {
-#   local path=$1
-#   local context=15
-#   previewcmd=(
-#     --preview 
-#     "
-#     line='$2'
-#     before=\$(( line > $context ? line - $context : 1 ))
-#     after=\$(( line + $context ))
-#     bat --color=always \
-#         --style=changes,numbers \
-#         --highlight-line=\$line \
-#         --line-range=\$before:\$after \
-#         '$path'
-#     "
-#   )
-# }
-
-
 preview_tree() {
   previewcmd=( --preview "$(_cmd_tree "$1")" )
 }
