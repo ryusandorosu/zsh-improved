@@ -1,9 +1,7 @@
 source $ZSHREP/fzf/presets/main.sh
 
-[[ $(alias lah) ]] && unalias lah
-lah() { command /usr/bin/ls -laAh "$@"; }
-laf() { command /usr/bin/ls -laAh "$@"; }
-alias lah='lah --color=tty'
+lah() { command /usr/bin/ls -laAh --color=tty "$@"; }
+laf() { command /usr/bin/ls -laAh --color=tty "$@"; }
 
 ffind() {
   local pattern
@@ -25,17 +23,4 @@ lfind() {
   | fzf "${fzfdefaults[@]}" \
         "${briefinfo[@]}" \
         "${previewcmd[@]}"
-}
-
-neovim() {
-  local pattern
-  [[ -z "$1" ]] && pattern="." || pattern="$1"
-  cmd=(locate -b "$pattern")
-
-  preview_bat "{}"; bind_fileinfo "{}"; bind_exec nvim "{}"
-  "${cmd[@]}" \
-  | fzf "${fzfdefaults[@]}" \
-        "${previewcmd[@]}" \
-        "${briefinfo[@]}" \
-        "${bindexec[@]}"
 }

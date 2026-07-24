@@ -1,4 +1,4 @@
-# $ZSHREP/fzf/command-scripts/gitstatus:
-alias gitadd='gitstatus add'
-alias gitrestore='gitstatus restore'
-alias gitstaged='gitstatus restore --staged'
+# $ZSHREP/fzf/command-functions/gitstatus:
+alias ga='gs add'
+alias gr='gs restore'
+alias gst='gs restore --staged'

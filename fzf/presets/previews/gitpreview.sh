@@ -67,5 +67,4 @@ preview_git() {
     --preview-window
     'right,67%,wrap-word'
   )
-  # --context=15 \ # cuts off needed commit data
 }

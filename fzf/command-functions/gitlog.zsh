@@ -1,7 +1,7 @@
 source $ZSHREP/fzf/presets/main.sh
 
 # similar to glgp alias
-gitlog() {
+glog() {
   gitcmd=(git)
   if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
   elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi
@@ -16,7 +16,7 @@ gitlog() {
   preview_git show "$repo_path" "{+1}"
   "${gitcmd[@]}" | fzf "${fzfdefaults[@]}" "${previewcmd[@]}" --ansi --multi
 }
-alias gitshow='gitlog'
+alias gsh='glog'
 
 # git log -S'$pattern' -p/--patch : shows git diff with previous commits
 # git log -S'$pattern' -- $file : search in the certain file
@@ -25,7 +25,8 @@ alias gitshow='gitlog'
 
 # git blame $file
 
-gitsearch() {
+# new fzf-gitgrep
+gg() {
   gitcmd=(git)
   if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
   elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi

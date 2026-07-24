@@ -5,8 +5,8 @@ source $ZSHREP/fzf/presets/main.sh
 ### to replace it
 ### alias gitgrep='git grep --heading --line-number --before-context=2 --after-context=1'
 
-# to rename it to gitvim finally o_O
-gitgrep() {
+# old gitgrep
+ggrep() {
   gitcmd=(git)
   if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
   elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi

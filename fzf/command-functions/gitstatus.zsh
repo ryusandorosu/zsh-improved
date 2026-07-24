@@ -1,0 +1,73 @@
+source $ZSHREP/fzf/presets/main.sh
+
+gs() {
+  # echo "debug: $#"
+  # echo "debug: $1"
+  # echo "debug: $2"
+  # echo "debug: $3"
+  if (( $# <= 2 )) && 
+  ( [[ -n "$1" && "$(file $1)" =~ "No such file or directory" ]] && 
+    [[ "$2" != --* ]] ); then
+
+    git_commands=(
+      add
+      restore
+    )
+    for subcmd in "${git_commands[@]}"; do
+      [[ "$1" == "$subcmd" ]] && gitsubcmd="$1"
+    done
+    shift
+
+  elif (( $# == 2 || $# == 3 )) && [[ "$2" == --* ]]; then
+  #    echo "debug: 2nd condition"
+
+    git_commands=(
+      restore
+      --staged
+    )
+    for subcmd in "${git_commands[@]}"; do
+      for arg in "$@"; do
+        [[ "$arg" == "$subcmd" ]] && gitsubcmd="$@"
+      done
+    done
+    shift 2
+
+  else gitsubcmd="add"; fi
+
+  gitcmd=(git)
+
+  [[ -d "$1" ]] && gitcmd+=(-C "$1")
+  [[ -f "$1" ]] && gitcmd+=(-C "$(dirname $1)")
+  [[ -n "$1" ]] && repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)/"
+
+  # preview_bat "${repo_path}{2}" git
+  preview_git diff "$repo_path" "${repo_path}{2}" "{1}"
+  bind_gitinfo "$repo_path" "${repo_path}{2}" "{1}"
+
+  execcmd=("${gitcmd[@]}")
+  execcmd+=("$gitsubcmd")
+  bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
+
+  ### --find-renames has no effect for git status
+  gitcmd+=(
+    status
+    --porcelain=v2
+  )
+
+  "${gitcmd[@]}" \
+  | awk '{
+      if ($1 == "?") {
+        status="??"
+        path=$2
+      } else {
+        status=$2
+        path=$9
+      }
+      print status " " path
+    }' \
+  | fzf "${fzfdefaults[@]}" \
+        "${previewcmd[@]}" \
+        "${briefinfo[@]}" \
+        "${bindexec[@]}" \
+        --multi
+}

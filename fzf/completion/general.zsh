@@ -50,4 +50,3 @@ _fzf_complete_cat()     { _fzf_fd_completion f "$@"; }
 _fzf_complete_bat()     { _fzf_complete_cat "$@"; }
 _fzf_complete_vim()     { _fzf_fd_completion f "$@"; }
 _fzf_complete_nvim()    { _fzf_complete_vim "$@"; }
-_fzf_complete_neovim()  { _fzf_complete_vim "$@"; }
