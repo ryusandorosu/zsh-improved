@@ -39,7 +39,7 @@ _cmd_bat_preview() {
 
 _cmd_bat_context() {
   local path=$1
-  local context=15
+  local context=20
   print -r -- "
     line=$2
     start=\$(( line > $context ? line - $context : 1 ))
@@ -48,7 +48,16 @@ _cmd_bat_context() {
         --style=changes,numbers \
         --highlight-line=\$line \
         --line-range=\$start:\$end \
-        '$path'
+        '$path' \
+    | rg --passthru \
+         --color=always \
+         --colors 'match:none' \
+         --colors 'match:bg:yellow' \
+         --colors 'match:fg:black' \
+         --colors 'match:style:bold' \
+         --smart-case \
+         --fixed-strings \
+         --regexp '{q}'
   "
 }
 
