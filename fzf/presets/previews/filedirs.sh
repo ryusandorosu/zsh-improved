@@ -37,6 +37,22 @@ _cmd_bat_preview() {
   "
 }
 
+_cmd_bat_context() {
+  local path=$1
+  local context=15
+  print -r -- "
+    line=$2
+    start=\$(( line > $context ? line - $context : 1 ))
+    end=\$(( line + $context ))
+    bat --color=always \
+        --style=changes,numbers \
+        --highlight-line=\$line \
+        --line-range=\$start:\$end \
+        '$path'
+  "
+}
+
+
 preview_tree() {
   previewcmd=( --preview "$(_cmd_tree "$1")" )
 }
