@@ -8,12 +8,23 @@ bind_gitinfo() {
     "focus:+transform-header:
     __status='$3'
     case \"\$__status\" in
-      '??') print 'untracked'           ;;
-      'M.') print 'staged, no changes'  ;;
+
+      '??') print 'untracked'                     ;;
+
+      'M.') print 'Modified, staged, no changes'  ;;
+
+      'R.') print 'Renamed, staged, no changes'   ;;
+
+      RM) echo -n 'Renamed, to be staged:'
+            git $repo_flag \
+            diff-files --stat -- '$path' \
+            | tail -n1 | cut -d, -f2-             ;;
+
       *)    echo -n 'to be staged:'
             git $repo_flag \
             diff-files --stat -- '$path' \
-            | tail -n1 | cut -d, -f2-   ;;
+            | tail -n1 | cut -d, -f2-             ;;
+
     esac
     "
   )

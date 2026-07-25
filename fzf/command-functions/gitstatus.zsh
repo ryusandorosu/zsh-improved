@@ -41,12 +41,11 @@ gs() {
   [[ -n "$1" ]] && repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)/"
 
   # preview_bat "${repo_path}{2}" git
-  preview_git diff "$repo_path" "${repo_path}{2}" "{1}"
+  preview_git diff "$repo_path" "${repo_path}{2}" "{1}" "${repo_path}{3}"
   bind_gitinfo "$repo_path" "${repo_path}{2}" "{1}"
 
   execcmd=("${gitcmd[@]}")
   execcmd+=("$gitsubcmd")
-  bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
 
   ### --find-renames has no effect for git status
   gitcmd+=(
@@ -54,16 +53,23 @@ gs() {
     --porcelain=v2
   )
 
+  bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
   "${gitcmd[@]}" \
   | awk '{
       if ($1 == "?") {
         status="??"
         path=$2
+        renamed=""
+      } else if ($9 ~ /^R([0-9]{1,3})$/) {
+        status=$2
+        path=$10
+        renamed=$11
       } else {
         status=$2
         path=$9
+        renamed=""
       }
-      print status " " path
+      print status " " path " " renamed
     }' \
   | fzf "${fzfdefaults[@]}" \
         "${previewcmd[@]}" \

@@ -20,7 +20,7 @@ preview_git() {
     ;;
   esac
 
-  # to add a case whan a file is renamed (R). preview gets an old name as {2}, while new name is seems to be {3}. (RM) = modified after being staged, a different case
+  # possibly to show --cached when a file is deleted
   previewcmd=(
     --preview
     "
@@ -38,14 +38,16 @@ preview_git() {
 
         *D*)                                               exit ;;
 
-        'M.') git $repo_flag $gitcommand \
-              --cached $select | __delta                        ;;
+        'M.'|'R.') git $repo_flag $gitcommand \
+                   --cached $select | __delta                   ;;
 
-        MM)   print \"Unstaged changes:\n\"
+        MM|RM)   print \"Unstaged changes:\n\"
               git $repo_flag $gitcommand $select | __delta
               print \"\nStaged changes:\n\"
               git $repo_flag $gitcommand \
               --cached $select | __delta                        ;;
+
+        RM)   git $repo_flag $gitcommand $select | __delta      ;;
 
         *)    git $repo_flag $gitcommand $select | __delta      ;;
 
