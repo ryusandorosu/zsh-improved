@@ -62,7 +62,7 @@ _fzf_complete_which() {
     ' \
     -- "$@" < <(
       local dir
-      for dir in $path; do # same as $PATH
+      for dir in $path; do
         [[ "$dir" == /mnt/c/* ]] && continue
         if [[ -d "$dir" ]]; then
           fd "." --type x --type l "$dir" | sed -r 's|.*/||'

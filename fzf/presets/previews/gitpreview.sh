@@ -8,11 +8,11 @@ preview_git() {
 
   case $gitcommand in
   diff)
-    local path=$3
+    local localpath=$3
     ### got error. preview_git:11: command not found: git
     # local revision=$(git $repo_flag rev-parse --abbrev-ref --symbolic-full-name @{u}) #|| revision=HEAD
     ### commented because it is not used anyway, but curious to sort out
-    [[ -n "$revision" ]] && select="'$revision' -- '$path'" || select="$path"
+    [[ -n "$revision" ]] && select="${revision} -- ${localpath}" || select="$localpath"
     ;;
   show)
     local commit=$3
@@ -21,29 +21,34 @@ preview_git() {
   esac
 
   # possibly to show --cached when a file is deleted
+  # possibly use _cmd_switch_battree for ??|A
   previewcmd=(
     --preview
     "
     [[ -z $select ]] && return
-    __status='$4'
-    __q='{q}'
+    __status=$4
+    __path=$localpath
+    __q={q}
     __delta() { delta --paging=never --color-only; }
     __out() {
-      case \"\$__status\" in
+      case \${__status} in
 
         '??'|*A*)
-          test -f '$path' && \
-          bat --color=always --style=changes,numbers '$path' \
-          || tree -C '$path'                                    ;;
+          test -f \${~__path} \
+            && { bat \
+               --color=always \
+               --style=changes,numbers \
+               \${~__path} \
+            } || { tree -C \${~__path} }                        ;;
 
         *D*)                                               exit ;;
 
         'M.'|'R.') git $repo_flag $gitcommand \
                    --cached $select | __delta                   ;;
 
-        MM|RM)   print \"Unstaged changes:\n\"
+        MM|RM)    print \"Unstaged changes:\n\"
               git $repo_flag $gitcommand $select | __delta
-              print \"\nStaged changes:\n\"
+                  print \"\nStaged changes:\n\"
               git $repo_flag $gitcommand \
               --cached $select | __delta                        ;;
 
@@ -53,7 +58,7 @@ preview_git() {
 
       esac
     }
-    if [[ -n \"\$__q\" ]]; then __out | \
+    if [[ -n \${__q} ]]; then __out | \
       rg --passthru \
          --color=always \
          --colors 'match:none' \
@@ -63,7 +68,7 @@ preview_git() {
          --colors 'highlight:bg:51,51,51' \
          --smart-case \
          --fixed-strings \
-         --regexp \"\$__q\"
+         --regexp \${__q}
     else __out; fi
     "
     --preview-window

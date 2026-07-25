@@ -16,7 +16,8 @@ bind_fileinfo() {
   briefinfo=(
     --bind
     "focus:+transform-header:
-    file --brief '$1'
+    __path=$1
+    file --brief \${~__path}
     "
   )
 }

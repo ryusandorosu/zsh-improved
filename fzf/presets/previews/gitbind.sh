@@ -1,13 +1,12 @@
 bind_gitinfo() {
-  local repo_root=$1
-  local path=$2
   local repo_flag
-  [[ -n "$repo_root" ]] && repo_flag="-C $repo_root" || repo_flag=""
+  [[ -n "$1" ]] && repo_flag="-C $1" || repo_flag=""
   briefinfo=(
     --bind
     "focus:+transform-header:
-    __status='$3'
-    case \"\$__status\" in
+    __path=$2
+    __status=$3
+    case \${__status} in
 
       '??') print 'untracked'                     ;;
 
@@ -15,14 +14,14 @@ bind_gitinfo() {
 
       'R.') print 'Renamed, staged, no changes'   ;;
 
-      RM) echo -n 'Renamed, to be staged:'
+      RM)   echo -n 'Renamed, to be staged:'
             git $repo_flag \
-            diff-files --stat -- '$path' \
+            diff-files --stat -- \${~__path} \
             | tail -n1 | cut -d, -f2-             ;;
 
       *)    echo -n 'to be staged:'
             git $repo_flag \
-            diff-files --stat -- '$path' \
+            diff-files --stat -- \${~__path} \
             | tail -n1 | cut -d, -f2-             ;;
 
     esac
