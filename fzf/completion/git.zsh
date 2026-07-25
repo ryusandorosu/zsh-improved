@@ -21,17 +21,15 @@ _fzf_complete_gitls() {
     -- "$@" < <(_fzf_git_repos)
 }
 
-_fzf_complete_gitc()          { _fzf_complete_gitls "$@"; }
+_fzf_complete_gc()     { _fzf_complete_gitls "$@"; }
 
-_fzf_complete_gitstatus()     { _fzf_complete_gitls "$@"; }
-_fzf_complete_gitadd()        { _fzf_complete_gitls "$@"; }
-_fzf_complete_gitrestore()    { _fzf_complete_gitls "$@"; }
-_fzf_complete_gitstaged()     { _fzf_complete_gitls "$@"; }
+_fzf_complete_gs()     { _fzf_complete_gitls "$@"; }
+_fzf_complete_ga()     { _fzf_complete_gitls "$@"; }
+_fzf_complete_gr()     { _fzf_complete_gitls "$@"; }
+_fzf_complete_gst()    { _fzf_complete_gitls "$@"; }
 
-_fzf_complete_gitvim()        { _fzf_complete_gitls "$@"; }
+_fzf_complete_glog()   { _fzf_complete_gitls "$@"; }
+_fzf_complete_gsh()    { _fzf_complete_gitls "$@"; }
+_fzf_complete_gg()     { _fzf_complete_gitls "$@"; }
 
-_fzf_complete_gitlog()        { _fzf_complete_gitls "$@"; }
-_fzf_complete_gitshow()       { _fzf_complete_gitls "$@"; }
-_fzf_complete_gitsearch()     { _fzf_complete_gitls "$@"; }
-
-_fzf_complete_gitgrep()       { _fzf_complete_gitls "$@"; }
+_fzf_complete_ggrep()  { _fzf_complete_gitls "$@"; }
