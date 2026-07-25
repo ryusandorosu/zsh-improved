@@ -1,5 +1,4 @@
 source $ZSHREP/fzf/presets/main.sh
-source $ZSHREP/common/cmd_display.sh
 
 fvim() {
   local file
@@ -15,7 +14,7 @@ fvim() {
     "$(_get_editor)"
     "$file"
   )
-  zsh_eval "${zsh_cmd[@]}"
+  zsheval "${zsh_cmd[@]}"
 }
 
 cdf() {
@@ -31,5 +30,5 @@ cdf() {
     cd
     "$dir"
   )
-  zsh_eval "${zsh_cmd[@]}"
+  zsheval "${zsh_cmd[@]}"
 }

@@ -1,6 +1,4 @@
 #!/bin/bash
-source $ZSHREP/common/cmd_display.sh
-
 os_id=$(grep '^ID=' /etc/os-release | cut -d= -f2)
 if [[ "$os_id" == "debian" && -z "$2" ]]; then
 
@@ -82,4 +80,4 @@ zsh_cmd="ansible-playbook \
 --tag $1 \
 $verbosity \
 "
-zsh_eval "$zsh_cmd"
+zsheval "$zsh_cmd"

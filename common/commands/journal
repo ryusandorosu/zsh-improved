@@ -1,5 +1,4 @@
 #!/bin/bash
-source $ZSHREP/common/cmd_display.sh
 
 zsh_cmd="sudo journalctl -u $1 \
 | tac \
@@ -10,4 +9,4 @@ zsh_cmd="sudo journalctl -u $1 \
 | tac \
 "
 # | grep "$(date '+%b %d')"
-zsh_eval "$zsh_cmd"
+zsheval "$zsh_cmd"

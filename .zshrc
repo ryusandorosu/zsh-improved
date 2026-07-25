@@ -37,4 +37,7 @@ elif [[ "$OS_ID" == Darwin ]]; then
   for file in $ZSHREP/macos/*.zsh; do source "$file"; done
 fi
 
-[[ $ZSH_THEME == "passion" ]] && source "$ZSH/themes/passion.zsh-theme"
+[[ $ZSH_THEME == "passion" ]] && {
+  source "$ZSHREP/themes/cmd-display.sh"
+  source "$ZSH/themes/passion.zsh-theme"
+}

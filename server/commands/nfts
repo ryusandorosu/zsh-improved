@@ -1,5 +1,4 @@
 #!/bin/bash
-source $ZSHREP/common/cmd_display.sh
 action=$1
 
 [[ "$action" != "unban" && "$action" != "ban" && "$action" != "list" && "$action" != "rules" ]] && \
@@ -33,4 +32,4 @@ else
   zsh_cmd="sudo nft $action inet filter $jail"
 fi
 
-zsh_eval "$zsh_cmd"
+zsheval "$zsh_cmd"

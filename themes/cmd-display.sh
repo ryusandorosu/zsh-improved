@@ -1,6 +1,6 @@
 #!/bin/bash
 ZSH_SCRIPT_CMD_FILE="$HOME/.zsh_cmd_display"
-function zsh_eval() {
+function zsheval() {
   if [[ $# > 1 ]]; then
     echo "$@" > "$ZSH_SCRIPT_CMD_FILE"
     eval "$@"

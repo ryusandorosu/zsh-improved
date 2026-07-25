@@ -1,5 +1,4 @@
 #!/bin/bash
-source $ZSHREP/common/cmd_display.sh
 # git ls-files -t: sefi-deprecated option. alternatives: git status --porcelain; git status --short; git diff-files --name-status; git diff-files --name-only; git diff --name-status (less-like)
 # flags comparison only, commands are not equal by output format: git status --untracked-files=all == git ls-files -om
 
@@ -14,4 +13,4 @@ zsh_cmd=(
   --full-name
 )
 
-zsh_eval "${zsh_cmd[@]}"
+zsheval "${zsh_cmd[@]}"

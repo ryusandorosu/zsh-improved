@@ -1,5 +1,4 @@
 #!/bin/bash
-source $ZSHREP/common/cmd_display.sh
 action=$1
 
 [[ "$action" != "unban" && "$action" != "ban" ]] && \
@@ -20,4 +19,4 @@ elif [[ "$action" == *element && "$jail" =~ $ip_address ]]; then
 elif [[ "$action" == *element && -z "$target" ]]; then
   echo "$(basename $0): ban/unban requires ip"
 fi
-zsh_eval "$zsh_cmd"
+zsheval "$zsh_cmd"

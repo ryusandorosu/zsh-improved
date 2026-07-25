@@ -1,5 +1,4 @@
 #!/bin/bash
-source $ZSHREP/common/cmd_display.sh
 action=$1
 
 [[ "$action" != "unban" && "$action" != "ban" && "$action" != "list" && "$action" != "ignore" && "$action" != "ignorelist" && "$action" != "alert" ]] && \
@@ -34,4 +33,4 @@ elif [[ "$action" == *--ip && -z "$target" ]]; then
 else
   zsh_cmd="sudo cscli $result_action"
 fi
-zsh_eval "$zsh_cmd"
+zsheval "$zsh_cmd"
