@@ -27,6 +27,8 @@ _fzf_comprun() {
 
     kill*)  fzf "${fzfdefaults[@]}" --bind="focus:+transform-header:"   "$@" ;;
 
+    *ctl)   fzf "${fzfdefaults[@]}" --preview="systemctl status {}"     "$@" ;;
+
     *)        bind_fileinfo "{}"
               fzf "${fzfdefaults[@]}" "${briefinfo[@]}" \
                   --preview='fzf-preview.sh {}'                         "$@" ;;
