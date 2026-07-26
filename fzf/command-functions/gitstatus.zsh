@@ -31,10 +31,7 @@ gs() {
 
   gitcmd=(git)
 
-  [[ -d "$1" ]] && gitcmd+=(-C "$1")
-  [[ -f "$1" ]] && gitcmd+=(-C "$(dirname $1)")
-  [[ -n "$1" ]] && repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)/"
-
+  _get_gitcmd_repo_path "$1"
   # preview_bat "${repo_path}{2}" git
   preview_git diff "$repo_path" "{2}" "{}" "{3}"
   bind_gitinfo "$repo_path" "{2}" "{}"

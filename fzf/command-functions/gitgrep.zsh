@@ -8,9 +8,7 @@ source $ZSHREP/fzf/presets/main.sh
 # old gitgrep
 ggrep() {
   gitcmd=(git)
-  if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
-  elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi
-  if   [[ -n "$1" ]]; then repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)/"; fi
+  _get_gitcmd_repo_path "$1"
 
   gitcmd+=(
     grep

@@ -1,11 +1,10 @@
 source $ZSHREP/fzf/presets/main.sh
+### REMINDER: --color=always flags in commands before piping to fzf require --ansi for fzf
 
 # similar to glgp alias
 glog() {
   gitcmd=(git)
-  if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
-  elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi
-  if   [[ -n "$1" ]]; then repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)"; fi
+  _get_gitcmd_repo_path "$1"
 
   gitcmd+=(
     log
@@ -18,25 +17,21 @@ glog() {
 }
 alias gsh='glog'
 
-# git log -S'$pattern' -p/--patch : shows git diff with previous commits
 # git log -S'$pattern' -- $file : search in the certain file
-# git log -G'$regex' -p : nuff said
+# git log -G'$regex' -p : ggr()
 # see DIFF FORMATTING in man git show/log
-
 # git blame $file
 
 # new fzf-gitgrep
 gg() {
   gitcmd=(git)
-  if   [[ -d "$1" ]]; then gitcmd+=(-C "$1");
-  elif [[ -f "$1" ]]; then gitcmd+=(-C "$(dirname $1)"); fi
-  if   [[ -n "$1" ]]; then repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)"; fi
+  _get_gitcmd_repo_path "$1"
 
   gitcmd+=(
     log
     --oneline
     --all
-    --color=always # requires --ansi for fzf
+    --color=always
   )
 
   preview_git show "$repo_path" "{+1}"

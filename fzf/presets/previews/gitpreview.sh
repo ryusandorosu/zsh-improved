@@ -9,6 +9,7 @@ preview_git() {
   case $gitcommand in
   diff)
     local localpath=$3
+    [[ -n "$repo_root" ]] && localpath="$repo_root/$localpath"
     select="$localpath"
     ;;
   show)
