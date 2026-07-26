@@ -2,7 +2,7 @@ _fzf_complete_systemctl() {
   _fzf_complete \
     --prompt="systemctl> " \
     -- "$@" < <(
-      systemctl list-units | awk '{print $1}' | tail -n +2 | tac | tail -n +7 | tac 
+      systemctl list-units | awk '{x = substr($0, 3); print x}' | awk '{print $1}' | tail -n +2 | tac | tail -n +7 | tac
     )
 }
 
