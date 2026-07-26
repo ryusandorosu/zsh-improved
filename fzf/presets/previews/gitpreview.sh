@@ -30,12 +30,7 @@ preview_git() {
       case \${__status:0:2} in
 
         '??'|*A*)
-          test -f \${~__path} \
-            && { bat \
-               --color=always \
-               --style=changes,numbers \
-               \${~__path} \
-            } || { tree -C \${~__path} }                        ;;
+          $(_cmd_switch_battree \${~__path})                    ;;
 
         MM|RM)    print \"Unstaged changes:\n\"
               git $repo_flag $gitcommand $select | __delta
@@ -44,7 +39,6 @@ preview_git() {
               --cached $select | __delta                        ;;
 
         RM)   git $repo_flag $gitcommand $select | __delta      ;;
-
 
         'M '|'M.'|'R '|'R.') git $repo_flag $gitcommand \
                    --cached $select | __delta                   ;;
