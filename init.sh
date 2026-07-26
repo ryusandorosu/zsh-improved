@@ -9,7 +9,7 @@ link_func() {
   fi
 }
 
-repo="$(git remote get-url origin)"
+repo="git@github.com:ryusandorosu/zsh-improved.git"
 destination="$HOME/$(basename $repo | sed 's/.git//')"
 read -e -i "$destination" -p "Choose a destination to clone or remain the default: " destination
 
@@ -50,6 +50,8 @@ create_symlink ~/.zshrc
 zsh ~/.zshrc
 if [[ "$(git -C "$destination" checkout)" ]] && [[ "$(readlink ~/.zshrc)" == "$destination/.zshrc" ]]; then
   echo "Installation done."
+  echo "Now run the following command: source ~/.zshrc"
+  echo "Note that you may likely lack most of dependencies so they will be installed on first sourcing of zshrc."
 else
   echo "Error occured during installation."
   if [[ ! "$(git -C "$destination" checkout)" ]]; then

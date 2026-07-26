@@ -12,6 +12,6 @@ setopt HIST_REDUCE_BLANKS # удалять лишние пробелы из ко
 setopt HIST_SAVE_NO_DUPS # не сохранять дубликаты команд
 setopt HIST_IGNORE_SPACE # не записывать команды начинающиеся с пробела
 
-# -- conflicting options -- :
+# -- conflicting options -- choose only one of them -- :
 # setopt INC_APPEND_HISTORY # писать команды в файл истории сразу после выполнения а не при выходе
-setopt SHARE_HISTORY # использовать общее хранилище истории во всех сеансах терминала. INC_APPEND_HISTORY с ним конфликтует
+setopt SHARE_HISTORY # использовать общее хранилище истории во всех сеансах терминала

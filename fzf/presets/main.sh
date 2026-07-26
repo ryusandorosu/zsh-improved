@@ -22,6 +22,7 @@ bind_fileinfo() {
   )
 }
 
+#bindbecome. bindexec is a different thing to try
 bind_exec() {
   local bin=$1 file=$2 arg=$3
   bindexec=(
