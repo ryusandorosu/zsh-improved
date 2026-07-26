@@ -43,8 +43,10 @@ preview_git() {
                   $pre git $repo_flag $gitcommand \
                   --cached $select | __delta                    ;;
 
-        ' D'|'.D')
-          $pre git $repo_flag $gitcommand -- $select | __delta  ;;
+        ' D'|'.D')  $pre git $repo_flag $gitcommand \
+                    -- $select | __delta                        ;;
+        'D '|'D.')  $pre git $repo_flag $gitcommand \
+                    --cached -- $select | __delta               ;;
 
         *)  $pre git $repo_flag $gitcommand $select | __delta   ;;
 

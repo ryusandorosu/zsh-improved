@@ -18,6 +18,8 @@ bind_gitinfo() {
 
       'R '|'R.') print 'Renamed, staged, no changes'   ;;
 
+      'D '|'D.') print 'Deleted, staged'               ;;
+
       ' D'|'.D') print 'Deleted, to be staged'         ;;
 
       *)    
