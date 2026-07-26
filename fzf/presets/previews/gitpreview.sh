@@ -3,8 +3,9 @@ preview_git() {
   local select
 
   local repo_root=$2
-  local repo_flag
+  local repo_flag pre
   [[ -n "$repo_root" ]] && repo_flag="-C $repo_root" || repo_flag=""
+  [[ -n "$repo_root" || "$repo_root" == /etc ]] && pre=sudo
 
   case $gitcommand in
   diff)
@@ -32,20 +33,20 @@ preview_git() {
         '??')
           $(_cmd_switch_battree \${~__path})                    ;;
 
-        AM|MM|RM)    print \"Unstaged changes:\n\"
-              git $repo_flag $gitcommand $select | __delta
+        AM|MM|RM) print \"Unstaged changes:\n\"
+            $pre git $repo_flag $gitcommand $select | __delta
                   print \"\nStaged changes:\n\"
-              git $repo_flag $gitcommand \
-              --cached $select | __delta                        ;;
+            $pre git $repo_flag $gitcommand \
+                  --cached $select | __delta                    ;;
 
         'A '|'A.'|'M '|'M.'|'R '|'R.')
-                  git $repo_flag $gitcommand \
+                  $pre git $repo_flag $gitcommand \
                   --cached $select | __delta                    ;;
 
         ' D'|'.D')
-              git $repo_flag $gitcommand -- $select | __delta   ;;
+          $pre git $repo_flag $gitcommand -- $select | __delta  ;;
 
-        *)    git $repo_flag $gitcommand $select | __delta      ;;
+        *)  $pre git $repo_flag $gitcommand $select | __delta   ;;
 
       esac
     }

@@ -1,6 +1,7 @@
 bind_gitinfo() {
-  local repo_flag
+  local repo_flag pre
   [[ -n "$1" ]] && repo_flag="-C $1" || repo_flag=""
+  [[ -n "$1" || "$1" == /etc ]] && pre=sudo
   briefinfo=(
     --bind
     "focus:+transform-header:
@@ -25,7 +26,7 @@ bind_gitinfo() {
         [[ \$__status == RM ]] && __print='Renamed, '
         [[ \$__status == *M ]] && echo -n \$__print
             echo -n 'to be staged:'
-              git $repo_flag \
+              $pre git $repo_flag \
               diff-files --stat -- \${~__path} \
               | tail -n1 | cut -d, -f2-                ;;
 

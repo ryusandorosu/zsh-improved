@@ -17,6 +17,21 @@ glog() {
 }
 alias gsh='glog'
 
+etclog() {
+  gitcmd=(
+    sudo
+    git
+    -C
+    /etc
+    log
+    --oneline
+    --color=always
+  )
+
+  preview_git show "/etc" "{+1}"
+  "${gitcmd[@]}" | fzf "${fzfdefaults[@]}" "${previewcmd[@]}" --multi
+}
+
 # git log -S'$pattern' -- $file : search in the certain file
 # git log -G'$regex' -p : ggr()
 # see DIFF FORMATTING in man git show/log
