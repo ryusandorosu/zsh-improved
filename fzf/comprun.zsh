@@ -29,6 +29,10 @@ _fzf_comprun() {
 
     *ctl)   fzf "${fzfdefaults[@]}" --preview="systemctl status {}"     "$@" ;;
 
+    brew)   fzf "${fzfdefaults[@]}" \
+            --preview="export HOMEBREW_COLOR=1; brew info {}"           "$@" ;;
+            # --bind="focus:+transform-header: brew desc {}" \ # slow
+
     *)        bind_fileinfo "{}"
               fzf "${fzfdefaults[@]}" "${briefinfo[@]}" \
                   --preview='fzf-preview.sh {}'                         "$@" ;;
