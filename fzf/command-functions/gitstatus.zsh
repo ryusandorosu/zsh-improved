@@ -1,10 +1,6 @@
 source $ZSHREP/fzf/presets/main.sh
 
 gs() {
-  # echo "debug: $#"
-  # echo "debug: $1"
-  # echo "debug: $2"
-  # echo "debug: $3"
   if (( $# <= 2 )) && 
   ( [[ -n "$1" && "$(file $1)" =~ "No such file or directory" ]] && 
     [[ "$2" != --* ]] ); then
@@ -19,7 +15,6 @@ gs() {
     shift
 
   elif (( $# == 2 || $# == 3 )) && [[ "$2" == --* ]]; then
-  #    echo "debug: 2nd condition"
 
     git_commands=(
       restore

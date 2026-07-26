@@ -1,7 +1,6 @@
 bind_gitinfo() {
   local repo_flag
   [[ -n "$1" ]] && repo_flag="-C $1" || repo_flag=""
-  # status_substr="$(awk '{xy = substr($0, 0, 2); print xy}' <<< "$3")"
   briefinfo=(
     --bind
     "focus:+transform-header:

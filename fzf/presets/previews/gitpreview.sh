@@ -9,10 +9,6 @@ preview_git() {
   case $gitcommand in
   diff)
     local localpath=$3
-    ### got error. preview_git:11: command not found: git
-    # local revision=$(git $repo_flag rev-parse --abbrev-ref --symbolic-full-name @{u}) #|| revision=HEAD
-    ### commented because it is not used anyway, but curious to sort out
-    # [[ -n "$revision" ]] && select="${revision} -- ${localpath}" || select="$localpath"
     select="$localpath"
     ;;
   show)
