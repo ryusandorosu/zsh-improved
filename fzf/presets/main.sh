@@ -2,6 +2,8 @@ for file in $ZSHREP/fzf/presets/*/*.sh; do source "$file"; done
 
 # options
 fzfdefaults=(
+  --ansi
+  --freeze-left=10
   --style=full
   --preview-window='right,58%,wrap-word'
   --bind='ctrl-up:preview-up'
