@@ -1,7 +1,6 @@
 unaliases=(
   lah
   ga
-  gc
   gr
   gst
   glog
