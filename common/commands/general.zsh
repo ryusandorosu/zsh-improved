@@ -10,9 +10,12 @@ duh() {
 fsed() {
   local pattern="$1"
   local dest
-  [[ -z "$2" ]] && dest="."
+  if [[ -z "$2" ]]; then
+    dest=""
+  fi
   zsh_cmd="
-    find $dest -type f \
+    fd --strip-cwd-prefix=always \
+       --type file . $dest \
     | xargs -r \
       sed -i \"${pattern}\" \
   "
