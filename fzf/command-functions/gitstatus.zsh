@@ -41,8 +41,8 @@ gs() {
   [[ -n "$1" ]] && repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)/"
 
   # preview_bat "${repo_path}{2}" git
-  preview_git diff "$repo_path" "${repo_path}{2}" "{1}" "${repo_path}{3}"
-  bind_gitinfo "$repo_path" "${repo_path}{2}" "{1}"
+  preview_git diff "$repo_path" "${repo_path}{2}" "{}" "${repo_path}{3}"
+  bind_gitinfo "$repo_path" "${repo_path}{2}" "{}"
 
   execcmd=("${gitcmd[@]}")
   execcmd+=("$gitsubcmd")
@@ -50,12 +50,33 @@ gs() {
   ### --find-renames has no effect for git status
   gitcmd+=(
     status
-    --porcelain=v2
+    --porcelain
   )
 
   bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
   "${gitcmd[@]}" \
-  | awk '{
+  | parse_porcelain \
+  | fzf "${fzfdefaults[@]}" \
+        "${previewcmd[@]}" \
+        "${briefinfo[@]}" \
+        "${bindexec[@]}" \
+        --multi
+}
+
+parse_porcelain() {
+  if [[ "${gitcmd[-1]}" =~ "--porcelain(=v1)?$" ]]; then
+  # the whole string {} for $3(bind_gitinfo)/$4(preview_git) is passed because i coudnt find better way to save spaces to parse xy status fields correctly
+    awk '{
+      status = substr($0, 0, 2)
+      if (!$4) {
+        printf "%s %s\n", status, $2
+      } else {
+        printf "%s %s %s\n", status, $4, $2
+      }
+    }'
+  elif [[ "${gitcmd[-1]}" == "--porcelain=v2" ]]; then
+  # pass {1} to: $3 of bind_gitinfo() and $4 of preview_git()
+    awk '{
       if ($1 == "?") {
         status="??"
         path=$2
@@ -70,10 +91,6 @@ gs() {
         renamed=""
       }
       print status " " path " " renamed
-    }' \
-  | fzf "${fzfdefaults[@]}" \
-        "${previewcmd[@]}" \
-        "${briefinfo[@]}" \
-        "${bindexec[@]}" \
-        --multi
+    }'
+  fi
 }
