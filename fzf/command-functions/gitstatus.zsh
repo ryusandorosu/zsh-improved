@@ -36,8 +36,8 @@ gs() {
   [[ -n "$1" ]] && repo_path="$("${gitcmd[@]}" rev-parse --show-toplevel)/"
 
   # preview_bat "${repo_path}{2}" git
-  preview_git diff "$repo_path" "${repo_path}{2}" "{}" "${repo_path}{3}"
-  bind_gitinfo "$repo_path" "${repo_path}{2}" "{}"
+  preview_git diff "$repo_path" "{2}" "{}" "{3}"
+  bind_gitinfo "$repo_path" "{2}" "{}"
 
   execcmd=("${gitcmd[@]}")
   execcmd+=("$gitsubcmd")
