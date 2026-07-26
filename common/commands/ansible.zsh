@@ -73,6 +73,10 @@ deploytag() {
   fi
   git -C /home/ryusandorosu/homeserver-ansible/ pull
 
+  print "
+  playbook: $playbook
+  host: $deployhost
+  "
   zsh_cmd=(
     ansible-playbook
     /home/ryusandorosu/homeserver-ansible/playbooks/$playbook.yml
