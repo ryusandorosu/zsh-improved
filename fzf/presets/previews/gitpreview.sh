@@ -29,21 +29,21 @@ preview_git() {
     __out() {
       case \${__status:0:2} in
 
-        '??'|*A*)
+        '??')
           $(_cmd_switch_battree \${~__path})                    ;;
 
-        MM|RM)    print \"Unstaged changes:\n\"
+        AM|MM|RM)    print \"Unstaged changes:\n\"
               git $repo_flag $gitcommand $select | __delta
                   print \"\nStaged changes:\n\"
               git $repo_flag $gitcommand \
               --cached $select | __delta                        ;;
 
-        RM)   git $repo_flag $gitcommand $select | __delta      ;;
+        'A '|'A.'|'M '|'M.'|'R '|'R.')
+                  git $repo_flag $gitcommand \
+                  --cached $select | __delta                    ;;
 
-        'M '|'M.'|'R '|'R.') git $repo_flag $gitcommand \
-                   --cached $select | __delta                   ;;
-
-        ' D'|'.D') git $repo_flag $gitcommand -- $select | __delta ;;
+        ' D'|'.D')
+              git $repo_flag $gitcommand -- $select | __delta   ;;
 
         *)    git $repo_flag $gitcommand $select | __delta      ;;
 

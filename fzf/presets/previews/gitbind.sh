@@ -6,28 +6,28 @@ bind_gitinfo() {
     "focus:+transform-header:
     __path=$2
     __status=$3
-    case \${__status:0:2} in
+    __status=\${__status:0:2}
+    case \$__status in
 
-      '??') print 'untracked'                     ;;
+      '??')      print 'untracked'                     ;;
 
-      RM)   echo -n 'Renamed, to be staged:'
-            git $repo_flag \
-            diff-files --stat -- \${~__path} \
-            | tail -n1 | cut -d, -f2-             ;;
+      'A '|'A.') print 'Added, staged, no changes'     ;;
 
-      'M ') print 'Modified, staged, no changes'  ;;
-      'M.') print 'Modified, staged, no changes'  ;;
+      'M '|'M.') print 'Modified, staged, no changes'  ;;
 
-      'R ') print 'Renamed, staged, no changes'   ;;
-      'R.') print 'Renamed, staged, no changes'   ;;
+      'R '|'R.') print 'Renamed, staged, no changes'   ;;
 
-      ' D') print 'Deleted, to be staged'         ;;
-      '.D') print 'Deleted, to be staged'         ;;
+      ' D'|'.D') print 'Deleted, to be staged'         ;;
 
-      *)    echo -n 'to be staged:'
-            git $repo_flag \
-            diff-files --stat -- \${~__path} \
-            | tail -n1 | cut -d, -f2-             ;;
+      *)    
+        [[ \$__status == *M ]] && __print='Modified, '
+        [[ \$__status == AM ]] && __print='Added, '
+        [[ \$__status == RM ]] && __print='Renamed, '
+        [[ \$__status == *M ]] && echo -n \$__print
+            echo -n 'to be staged:'
+              git $repo_flag \
+              diff-files --stat -- \${~__path} \
+              | tail -n1 | cut -d, -f2-                ;;
 
     esac
     "
