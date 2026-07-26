@@ -66,15 +66,7 @@ _cmd_bat_context() {
         --highlight-line=\$line \
         --line-range=\$start:\$end \
         \${~__path} \
-    | rg --passthru \
-         --color=always \
-         --colors 'match:none' \
-         --colors 'match:bg:yellow' \
-         --colors 'match:fg:black' \
-         --colors 'match:style:bold' \
-         --smart-case \
-         --fixed-strings \
-         --regexp {q}
+    | $(_ripgrep_highlight {q})
   "
 }
 

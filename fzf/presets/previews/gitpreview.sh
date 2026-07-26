@@ -17,7 +17,6 @@ preview_git() {
     ;;
   esac
 
-  # possibly use _cmd_switch_battree for ??|A
   previewcmd=(
     --preview
     "
@@ -49,17 +48,8 @@ preview_git() {
 
       esac
     }
-    if [[ -n \${__q} ]]; then __out | \
-      rg --passthru \
-         --color=always \
-         --colors 'match:none' \
-         --colors 'match:bg:yellow' \
-         --colors 'match:fg:black' \
-         --colors 'match:style:bold' \
-         --colors 'highlight:bg:51,51,51' \
-         --smart-case \
-         --fixed-strings \
-         --regexp \${__q}
+    if [[ -n \${__q} ]]; then
+         __out | $(_ripgrep_highlight '${__q}' line)
     else __out; fi
     "
     --preview-window
