@@ -1,4 +1,4 @@
-source $ZSHREP/fzf/presets/main.sh
+source $ZSHREP/fzf/presets.sh
 
 lah() { command /usr/bin/ls -laAh --color=tty "$@"; }
 laf() { command /usr/bin/ls -laAh --color=tty "$@"; }

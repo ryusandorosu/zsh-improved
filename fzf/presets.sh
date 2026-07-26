@@ -1,4 +1,4 @@
-for file in $ZSHREP/fzf/presets/*/*.sh; do source "$file"; done
+for file in $ZSHREP/fzf/previews/*.sh; do source "$file"; done
 
 # options
 fzfdefaults=(

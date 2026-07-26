@@ -5,7 +5,7 @@ preview_git() {
   local repo_root=$2
   local repo_flag pre
   [[ -n "$repo_root" ]] && repo_flag="-C $repo_root" || repo_flag=""
-  [[ -n "$repo_root" || "$repo_root" == /etc ]] && pre=sudo
+  [[ -n "$repo_root" && "$repo_root" == /etc ]] && pre=sudo
 
   case $gitcommand in
   diff)

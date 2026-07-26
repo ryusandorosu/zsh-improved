@@ -1,4 +1,4 @@
-source $ZSHREP/fzf/presets/main.sh
+source $ZSHREP/fzf/presets.sh
 
 _fzf_comprun() {
   local command=$1
@@ -22,7 +22,7 @@ _fzf_comprun() {
 
     which)    fzf "${fzfdefaults[@]}"                                   "$@" ;;
 
-    aptls)    fzf "${fzfdefaults[@]}" \
+    apt*)     fzf "${fzfdefaults[@]}" \
               --delimiter=/ --preview="apt-cache show {1}"              "$@" ;;
 
     kill*)  fzf "${fzfdefaults[@]}" --bind="focus:+transform-header:"   "$@" ;;
@@ -31,7 +31,6 @@ _fzf_comprun() {
 
     brew)   fzf "${fzfdefaults[@]}" \
             --preview="export HOMEBREW_COLOR=1; brew info {}"           "$@" ;;
-            # --bind="focus:+transform-header: brew desc {}" \ # slow
 
     *)        bind_fileinfo "{}"
               fzf "${fzfdefaults[@]}" "${briefinfo[@]}" \

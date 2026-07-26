@@ -1,4 +1,4 @@
-source $ZSHREP/fzf/presets/main.sh
+source $ZSHREP/fzf/presets.sh
 
 # git diff --name-only; git diff --compact-summary; --color-moved=default; --diff-algorithm=default; --find-renames
 # ^ same for git show ^, may be useful for gitlog.zsh / preview_git()

@@ -1,7 +1,7 @@
 bind_gitinfo() {
   local repo_flag pre
   [[ -n "$1" ]] && repo_flag="-C $1" || repo_flag=""
-  [[ -n "$1" || "$1" == /etc ]] && pre=sudo
+  [[ -n "$1" && "$1" == /etc ]] && pre=sudo
   briefinfo=(
     --bind
     "focus:+transform-header:

@@ -1,4 +1,4 @@
-source $ZSHREP/fzf/presets/main.sh
+source $ZSHREP/fzf/presets.sh
 
 gs() {
   if (( $# <= 2 )) && 

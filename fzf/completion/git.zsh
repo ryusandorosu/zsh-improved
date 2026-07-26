@@ -1,4 +1,4 @@
-source $ZSHREP/fzf/presets/main.sh
+source $ZSHREP/fzf/presets.sh
 
 _fzf_git_repos() {
   local base=$(_fzf_prefix_dir "$prefix")

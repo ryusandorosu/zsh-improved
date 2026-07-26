@@ -1,4 +1,4 @@
-source $ZSHREP/fzf/presets/main.sh
+source $ZSHREP/fzf/presets.sh
 ### REMINDER: --color=always flags in commands before piping to fzf require --ansi for fzf
 
 # similar to glgp alias
