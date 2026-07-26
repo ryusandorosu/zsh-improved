@@ -9,7 +9,7 @@ link_func() {
   fi
 }
 
-repo="git@github.com:ryusandorosu/zsh-improved.git"
+repo="$(git remote get-url origin)"
 destination="$HOME/$(basename $repo | sed 's/.git//')"
 read -e -i "$destination" -p "Choose a destination to clone or remain the default: " destination
 
