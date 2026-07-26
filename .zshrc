@@ -26,6 +26,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
 source $ZSHREP/init/brew.zsh # TO CHECK MACOS
 
 for file in $ZSHREP/common/*.zsh; do source "$file"; done
+for file in $ZSHREP/common/*/*.zsh; do source "$file"; done
 for file in $ZSHREP/fzf/*.zsh; do source "$file"; done
 for file in $ZSHREP/fzf/*/*.zsh; do source "$file"; done
 
@@ -38,6 +39,6 @@ elif [[ "$OS_ID" == Darwin ]]; then
 fi
 
 [[ $ZSH_THEME == "passion" ]] && {
-  source "$ZSHREP/themes/cmd-display.sh"
-  source "$ZSH/themes/passion.zsh-theme"
+  source $ZSHREP/themes/cmd-display.sh
+  source $ZSH/themes/passion.zsh-theme
 }

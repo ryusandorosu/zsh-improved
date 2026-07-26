@@ -1,8 +1,0 @@
-#!/bin/bash
-sedpattern="$1"
-[[ -z "$2" ]] && dest="."
-zsh_cmd="find $dest -type f \
-| xargs -r \
-sed -i \"${sedpattern}\" \
-"
-zsheval "$zsh_cmd"

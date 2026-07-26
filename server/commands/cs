@@ -1,36 +1,54 @@
 #!/bin/bash
 action=$1
 
-[[ "$action" != "unban" && "$action" != "ban" && "$action" != "list" && "$action" != "ignore" && "$action" != "ignorelist" && "$action" != "alert" ]] && \
+available_commands=(
+  unban
+  ban
+  list
+  ignore
+  ignorelist
+  alert
+)
+
+valid_cmd=false
+for cmd in "${available_commands[@]}"; do
+  if [[ "$action" == "$cmd" ]]; then
+    valid_cmd=true
+    break
+  fi
+done
+
+if ! $valid_cmd; then
 echo "$(basename $0): incorrect action.
 usage: $(basename $0) ban/ignore ip (time)
 usage: $(basename $0) unban ip
 usage: $(basename $0) list/ignorelist/alert
 "
+fi
+
+zsh_cmd=(sudo cscli)
 
 jail=le_whitelist
 target=$2
 time=$3
-[[ "$action" == "ban" ]] && result_action="decisions add --ip"
-[[ "$action" == "unban" ]] && result_action="decisions delete --ip"
-[[ "$action" == "list" ]] && result_action="decisions list"
-[[ "$action" == "alert" ]] && result_action="alerts list"
-[[ "$action" == "ignore" ]] && result_action="allowlists add $jail"
-[[ "$action" == "ignorelist" ]] && result_action="allowlists inspect $jail"
+case $action in
+  ban) zsh_cmd+=(decisions add --ip) ;;
+  unban) zsh_cmd+=(decisions delete --ip) ;;
+  list) zsh_cmd+=(decisions list) ;;
+  alert) zsh_cmd+=(alerts list) ;;
+  ignore) zsh_cmd+=(allowlists add $jail) ;;
+  ignorelist) zsh_cmd+=(allowlists inspect $jail) ;;
+esac
 
 if [[ -n "$target" && "$target" =~ $ip_address ]]; then
-  if [[ -n "$time" ]] && [[ "$action" == "ban" ]]; then
-    zsh_cmd="sudo cscli $result_action $target --duration $time"
-  elif [[ -n "$time" ]] && [[ "$action" == "ignore" ]]; then
-    zsh_cmd="sudo cscli $result_action $target --expiration $time"
-  else
-    zsh_cmd="sudo cscli $result_action $target"
-  fi
+  zsh_cmd+=($target)
+  [[ -n "$time" ]] && {
+    [[ "$action" == "ban" ]] && zsh_cmd+=(--duration $time)
+    [[ "$action" == "ignore" ]] && zsh_cmd+=(--expiration $time)
+  }
 elif [[ -n "$target" && ! ( "$target" =~ $ip_address ) ]]; then
   echo "$(basename $0): incorrect ip input"
 elif [[ "$action" == *--ip && -z "$target" ]]; then
   echo "$(basename $0): ban/unban requires ip"
-else
-  zsh_cmd="sudo cscli $result_action"
 fi
-zsheval "$zsh_cmd"
+zsheval "${zsh_cmd[@]}"

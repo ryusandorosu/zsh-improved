@@ -1,3 +1,0 @@
-#!/bin/bash
-zsh_cmd="curl -s http://ip-api.com/json/$1 | jq"
-zsheval "$zsh_cmd"

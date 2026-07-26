@@ -1,17 +1,20 @@
 #!/bin/bash
 action=$1
 
-[[ "$action" != "unban" && "$action" != "ban" ]] && \
+[[ "$action" != "unban" && "$action" != "ban" ]] && {
 echo "$(basename $0): incorrect action.
 usage: $(basename $0) ban/unban jail ip"
+}
 
+jail=$2
+zsh_cmd=(sudo fail2ban-client set $jail)
 [[ "$action" == "ban" ]] && action=banip
 [[ "$action" == "unban" ]] && action=unbanip
-jail=$2
-target=$3
+zsh_cmd+=($action)
 
+target=$3
 if [[ -n "$target" && "$target" =~ $ip_address ]]; then
-  zsh_cmd="sudo fail2ban-client set $jail $action $target"
+  zsh_cmd+=($target)
 elif [[ -n "$target" && ! ( "$target" =~ $ip_address ) ]]; then
   echo "$(basename $0): incorrect ip input"
 elif [[ "$action" == *element && "$jail" =~ $ip_address ]]; then
@@ -19,4 +22,4 @@ elif [[ "$action" == *element && "$jail" =~ $ip_address ]]; then
 elif [[ "$action" == *element && -z "$target" ]]; then
   echo "$(basename $0): ban/unban requires ip"
 fi
-zsheval "$zsh_cmd"
+zsheval "${zsh_cmd[@]}"

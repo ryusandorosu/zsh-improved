@@ -1,26 +1,47 @@
 #!/bin/bash
 action=$1
 
-[[ "$action" != "unban" && "$action" != "ban" && "$action" != "list" && "$action" != "rules" ]] && \
+available_commands=(
+  unban
+  ban
+  list
+  rules
+)
+
+valid_cmd=false
+for cmd in "${available_commands[@]}"; do
+  if [[ "$action" == "$cmd" ]]; then
+    valid_cmd=true
+    break
+  fi
+done
+
+if ! $valid_cmd; then
 echo "$(basename $0): incorrect action.
 usage: $(basename $0) ban set ip (time)
 usage: $(basename $0) unban set ip
 usage: $(basename $0) list/rules
 "
+fi
 
-[[ "$action" == "ban" ]] && action="add element"
-[[ "$action" == "unban" ]] && action="delete element"
-[[ "$action" == "list" ]] && action="list set"
-[[ "$action" == "rules" ]] && action="list table"
+zsh_cmd=(sudo nft)
+case $action in
+  ban) zsh_cmd+=(add element) ;;
+  unban) zsh_cmd+=(delete element) ;;
+  list) zsh_cmd+=(list set) ;;
+  rules) zsh_cmd+=(list table) ;;
+esac
+
 jail=$2
 target=$3
 time=$4
+zsh_cmd+=(inet filter $jail)
 
 if [[ -n "$target" && "$target" =~ $ip_address ]]; then
   if [[ -n "$time" ]] && [[ "$jail" == "whitelist" || "$jail" == "blacklist" ]]; then
-    zsh_cmd="sudo nft $action inet filter $jail { $target timeout $time }"
+    zsh_cmd+=({ $target timeout $time })
   else
-    zsh_cmd="sudo nft $action inet filter $jail { $target }"
+    zsh_cmd+=({ $target })
   fi
 elif [[ -n "$target" && ! ( "$target" =~ $ip_address ) ]]; then
   echo "$(basename $0): incorrect ip input"
@@ -28,8 +49,6 @@ elif [[ "$action" == *element && "$jail" =~ $ip_address ]]; then
   echo "$(basename $0): ban/unban requires set before ip"
 elif [[ "$action" == *element && -z "$target" ]]; then
   echo "$(basename $0): ban/unban requires ip"
-else
-  zsh_cmd="sudo nft $action inet filter $jail"
 fi
 
-zsheval "$zsh_cmd"
+zsheval "${zsh_cmd[@]}"

@@ -1,0 +1,13 @@
+journal() {
+  zsh_cmd="
+    sudo journalctl -u $1 \
+    | tac \
+    | grep \
+      --max-count=1 \
+      --before-context=10000 \
+      --regexp='-- Boot' \
+    | tac \
+  "
+  # | grep "$(date '+%b %d')"
+  zsheval "$zsh_cmd"
+}

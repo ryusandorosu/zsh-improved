@@ -1,0 +1,87 @@
+deploytag() {
+  os_id=$(grep '^ID=' /etc/os-release | cut -d= -f2)
+  if [[ "$os_id" == "debian" && -z "$2" ]]; then
+
+    deployhost=local
+    playbook=server
+    verbosity=-vv
+
+  elif [[ "$os_id" == "debian" && -n "$2" ]]; then
+
+    is_valid=false
+    srv_allowed_options=(
+      asus
+      honor
+      tg
+    )
+    for q in "${srv_allowed_options[@]}"; do
+      if [[ "$2" == "$q" ]]; then
+        is_valid=true
+        break
+      fi
+    done
+    if ! $is_valid; then echo "$(basename $0): second argument accepts only ${srv_allowed_options[@]} options"; exit 1; fi
+
+    if [[ "$2" == asus || "$2" == honor ]]; then
+      deployhost=$2
+      playbook=windows
+      verbosity=-vvv
+    else
+      [[ "$2" == tg ]] && local srv_play=telegram
+      deployhost=local
+      playbook=$srv_play
+      verbosity=-vv
+    fi
+
+  elif [[ "$os_id" == "ubuntu" && -z "$2" ]]; then
+
+    deployhost=remote
+    playbook=server
+    verbosity=-vv
+
+  elif [[ "$os_id" == "ubuntu" && -n "$2" ]]; then
+
+    is_valid=false
+    wsl_allowed_options=(
+      win
+      wsl
+      tg
+    )
+    for q in "${wsl_allowed_options[@]}"; do
+      if [[ "$2" == "$q" ]]; then
+        is_valid=true
+        break
+      fi
+    done
+    if ! $is_valid; then echo "$(basename $0): second argument accepts only ${wsl_allowed_options[@]} options"; exit 1; fi
+
+    if [[ "$2" == win ]]; then
+      [[ "$(hostname)" == DESKTOP-5EFI5KM ]] && deployhost=local-asus
+      [[ "$(hostname)" == DESKTOP-2MJ0UCN ]] && deployhost=local-honor
+      playbook=windows
+      verbosity=-vvv
+    elif [[ "$2" == wsl ]]; then
+      deployhost=wsl
+      playbook=wsl
+      verbosity=-vv
+    elif [[ "$2" == tg ]]; then
+      deployhost=remote
+      playbook=telegram
+      verbosity=-vv
+    fi
+
+  fi
+  git -C /home/ryusandorosu/homeserver-ansible/ pull
+
+  zsh_cmd=(
+    ansible-playbook
+    /home/ryusandorosu/homeserver-ansible/playbooks/$playbook.yml
+    --limit
+    "$deployhost"
+    --diff
+    --tag
+    "$1"
+    "$verbosity"
+  )
+  zsheval "${zsh_cmd[@]}"
+}

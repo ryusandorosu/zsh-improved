@@ -1,7 +1,0 @@
-#!/bin/bash
-
-zsh_cmd="du -ah $1 \
-| sort -rh \
-| head -32 \
-"
-zsheval "$zsh_cmd"
