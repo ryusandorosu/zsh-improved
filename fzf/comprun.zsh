@@ -12,8 +12,8 @@ _fzf_comprun() {
 
     ssh|autossh)               fzf "${fzfdefaults[@]}"                  "$@" ;;
 
-    cp|mv)                 preview_battree "{}"; bind_fileinfo "{}"
-       fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"     "$@" ;;
+    cp|mv)                  preview_battree "{}"; bind_fileinfo "{}"
+        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"    "$@" ;;
 
     *alias)   fzf "${fzfdefaults[@]}" --preview='printf "%s\n" {2}'     "$@" ;;
 
@@ -21,6 +21,11 @@ _fzf_comprun() {
               --preview='print {} | sed -r "s/^\w+\s+//"'               "$@" ;;
 
     which)    fzf "${fzfdefaults[@]}"                                   "$@" ;;
+
+    aptls)    fzf "${fzfdefaults[@]}" \
+              --delimiter=/ --preview="apt-cache show {1}"              "$@" ;;
+
+    kill*)  fzf "${fzfdefaults[@]}" --bind="focus:+transform-header:"   "$@" ;;
 
     *)        bind_fileinfo "{}"
               fzf "${fzfdefaults[@]}" "${briefinfo[@]}" \
