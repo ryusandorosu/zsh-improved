@@ -1,6 +1,5 @@
+for file in $ZSHREP/fzf/preview-generation/*.sh; do source "$file"; done
 for file in $ZSHREP/fzf/previews/*.sh; do source "$file"; done
-
-_default_preview_width=58
 
 # options
 fzfdefaults=(
@@ -8,7 +7,7 @@ fzfdefaults=(
   --ansi
   --wrap
   --freeze-left=10
-  --preview-window="${_default_preview_width}%,wrap-word"
+  --preview-window="$(_set_window default wrap-word)"
   --bind='ctrl-up:preview-up'
   --bind='ctrl-down:preview-down'
   --bind='ctrl-page-up:preview-page-up'
@@ -40,10 +39,4 @@ bind_exec() {
     --bind
     "enter:become($bin $file $arg)"
   )
-}
-
-_get_editor() {
-  local editor
-  [[ -f "$(which nvim)" ]] && editor=nvim || editor=vim
-  echo "$editor"
 }

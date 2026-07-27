@@ -42,7 +42,7 @@ export FZF_CTRL_T_OPTS="
   --prompt '${FZF_CTRL_T_COMMAND%% *}> '
   --bind 'focus:+transform-header: file {} | fold --bytes --width=\$FZF_PREVIEW_COLUMNS'
   --preview-window='wrap-word'
-  --preview '$(_cmd_bat_preview {})'
+  --preview '$(_cmd_bat {})'
   "
  # seems like --preview-window here also needs to be configured 
 if [[ ${FZF_CTRL_T_COMMAND%% *} == locate ]]; then

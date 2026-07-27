@@ -57,6 +57,6 @@ preview_git() {
     else __out; fi
     "
     --preview-window
-    '~1,67%,wrap-word'
+    "$(_set_window 67 wrap-word 1)"
   )
 }
