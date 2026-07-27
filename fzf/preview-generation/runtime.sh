@@ -1,10 +1,14 @@
 ### REMINDER: do not use $path variable in fzf scripts. it is fzf builtin variable used instead of $PATH system-wide. $PATH usage causes errors.
 
 _cmd_tree() {
+  ### -C stands for turning on colorization always
+  ### --metafirst: interesting but see no difference
   print -r -- "
     __path=$1
     tree -C \${~__path} | head -250
   "
+  ## report gets cut off. render it in --bind "focus:+transform-header:" instead if no better way to move up in the preview
+  ## or replace it with awk
 }
 
 _cmd_bat_basic() {

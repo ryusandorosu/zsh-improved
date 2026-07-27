@@ -1,7 +1,6 @@
 for file in $ZSHREP/fzf/preview-generation/*.sh; do source "$file"; done
 for file in $ZSHREP/fzf/previews/*.sh; do source "$file"; done
 
-# options
 fzfdefaults=(
   --style=full
   --ansi
@@ -14,7 +13,6 @@ fzfdefaults=(
   --bind='ctrl-page-down:preview-page-down'
 )
 
-# binds
 bind_fileinfo() {
   # file --brief --mime '$1'
   ### 2% = 4.76 is difference between _set_window and real ratio

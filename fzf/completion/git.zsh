@@ -14,7 +14,7 @@ _fzf_git_repos() {
 }
 
 _fzf_complete_gitls() {
-  preview_tree "{}"
+  preview_tree "{}" header
   _fzf_complete \
     --prompt="git> " \
     "${previewcmd[@]}" \

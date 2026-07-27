@@ -16,7 +16,8 @@ ffind() {
     '/'
   )
 
-  preview_battree "{}"; bind_fileinfo "{}" brief
+  preview_battree "{}" header
+  bind_fileinfo "{}" brief
   "${cmd[@]}" \
   | fzf \
     --prompt "fd> " \
@@ -36,7 +37,8 @@ lfind() {
   )
   [[ "$OS_ID" == ubuntu ]] && cmd+=(--ignore-spaces)
 
-  preview_battree "{}"; bind_fileinfo "{}" brief
+  preview_battree "{}" header
+  bind_fileinfo "{}" brief
   "${cmd[@]}" \
   | fzf \
     --prompt "locate> " \

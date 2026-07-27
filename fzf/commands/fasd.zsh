@@ -4,7 +4,8 @@ fvim() {
   local file
   if [[ -n "$1" ]]; then file="$1"; else
   file=$(
-    preview_bat "{}"; bind_fileinfo "{}" brief
+    preview_bat "{}" header
+    bind_fileinfo "{}" brief
     fasd -f | awk '{print $2}' |
     fzf --tac "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"
   ) || return
@@ -21,7 +22,8 @@ cdf() {
   local dir
   if [[ -n "$1" ]]; then dir="$1"; else
   dir=$(
-    preview_tree "{}"; bind_fileinfo "{}" brief
+    preview_tree "{}" header
+    bind_fileinfo "{}" brief
     fasd -d | awk '{print $2}' |
     fzf --tac "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"
   ) || return

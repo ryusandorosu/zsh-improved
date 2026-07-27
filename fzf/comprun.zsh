@@ -4,7 +4,9 @@ _fzf_comprun() {
   local command=$1
   shift
   case "$command" in
-    cd|cdf|l|ls|lsa|lah)  preview_tree "{}"; bind_fileinfo "{}" brief
+
+    cd|cdf|l|ls|lsa|lah)  preview_tree "{}" header
+                          bind_fileinfo "{}" brief
        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"   "$@" ;;
 
     *vim|laf)             preview_bat "{}";  bind_fileinfo "{}" brief
@@ -12,7 +14,7 @@ _fzf_comprun() {
 
     *ssh)                   fzf "${fzfdefaults[@]}"                     "$@" ;;
 
-    cp|mv)              preview_battree "{}"; bind_fileinfo "{}" brief
+    cp|mv)       preview_battree "{}" header; bind_fileinfo "{}" brief
         fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"  "$@" ;;
 
     *alias)   fzf --bind='focus:+transform-header: printf "%s\n" {2}'   "$@" ;;
