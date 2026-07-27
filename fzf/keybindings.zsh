@@ -27,9 +27,9 @@ fd=(
 
 locate=(
   locate
-  --ignore-spaces
   --basename
 )
+[[ "$OS_ID" == ubuntu ]] && locate+=(--ignore-spaces)
 
 export FZF_CTRL_T_COMMAND="${(j: :)locate[@]}"
 export FZF_CTRL_T_OPTS="
@@ -44,7 +44,7 @@ export FZF_CTRL_T_OPTS="
   --preview-window='wrap-word'
   --preview '$(_cmd_bat_preview {})'
   "
-  # --prompt '${${(z)FZF_CTRL_T_COMMAND}[1]}> '
+ # seems like --preview-window here also needs to be configured 
 if [[ ${FZF_CTRL_T_COMMAND%% *} == locate ]]; then
   FZF_CTRL_T_OPTS+="
   --bind 'start:reload:$FZF_CTRL_T_COMMAND'

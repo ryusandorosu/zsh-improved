@@ -34,10 +34,10 @@ lfind() {
 
   cmd=(
     locate
-    --ignore-spaces
     --basename
     "$pattern"
   )
+  [[ "$OS_ID" == ubuntu ]] && cmd+=(--ignore-spaces)
 
   preview_battree "{}"; bind_fileinfo "{}" brief
   "${cmd[@]}" \
