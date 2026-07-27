@@ -29,7 +29,7 @@ elif [[ "$OS_ID" == Darwin ]]; then
   # possibly use the same script as above?
   [[ ! -d $user_goinfre/.brew ]] && $ZSHREP/init/imported/install_brew.sh #/Users/kaycekey/Desktop/install_brew.sh
 
-  # where to take fasd? possibly replace with 'z'.
+  # where to take fasd? possibly replace with 'z' or 'autojump'.
   # check git version on macos
   macos_brew_packages=(
     coreutils
@@ -50,3 +50,4 @@ fi
 # https://github.com/junegunn/fzf
 # https://github.com/BurntSushi/ripgrep
 # https://github.com/rupa/z
+# https://github.com/wting/autojump
