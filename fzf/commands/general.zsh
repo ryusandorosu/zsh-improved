@@ -18,10 +18,8 @@ ffind() {
     "$pattern"
     '/'
   )
-  # --max-results 1000
 
   preview_battree "{}"; bind_fileinfo "{}" brief
-  # fd "$pattern" '/' \
   "${cmd[@]}" \
   | fzf \
     --prompt "fd> " \
@@ -40,10 +38,8 @@ lfind() {
     --basename
     "$pattern"
   )
-  # --limit 1000
 
   preview_battree "{}"; bind_fileinfo "{}" brief
-  # locate -b "$pattern" \
   "${cmd[@]}" \
   | fzf \
     --prompt "locate> " \
@@ -51,4 +47,3 @@ lfind() {
     "${filedirinfo[@]}" \
     "${previewcmd[@]}"
 }
-# --height ~100%
