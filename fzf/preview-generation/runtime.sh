@@ -1,14 +1,21 @@
 ### REMINDER: do not use $path variable in fzf scripts. it is fzf builtin variable used instead of $PATH system-wide. $PATH usage causes errors.
 
 _cmd_tree() {
-  ### -C stands for turning on colorization always
-  ### --metafirst: interesting but see no difference
+  ### FILE OPTIONS: -C == color=always
+  ##  these seem useful for ltree/lst alias but not here. --metafirst -gupshD --du
+  ##  but   --metafirst -shD --du   seems reasonable
   print -r -- "
     __path=$1
-    tree -C \${~__path} | head -250
+    tree -C \${~__path} \
+      | awk -v n=200 '
+        NR<=n { print; next }
+        { last=\$0 }
+        END { if (NR>n) print \"...\"; if (last!=\"\") print last }
+      '
   "
   ## report gets cut off. render it in --bind "focus:+transform-header:" instead if no better way to move up in the preview
-  ## or replace it with awk
+  ## replaced head with awk, seems nice
+  ## or MAYBE via -J option piping to jq o___O
 }
 
 _cmd_bat_basic() {
