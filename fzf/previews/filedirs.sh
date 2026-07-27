@@ -14,6 +14,6 @@ preview_battree() {
     "$(_set_window default wrap-word 1)"
   )
   ### wrapped header gets fixed only before the first wrap
-  ### bat see: --terminal-width; --wrap=auto/character; --chop-long-lines
+  ### bat see: --wrap=auto/character; --chop-long-lines
   ## to check tree how it may fix header
 }

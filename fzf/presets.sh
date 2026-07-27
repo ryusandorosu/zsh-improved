@@ -17,12 +17,14 @@ fzfdefaults=(
 # binds
 bind_fileinfo() {
   # file --brief --mime '$1'
+  ### 2% = 4.76 is difference between _set_window and real ratio
+  ### 10 in __width is ceiling of 2% * 2
   filedirinfo=(
     --bind
     "focus:+transform-header:
     __path=$1
     __style=$2
-    __width=\$(( \$FZF_COLUMNS * (100 - $preview_width - 3 ) / 100 ))
+    __width=\$(( \$FZF_COLUMNS - \$FZF_PREVIEW_COLUMNS - 10 ))
     [[ -n \$__style ]] && __fold_rule=spaces || __fold_rule=bytes
     file --\$__style \${~__path} \
     | fold \

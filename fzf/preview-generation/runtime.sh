@@ -3,7 +3,7 @@
 _cmd_tree() {
   print -r -- "
     __path=$1
-    tree -C \${~__path} | head -500
+    tree -C \${~__path} | head -250
   "
 }
 
@@ -11,7 +11,7 @@ _cmd_bat_basic() {
   print -r -- "
     __path=$1
     __style=$2
-    bat \$__style --color=always \${~__path} | head -500
+    bat \$__style --terminal-width=\$FZF_PREVIEW_COLUMNS --color=always \${~__path} | head -250
   "
 }
 
@@ -65,10 +65,10 @@ _cmd_bat_context() {
     __end=\$(( __line + $context ))
     bat --color=always \
         --style=numbers,changes,header-filename \
+        --terminal-width=\$FZF_PREVIEW_COLUMNS \
         --highlight-line=\$__line \
         --line-range=\$__start:\$__end \
         \${~__path} \
     | $(_ripgrep_highlight {q})
   "
-  ### applied header style, to check
 }
