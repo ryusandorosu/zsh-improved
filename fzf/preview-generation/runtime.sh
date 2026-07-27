@@ -15,6 +15,23 @@ _cmd_bat_basic() {
   "
 }
 
+_cmd_bat_context() {
+  local context=20
+  print -r -- "
+    __path=$1
+    __line=$2
+    __start=\$(( __line > $context ? __line - $context : 1 ))
+    __end=\$(( __line + $context ))
+    bat --color=always \
+        --style=numbers,changes,header-filename \
+        --terminal-width=\$FZF_PREVIEW_COLUMNS \
+        --highlight-line=\$__line \
+        --line-range=\$__start:\$__end \
+        \${~__path} \
+    | $(_ripgrep_highlight {q})
+  "
+}
+
 _cmd_bat() {
   local localpath=$1 style=$2
 
@@ -53,22 +70,5 @@ _cmd_switch_battree() {
     test -d \${~__path} \
       && { $(_cmd_tree \${~__path}); } \
       || { $(_cmd_bat \${~__path} $style); }
-  "
-}
-
-_cmd_bat_context() {
-  local context=20
-  print -r -- "
-    __path=$1
-    __line=$2
-    __start=\$(( __line > $context ? __line - $context : 1 ))
-    __end=\$(( __line + $context ))
-    bat --color=always \
-        --style=numbers,changes,header-filename \
-        --terminal-width=\$FZF_PREVIEW_COLUMNS \
-        --highlight-line=\$__line \
-        --line-range=\$__start:\$__end \
-        \${~__path} \
-    | $(_ripgrep_highlight {q})
   "
 }
