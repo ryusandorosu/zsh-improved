@@ -1,6 +1,7 @@
 _ripgrep_highlight() {
   rgopts=(
     rg
+    --no-config
     --passthru
     --color=always
     --colors='match:none'
