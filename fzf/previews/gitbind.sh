@@ -2,7 +2,7 @@ bind_gitinfo() {
   local repo_flag pre
   [[ -n "$1" ]] && repo_flag="-C $1" || repo_flag=""
   [[ -n "$1" && "$1" == /etc ]] && pre=sudo
-  briefinfo=(
+  filedirinfo=(
     --bind
     "focus:+transform-header:
     __path=$2

@@ -1,11 +1,14 @@
 for file in $ZSHREP/fzf/previews/*.sh; do source "$file"; done
 
+_default_preview_width=58
+
 # options
 fzfdefaults=(
-  --ansi
-  --freeze-left=10
   --style=full
-  --preview-window='right,58%,wrap-word'
+  --ansi
+  --wrap
+  --freeze-left=10
+  --preview-window="${_default_preview_width}%,wrap-word"
   --bind='ctrl-up:preview-up'
   --bind='ctrl-down:preview-down'
   --bind='ctrl-page-up:preview-page-up'
@@ -15,11 +18,17 @@ fzfdefaults=(
 # binds
 bind_fileinfo() {
   # file --brief --mime '$1'
-  briefinfo=(
+  filedirinfo=(
     --bind
     "focus:+transform-header:
     __path=$1
-    file --brief \${~__path}
+    __style=$2
+    __width=\$(( \$FZF_COLUMNS * (100 - $preview_width - 3 ) / 100 ))
+    [[ -n \$__style ]] && __fold_rule=spaces || __fold_rule=bytes
+    file --\$__style \${~__path} \
+    | fold \
+      --\$__fold_rule \
+      --width=\$__width
     "
   )
 }

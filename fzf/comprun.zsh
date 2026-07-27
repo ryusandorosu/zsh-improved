@@ -4,18 +4,19 @@ _fzf_comprun() {
   local command=$1
   shift
   case "$command" in
-    cd|cdf|l|ls|lsa|lah|laf)  preview_tree "{}"; bind_fileinfo "{}"
-       fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"     "$@" ;;
+    cd|cdf|l|ls|lsa|lah)  preview_tree "{}"; bind_fileinfo "{}" brief
+       fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"   "$@" ;;
 
-    *vim)                     preview_bat "{}";  bind_fileinfo "{}"
-       fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"     "$@" ;;
+    *vim|laf)             preview_bat "{}";  bind_fileinfo "{}" brief
+       fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"   "$@" ;;
 
     *ssh)                   fzf "${fzfdefaults[@]}"                     "$@" ;;
 
-    cp|mv)                  preview_battree "{}"; bind_fileinfo "{}"
-        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${briefinfo[@]}"    "$@" ;;
+    cp|mv)              preview_battree "{}"; bind_fileinfo "{}" brief
+        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"  "$@" ;;
 
     *alias)   fzf "${fzfdefaults[@]}" --preview='printf "%s\n" {2}'     "$@" ;;
+    # to replace with bind instead preview and not full view
 
     whence)   fzf "${fzfdefaults[@]}" \
               --preview='print {} | sed -r "s/^\w+\s+//"'               "$@" ;;
@@ -32,8 +33,8 @@ _fzf_comprun() {
     brew)   fzf "${fzfdefaults[@]}" \
             --preview="export HOMEBREW_COLOR=1; brew info {}"           "$@" ;;
 
-    *)        bind_fileinfo "{}"
-              fzf "${fzfdefaults[@]}" "${briefinfo[@]}" \
+    *)        bind_fileinfo "{}" brief
+              fzf "${fzfdefaults[@]}" "${filedirinfo[@]}" \
                   --preview='fzf-preview.sh {}'                         "$@" ;;
 
   esac

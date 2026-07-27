@@ -50,7 +50,7 @@ gs() {
   | parse_porcelain \
   | fzf "${fzfdefaults[@]}" \
         "${previewcmd[@]}" \
-        "${briefinfo[@]}" \
+        "${filedirinfo[@]}" \
         "${bindexec[@]}" \
         --multi
 }
