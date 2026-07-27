@@ -15,8 +15,7 @@ _fzf_comprun() {
     cp|mv)              preview_battree "{}"; bind_fileinfo "{}" brief
         fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"  "$@" ;;
 
-    *alias)   fzf "${fzfdefaults[@]}" --preview='printf "%s\n" {2}'     "$@" ;;
-    # to replace with bind instead preview and not full view
+    *alias)   fzf --bind='focus:+transform-header: printf "%s\n" {2}'   "$@" ;;
 
     whence)   fzf "${fzfdefaults[@]}" \
               --preview='print {} | sed -r "s/^\w+\s+//"'               "$@" ;;
