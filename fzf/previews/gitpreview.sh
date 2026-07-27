@@ -57,6 +57,6 @@ preview_git() {
     else __out; fi
     "
     --preview-window
-    '~1,right,67%,wrap-word'
+    '~1,67%,wrap-word'
   )
 }

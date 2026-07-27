@@ -21,7 +21,8 @@ _cmd_bat_preview() {
   if [[ -n "$style" ]]; then
 
     case $style in
-      git) style="--style=changes,numbers" ;;
+      git) style="--style=numbers,changes" ;;
+      header) style="--style=numbers,header-filename" ;;
     esac
 
   else
@@ -37,9 +38,9 @@ _cmd_bat_preview() {
 
   print -r -- "
     __path=$localpath
-    ft=\$(file --brief \${~__path})
-    case \"\$ft\" in
-      JSON*) jq --color-output . \${~__path} || $(_cmd_bat_simple "$localpath" "$style") ;;
+    __ft=\$(file --brief \${~__path})
+    case \"\$__ft\" in
+      JSON*) jq --color-output . \${~__path}          ;;
       *)     $(_cmd_bat_simple "$localpath" "$style") ;;
     esac
   "
@@ -52,6 +53,7 @@ _cmd_switch_battree() {
       && { $(_cmd_tree \${~__path}); } \
       || { $(_cmd_bat_preview \${~__path}); }
   "
+  ### _cmd_bat_preview : apply header style
 }
 
 _cmd_bat_context() {
@@ -79,5 +81,13 @@ preview_bat() {
 }
 
 preview_battree() {
-  previewcmd=( --preview "$(_cmd_switch_battree "$1")" )
+  previewcmd=(
+    --preview
+    "$(_cmd_switch_battree "$1")"
+  )
+    # --preview-window
+    # "~1,${_default_preview_width}%,wrap-word"
+    ### wrapped header gets fixed only before the first wrap
+    ### see: --terminal-width; --wrap=auto/character; --chop-long-lines
+    ### to make it a separate _cmd parameterized to use in preview_git()'s previewcmd too
 }
