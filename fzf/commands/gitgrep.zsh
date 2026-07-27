@@ -30,7 +30,7 @@ ggrep() {
     "."
   )
 
-  bind_exec "$(_get_editor)" "${repo_path}{1}" "+{2}"
+  bind_become "$(_get_editor)" "${repo_path}{1}" "+{2}"
   "${gitcmd[@]}" \
   | fzf "${fzfdefaults[@]}" \
         --prompt="git-grep to $(_get_editor)> " \
@@ -38,5 +38,5 @@ ggrep() {
         --preview "$(
           _cmd_bat_context "${repo_path}{1}" {2}
         )" \
-        "${bindexec[@]}"
+        "${bindbecome[@]}"
 }

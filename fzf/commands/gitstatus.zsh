@@ -45,7 +45,7 @@ gs() {
     --porcelain
   )
 
-  bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
+  bind_become "${(j: :)execcmd[@]}" "${repo_path}{+2}"
   "${gitcmd[@]}" \
   | parse_porcelain \
   | fzf \
@@ -53,7 +53,7 @@ gs() {
     "${fzfdefaults[@]}" \
     "${previewcmd[@]}" \
     "${filedirinfo[@]}" \
-    "${bindexec[@]}" \
+    "${bindbecome[@]}" \
     --multi
 }
 

@@ -32,10 +32,10 @@ bind_fileinfo() {
   )
 }
 
-#bindbecome. bindexec is a different thing to try
-bind_exec() {
+### bindexec is a different thing to try
+bind_become() {
   local bin=$1 file=$2 arg=$3
-  bindexec=(
+  bindbecome=(
     --bind
     "enter:become($bin $file $arg)"
   )
