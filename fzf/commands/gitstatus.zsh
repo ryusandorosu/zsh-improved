@@ -48,11 +48,13 @@ gs() {
   bind_exec "${(j: :)execcmd[@]}" "${repo_path}{+2}"
   "${gitcmd[@]}" \
   | parse_porcelain \
-  | fzf "${fzfdefaults[@]}" \
-        "${previewcmd[@]}" \
-        "${filedirinfo[@]}" \
-        "${bindexec[@]}" \
-        --multi
+  | fzf \
+    --prompt="${(j: :)execcmd[@]}> " \
+    "${fzfdefaults[@]}" \
+    "${previewcmd[@]}" \
+    "${filedirinfo[@]}" \
+    "${bindexec[@]}" \
+    --multi
 }
 
 parse_porcelain() {

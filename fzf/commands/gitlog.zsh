@@ -13,7 +13,7 @@ glog() {
   )
 
   preview_git show "$repo_path" "{+1}"
-  "${gitcmd[@]}" | fzf "${fzfdefaults[@]}" "${previewcmd[@]}" --multi
+  "${gitcmd[@]}" | fzf "${fzfdefaults[@]}" "${previewcmd[@]}" --prompt="git log> " --multi
 }
 alias gsh='glog'
 
