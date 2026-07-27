@@ -7,17 +7,24 @@ duh() {
   zsheval "$zsh_cmd"
 }
 
+# make it a separate command
 fsed() {
   local pattern="$1"
-  local dest
+  local dest opt
   if [[ -z "$2" ]]; then
     dest=""
+    opt=""
+  elif [[ "$2" == -* ]]; then
+    dest=""
+    opt="$2"
+  else
+    dest="$2"
+    opt=""
   fi
   zsh_cmd="
-    fd --strip-cwd-prefix=always \
-       --type file . $dest \
+    fd --type file . $dest \
     | xargs -r \
-      sed -i \"${pattern}\" \
+      sed $opt -i \"${pattern}\" \
   "
   zsheval "$zsh_cmd"
 }

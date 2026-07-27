@@ -10,3 +10,5 @@ bindkey '^[w' backward-kill-word
 bindkey '^H' kill-region
 bindkey '^[T' transpose-chars
 bindkey '^T' transpose-words
+
+bindkey '^F' fzf-file-widget
