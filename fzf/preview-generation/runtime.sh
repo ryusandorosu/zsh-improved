@@ -2,8 +2,6 @@
 
 _cmd_tree() {
   ### FILE OPTIONS: -C == color=always
-  ##  these seem useful for ltree/lst alias but not here. --metafirst -gupshD --du
-  ##  but   --metafirst -shD --du   seems reasonable
   print -r -- "
     __path=$1
     tree -C \${~__path} \
@@ -13,9 +11,6 @@ _cmd_tree() {
         END { if (NR>n) print \"...\"; if (last!=\"\") print last }
       '
   "
-  ## report gets cut off. render it in --bind "focus:+transform-header:" instead if no better way to move up in the preview
-  ## replaced head with awk, seems nice
-  ## or MAYBE via -J option piping to jq o___O
 }
 
 _cmd_bat_basic() {

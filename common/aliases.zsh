@@ -8,3 +8,5 @@ alias ripgrep='rg'
 alias gc='git -C'
 alias dfi='df -i'
 alias motd='run-parts /etc/update-motd.d' # not sure that is suitable for macos
+alias t='tree --metafirst -shD --du'
+alias lst='tree --metafirst -gup -shD --du'

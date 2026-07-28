@@ -39,12 +39,13 @@ _fzf_fasd_completion() {
 _fzf_complete_fvim()    { _fzf_fasd_completion -f "$@"; }
 _fzf_complete_cdf()     { _fzf_fasd_completion -d "$@"; }
 
-# --walker=[file][,dir][,follow][,hidden]
 _fzf_complete_ls()      { _fzf_fd_completion d "$@"; }
 _fzf_complete_l()       { _fzf_complete_ls "$@"; }
 _fzf_complete_lsa()     { _fzf_complete_ls "$@"; }
 _fzf_complete_lah()     { _fzf_complete_ls "$@"; }
 _fzf_complete_laf()     { _fzf_fd_completion f "$@"; }
+_fzf_complete_t()     { _fzf_complete_ls "$@"; }
+_fzf_complete_lst()     { _fzf_complete_ls "$@"; }
 
 _fzf_complete_cat()     { _fzf_fd_completion f "$@"; }
 _fzf_complete_bat()     { _fzf_complete_cat "$@"; }
