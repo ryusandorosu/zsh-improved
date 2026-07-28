@@ -5,7 +5,7 @@ _fzf_comprun() {
   shift
   case "$command" in
 
-    cd|cdf|l|ls|lsa|lah|t|lst) 
+    cd|cdf|l|ls|lsa|lah|t|ta) 
                           preview_tree "{}" header
                           bind_fileinfo "{}" brief
        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"   "$@" ;;
