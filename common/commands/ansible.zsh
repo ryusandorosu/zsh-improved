@@ -1,12 +1,17 @@
 deploytag() {
-  os_id=$(grep '^ID=' /etc/os-release | cut -d= -f2)
-  if [[ "$os_id" == "debian" && -z "$2" ]]; then
+  if [[ "$OS_ID" == "debian" && -z "$2" ]]; then
 
     deployhost=local
     playbook=server
     verbosity=-vv
 
-  elif [[ "$os_id" == "debian" && -n "$2" ]]; then
+  elif [[ "$OS_ID" == "ubuntu" && -z "$2" ]]; then
+
+    deployhost=remote
+    playbook=server
+    verbosity=-vv
+
+  elif [[ "$OS_ID" == "debian" && -n "$2" ]]; then
 
     is_valid=false
     srv_allowed_options=(
@@ -15,12 +20,9 @@ deploytag() {
       tg
     )
     for q in "${srv_allowed_options[@]}"; do
-      if [[ "$2" == "$q" ]]; then
-        is_valid=true
-        break
-      fi
+      if [[ "$2" == "$q" ]]; then is_valid=true; break; fi
     done
-    if ! $is_valid; then echo "$(basename $0): second argument accepts only ${srv_allowed_options[@]} options"; exit 1; fi
+    if ! $is_valid; then echo "$(basename $0): second argument accepts only one of ${(j:,:)srv_allowed_options[@]} options"; exit 1; fi
 
     if [[ "$2" == asus || "$2" == honor ]]; then
       deployhost=$2
@@ -33,42 +35,45 @@ deploytag() {
       verbosity=-vv
     fi
 
-  elif [[ "$os_id" == "ubuntu" && -z "$2" ]]; then
-
-    deployhost=remote
-    playbook=server
-    verbosity=-vv
-
-  elif [[ "$os_id" == "ubuntu" && -n "$2" ]]; then
+  elif [[ "$OS_ID" == "ubuntu" && -n "$2" ]]; then
 
     is_valid=false
     wsl_allowed_options=(
       win
       wsl
       tg
+      app
     )
     for q in "${wsl_allowed_options[@]}"; do
-      if [[ "$2" == "$q" ]]; then
-        is_valid=true
-        break
-      fi
+      if [[ "$2" == "$q" ]]; then is_valid=true; break; fi
     done
-    if ! $is_valid; then echo "$(basename $0): second argument accepts only ${wsl_allowed_options[@]} options"; exit 1; fi
+    if ! $is_valid; then echo "$(basename $0): second argument accepts only one of ${(j:,:)wsl_allowed_options[@]} options"; exit 1; fi
 
-    if [[ "$2" == win ]]; then
-      [[ "$(hostname)" == DESKTOP-5EFI5KM ]] && deployhost=local-asus
-      [[ "$(hostname)" == DESKTOP-2MJ0UCN ]] && deployhost=local-honor
-      playbook=windows
-      verbosity=-vvv
-    elif [[ "$2" == wsl ]]; then
-      deployhost=wsl
-      playbook=wsl
-      verbosity=-vv
-    elif [[ "$2" == tg ]]; then
-      deployhost=remote
-      playbook=telegram
-      verbosity=-vv
-    fi
+    case "$2" in
+      win)
+        case "$(hostname)" in
+          DESKTOP-5EFI5KM) deployhost=local-asus  ;;
+          DESKTOP-2MJ0UCN) deployhost=local-honor ;;
+        esac
+        playbook=windows
+        verbosity=-vvv
+        ;;
+      wsl)
+        deployhost=wsl
+        playbook=wsl
+        verbosity=-vv
+        ;;
+      tg)
+        deployhost=remote
+        playbook=telegram
+        verbosity=-vv
+        ;;
+      app)
+        deployhost=remote
+        playbook=applications
+        verbosity=-vv
+        ;;
+    esac
 
   fi
   git -C /home/ryusandorosu/homeserver-ansible/ pull
