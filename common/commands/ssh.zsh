@@ -1,6 +1,6 @@
 sshport() {
-  [[ "$os_id" == "debian" ]] && echo "denied" && exit 1
-  [[ "$os_id" == "ubuntu" ]] && identity=~/.ssh/nuc_server
+  [[ "$OS_ID" == "debian" ]] && echo "denied" && exit 1
+  [[ "$OS_ID" == "ubuntu" ]] && identity=nuc_server
 
   zsh_cmd=(
     autossh
@@ -9,7 +9,7 @@ sshport() {
     $1:127.0.0.1:$1
     -p 22
     -i
-    $identity
+    $HOME/.ssh/$identity
     ryusandorosu@192.168.0.100
   )
   zsheval "${zsh_cmd[@]}"
