@@ -1,4 +1,5 @@
 #!/bin/bash
+source $ZSHREP/themes/cmd-display.sh
 action=$1
 
 [[ "$action" != "unban" && "$action" != "ban" ]] && {
