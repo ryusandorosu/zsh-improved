@@ -26,7 +26,8 @@ preview_git() {
     __status=$4
     __path=$localpath
     __q={q}
-    __delta() { delta --paging=never --color-only; }
+    # __delta() { delta --paging=never --color-only; }
+    __delta() { delta --config $ZSHREP/configs/gitdelta; }
     __out() {
       case \${__status:0:2} in
 
