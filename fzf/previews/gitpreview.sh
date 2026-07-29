@@ -11,7 +11,10 @@ preview_git() {
   diff)
     local localpath=$3
     local oldpath=$5
-    [[ -n "$repo_root" ]] && localpath="$repo_root/$localpath"
+    [[ -n "$repo_root" ]] && {
+      localpath="$repo_root/$localpath"
+      oldpath="$repo_root/$oldpath"
+    }
     select="$localpath"
     ;;
   show)
