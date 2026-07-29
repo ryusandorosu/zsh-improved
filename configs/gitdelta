@@ -1,20 +1,17 @@
-[interactive]
-    diffFilter = delta --color-only
-
-[merge]
-    conflictStyle = zdiff3
-
 [delta]
   ; necessary
     detect-dark-light = never
     dark = true
   ; behavior
+    color-only = true             # disables: defaults; resets to defaults: diff-highlight, diff-so-fancy
     diff-highlight = true
     side-by-side = false
     colorMoved = default          # to check how it works
   ; formatting
+    ; requires: settings.json: "security.allowedUNCHosts": ["wsl.localhost"],
+    ; requires: $WSL_DISTRO_NAME, variable substitution is not supported
     hyperlinks                    = true
-    hyperlinks-file-link-format   = "vscode://file/{path}:{line}"
+    hyperlinks-file-link-format   = "vscode://file//wsl.localhost/Ubuntu{path}:{line}"
   # defaults changed
     paging                        = never
     commit-style                  = bold yellow
