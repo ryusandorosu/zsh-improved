@@ -2,9 +2,10 @@
 
 _cmd_tree() {
   ### FILE OPTIONS: -C == color=always
+  ## \"\${~__path}\" for windows paths, yet discovered in tree only unlike \${~__path} is used in other funcs and shows win paths well o_O
   print -r -- "
     __path=$1
-    tree -C \${~__path} \
+    tree -C \"\${~__path}\" \
       | awk -v n=200 '
         NR<=n { print; next }
         { last=\$0 }
