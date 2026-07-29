@@ -18,6 +18,7 @@ deploytag() {
       asus
       honor
       tg
+      cert
     )
     for q in "${srv_allowed_options[@]}"; do
       if [[ "$2" == "$q" ]]; then is_valid=true; break; fi
@@ -30,6 +31,7 @@ deploytag() {
       verbosity=-vvv
     else
       [[ "$2" == tg ]] && local srv_play=telegram
+      [[ "$2" == cert ]] && local srv_play=certificates
       deployhost=local
       playbook=$srv_play
       verbosity=-vv
@@ -43,6 +45,7 @@ deploytag() {
       wsl
       tg
       app
+      cert
     )
     for q in "${wsl_allowed_options[@]}"; do
       if [[ "$2" == "$q" ]]; then is_valid=true; break; fi
@@ -71,6 +74,11 @@ deploytag() {
       app)
         deployhost=remote
         playbook=applications
+        verbosity=-vv
+        ;;
+      cert)
+        deployhost=remote
+        playbook=certificates
         verbosity=-vv
         ;;
     esac
