@@ -2,3 +2,4 @@
 --vimgrep
 --smart-case
 --glob=!.git
+--no-ignore
