@@ -65,7 +65,7 @@ deploytag() {
         ;;
       tg)
         deployhost=remote
-        playbook=telegram
+        playbook=notifications
         verbosity=-vv
         ;;
       app)
