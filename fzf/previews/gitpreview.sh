@@ -10,6 +10,7 @@ preview_git() {
   case $gitcommand in
   diff)
     local localpath=$3
+    local oldpath=$5
     [[ -n "$repo_root" ]] && localpath="$repo_root/$localpath"
     select="$localpath"
     ;;
@@ -25,8 +26,8 @@ preview_git() {
     [[ -z $select ]] && return
     __status=$4
     __path=$localpath
+    __oldpath=$oldpath
     __q={q}
-    # __delta() { delta --paging=never --color-only; }
     __delta() { delta --config $ZSHREP/configs/gitdelta; }
     __out() {
       case \${__status:0:2} in
@@ -35,19 +36,20 @@ preview_git() {
           $(_cmd_switch_battree \${~__path})                    ;;
 
         AM|MM|RM) print \"Unstaged changes:\n\"
-            $pre git $repo_flag $gitcommand $select | __delta
+          $pre git $repo_flag $gitcommand \
+                  \${~__path} | __delta
                   print \"\nStaged changes:\n\"
-            $pre git $repo_flag $gitcommand \
-                  --cached $select | __delta                    ;;
+          $pre git $repo_flag $gitcommand \
+                  --cached \${~__path} | __delta                ;;
 
         'A '|'A.'|'M '|'M.'|'R '|'R.')
-                  $pre git $repo_flag $gitcommand \
-                  --cached $select | __delta                    ;;
+          $pre git $repo_flag $gitcommand \
+          --cached -- \${~__oldpath} \${~__path} | __delta      ;;
 
         ' D'|'.D')  $pre git $repo_flag $gitcommand \
-                    -- $select | __delta                        ;;
+                    -- \${~__path} | __delta                    ;;
         'D '|'D.')  $pre git $repo_flag $gitcommand \
-                    --cached -- $select | __delta               ;;
+                    --cached -- \${~__path} | __delta           ;;
 
         *)  $pre git $repo_flag $gitcommand $select | __delta   ;;
 

@@ -39,7 +39,6 @@ gs() {
   execcmd=("${gitcmd[@]}")
   execcmd+=("$gitsubcmd")
 
-  ### --find-renames has no effect for git status
   gitcmd+=(
     status
     --porcelain
