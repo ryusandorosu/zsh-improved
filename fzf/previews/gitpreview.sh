@@ -26,6 +26,7 @@ preview_git() {
   previewcmd=(
     --preview
     "
+    [[ -z $4 && -z $select ]] && echo 'No changes in the repo'
     [[ -z $select ]] && return
     __status=$4
     __path=$localpath
