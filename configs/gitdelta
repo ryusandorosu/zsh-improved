@@ -2,62 +2,11 @@
   ; necessary
     detect-dark-light = never
     dark = true
-  ; behavior
-    color-only = true             # disables: defaults; resets to defaults: diff-highlight, diff-so-fancy
-    diff-highlight = true
-    side-by-side = false
-    colorMoved = default          # to check how it works
-  ; formatting
-    ; requires: settings.json: "security.allowedUNCHosts": ["wsl.localhost"],
-    ; requires: $WSL_DISTRO_NAME, variable substitution is not supported
-    hyperlinks                    = true
-    hyperlinks-file-link-format   = "vscode://file//wsl.localhost/Ubuntu{path}:{line}"
-  # defaults changed
+  ; fzf-specific behavior
+    color-only                    = true
+    side-by-side                  = false
     paging                        = never
+  ; defaults override
+    line-numbers                  = true
     commit-style                  = bold yellow
     file-style                    = bold blue
-    # file-decoration-style = gray ol
-    # commit-decoration-style = ul
-  # defaults. see 'delta --show-config'
-  # also see https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit
-    hunk-header-style             = syntax
-    minus-style                   = syntax 52 #syntax "#3f0001"
-    minus-non-emph-style          = syntax 52 #syntax "#3f0001"
-    minus-emph-style              = syntax 88 #syntax "#901011"
-    minus-empty-line-marker-style = normal "#3f0001"
-    zero-style                    = syntax
-    plus-style                    = syntax 22 #syntax "#002800"
-    plus-non-emph-style           = syntax 22 #syntax "#002800"
-    plus-emph-style               = syntax 28 #syntax "#006000"
-    plus-empty-line-marker-style  = normal "#002800"
-    grep-file-style               = purple
-    grep-line-number-style        = green
-    whitespace-error-style        = reverse purple
-    blame-palette                 = "#000000 #222222 #444444"
-    true-color                    = auto
-    file-added-label              = added:
-    file-modified-label           = #Δ
-    file-removed-label            = removed:
-    file-renamed-label            = renamed:
-    right-arrow                   = ⟶ 
-    inspect-raw-lines             = true
-    keep-plus-minus-markers       = false
-    line-numbers                  = true
-    line-numbers-minus-style      = 88
-    line-numbers-zero-style       = "#444444"
-    line-numbers-plus-style       = 28
-    line-numbers-left-style       = blue
-    line-numbers-right-style      = blue
-    line-numbers-left-format      = │{nm:^4}│
-    line-numbers-right-format     = │{np:^4}│
-    max-line-distance             = 0.6
-    max-line-length               = 3000
-    diff-stat-align-width         = 48
-    line-fill-method              = ansi
-    navigate                      = true
-    navigate-regex                = ^(commit|added:|removed:|renamed:|Δ|•)
-    syntax-theme                  = Monokai Extended
-    width                         = 238
-    tabs                          = 8
-    word-diff-regex               = '\\w+'
-  # delta --diff-so-fancy --show-config
