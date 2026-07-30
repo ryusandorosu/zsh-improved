@@ -7,7 +7,7 @@ _fzf_git_repos() {
     base="~"
     expanded=${~base}
   fi
-  fd --hidden --type dir --max-depth 6 '^\.git$' "$expanded" \
+  fd --hidden --type dir --max-depth 2 '^\.git$' "$expanded" \
     | sed 's|.git/||' \
     | while IFS= read -r line; do print -r -- "${base}${line#$expanded}"; done \
     | sort -ru
