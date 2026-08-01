@@ -34,16 +34,18 @@ _fzf_complete_autossh() { _fzf_complete_ssh "$@"; }
 _fzf_server_docker_services() {
   local inventory=~/homeserver-ansible/inventory/group_vars/all/network/ports.yml
   [[ -r $inventory ]] && {
-    python3 -c 'import sys, yaml, json; print(json.dumps(yaml.safe_load(sys.stdin)))' < "$inventory" \
-    | jq -r '.docker[] | [.name, (.port.exposed? // .port)] | select(.[1] | type == "number") | @csv'
+    yq -o=tsv '
+      .docker[]
+      | [.name, (.port.exposed // .port)]
+      | select((.[1] | tag) == "!!int")
+    ' "$inventory"
   }
 }
 
 _fzf_complete_sshport() {
   _fzf_complete --prompt="ssh -N -L port:127.0.0.1:port> " \
-    --delimiter=',' \
+    --delimiter='\t' \
     --with-nth=1 \
-    --bind='focus:+transform-header: print {2}' \
     -- "$@" < <(_fzf_server_docker_services)
 }
-_fzf_complete_sshport_post() { cut -d, -f2; }
+_fzf_complete_sshport_post() { cut -f2; }

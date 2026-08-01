@@ -13,7 +13,8 @@ _fzf_comprun() {
     *vim|laf)             preview_bat "{}";  bind_fileinfo "{}" brief
        fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"   "$@" ;;
 
-    *ssh*)                  fzf "${fzfdefaults[@]}"                     "$@" ;;
+    *ssh)                  fzf "${fzfdefaults[@]}"                      "$@" ;;
+    sshport)     fzf --bind='focus:+transform-header: print {2}'        "$@" ;;
 
     cp|mv)       preview_battree "{}" header; bind_fileinfo "{}" brief
         fzf "${fzfdefaults[@]}" "${previewcmd[@]}" "${filedirinfo[@]}"  "$@" ;;
