@@ -14,3 +14,4 @@ alias tal='ta -L'
 
 alias gc='git -C'
 alias gcom='git commit --patch'
+alias gri='rm -v .git/index; git reset'
