@@ -5,10 +5,12 @@ alias sudo='sudo '
 alias diffs='diff -sy --color'
 alias rgrep="rgrep --color=auto --line-number --exclude-dir='.*'"
 alias ripgrep='rg'
-alias gc='git -C'
 alias dfi='df -i'
 alias motd='run-parts /etc/update-motd.d' # not sure that is suitable for macos
 alias t='tree --metafirst -shD --du'
 alias tl='t -L'
 alias ta='t -gup -a'
 alias tal='ta -L'
+
+alias gc='git -C'
+alias gcom='git commit --patch'
