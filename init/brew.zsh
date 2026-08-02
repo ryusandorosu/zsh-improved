@@ -7,6 +7,7 @@ common_brew_packages=(
 # to check on macos: possibly fd also needed here instead of being in linux packages
   fzf
   git-delta
+  sad
 )
 
 if [[ "$OS_ID" != Darwin ]] && [[ ! -f $linuxbrew_location/bin/brew ]]; then

@@ -18,3 +18,19 @@ fsed() {
   "
   zsheval "$zsh_cmd"
 }
+
+### usage: https://github.com/ms-jpq/sad
+fsad() {
+  local dest
+  if [[ -f "$1" || -d "$1" ]]; then
+    dest="$1"
+    shift
+  fi
+  zsh_cmd="
+    fd --type file . "$dest" \
+    | \
+    GIT_PAGER=\"delta --config $ZSHREP/configs/gitdelta\" \
+    sad "$@" \
+  "
+  zsheval "$zsh_cmd"
+}
