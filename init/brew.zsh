@@ -52,3 +52,6 @@ fi
 # https://github.com/BurntSushi/ripgrep
 # https://github.com/rupa/z
 # https://github.com/wting/autojump
+
+# https://www.nerdfonts.com/font-downloads
+# brew install font-jetbrains-mono-nerd-font
