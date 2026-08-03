@@ -3,11 +3,11 @@
     detect-dark-light = never
     dark = true
   ; fzf-specific behavior
-    color-only                    = true
     side-by-side                  = false
     paging                        = never
   ; defaults override
     line-numbers                  = true
-    commit-style                  = bold yellow
     file-style                    = bold blue
-    keep-plus-minus-markers       = false
+    file-decoration-style         = 
+    hunk-header-style             = omit
+    zero-style                    = syntax

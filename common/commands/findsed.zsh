@@ -36,7 +36,8 @@ fsad() {
     fd --type file \
     --full-path "$dest" \
     | sad "$@" \
-    --pager='delta --config $ZSHREP/configs/gitdelta' \
+    --pager='delta --config $ZSHREP/configs/saddelta' \
+    --fzf='--style=minimal --layout=reverse --height=40%' \
   "
   zsheval "$zsh_cmd"
 }
