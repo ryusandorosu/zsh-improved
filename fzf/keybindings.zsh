@@ -59,5 +59,5 @@ export FZF_ALT_C_OPTS="
   --style full
   --wrap
   --prompt 'cd> '
-  --preview '$(_cmd_tree {})'
+  --preview '$ZSHREP/fzf/previews/altc.sh {}'
   "
