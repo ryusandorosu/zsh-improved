@@ -1,5 +1,4 @@
 source $ZSHREP/init/definitions.zsh
-# possibly move delta config here?
 common_brew_packages=(
   bat
   jq
@@ -31,7 +30,7 @@ if [[ "$OS_ID" != Darwin ]] && [[ ! -f $linuxbrew_location/bin/brew ]]; then
 elif [[ "$OS_ID" == Darwin ]]; then
 
   # possibly use the same script as above?
-  [[ ! -d $user_goinfre/.brew ]] && $ZSHREP/init/imported/install_brew.sh #/Users/kaycekey/Desktop/install_brew.sh
+  [[ ! -d $user_goinfre/.brew ]] && $ZSHREP/init/imported/install_brew.sh #delete this: /Users/kaycekey/Desktop/install_brew.sh
 
   # where to take fasd? possibly replace with 'z' or 'autojump'.
   # check git version on macos
