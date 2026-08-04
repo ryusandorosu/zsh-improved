@@ -2,12 +2,13 @@ source $ZSHREP/init/definitions.zsh
 # possibly move delta config here?
 common_brew_packages=(
   bat
+  jq
   ripgrep
   fd
-# to check on macos: possibly fd also needed here instead of being in linux packages
   fzf
   git-delta
   sad
+  sd
 )
 
 if [[ "$OS_ID" != Darwin ]] && [[ ! -f $linuxbrew_location/bin/brew ]]; then
@@ -16,7 +17,9 @@ if [[ "$OS_ID" != Darwin ]] && [[ ! -f $linuxbrew_location/bin/brew ]]; then
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
   )"
 
-  linux_brew_packages=()
+  linux_brew_packages=(
+    yq
+  )
 
   for formulae in "${common_brew_packages[@]}"; do
     [[ ! -d $linuxbrew_location/Cellar/$formulae ]] && brew install "$formulae"
