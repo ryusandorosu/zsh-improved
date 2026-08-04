@@ -12,7 +12,7 @@ common_brew_packages=(
 
 if [[ "$OS_ID" != Darwin ]] && [[ ! -f $linuxbrew_location/bin/brew ]]; then
 
-  /bin/bash -c "$(
+  NONINTERACTIVE=1 /bin/bash -c "$(
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
   )"
 
