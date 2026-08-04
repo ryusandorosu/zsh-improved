@@ -39,6 +39,7 @@ export FZF_CTRL_T_OPTS="
   --style full
   --ansi
   --wrap
+  --multi
   --prompt '${FZF_CTRL_T_COMMAND%% *}> '
   --bind 'focus:+transform-header: file {} | fold --bytes --width=\$FZF_PREVIEW_COLUMNS'
   --preview-window='wrap-word'
