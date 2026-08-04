@@ -59,3 +59,31 @@ gg() {
       < /dev/null
   # || true: защита на случай, если -S{q} с частично введённым/некорректным паттерном (например, незакрытая регулярка при добавлении -G в будущем) даст ненулевой код возврата — тогда reload просто не обновит список вместо падения с ошибкой в интерфейсе
 }
+
+gch() {
+  gitcmd=(git)
+  _get_gitcmd_repo_path "$1"
+  precmd=("${gitcmd[@]}")
+  logcmd=("${gitcmd[@]}")
+
+  precmd+=(
+    fetch
+    origin
+  )
+
+  logcmd+=(
+    branch
+    --show-current
+  )
+
+  gitcmd+=(
+    log
+    $(${logcmd[@]})..origin/$(${logcmd[@]})
+    --oneline
+    --color=always
+  )
+
+  preview_git show "$repo_path" "{+1}"
+  "${precmd[@]}"
+  "${gitcmd[@]}" | fzf "${fzfdefaults[@]}" "${previewcmd[@]}" --prompt="git fetch origin> " --multi
+}
