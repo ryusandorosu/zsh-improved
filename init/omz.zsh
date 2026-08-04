@@ -19,3 +19,15 @@ link_custom_theme_to_omz() {
 for theme in "${custom_themes[@]}"; do
   link_custom_theme_to_omz $theme
 done
+
+zsh_git_plugins=(
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+)
+
+for plugin in "${zsh_git_plugins[@]}"; do
+  [[ ! -d $ZSH/custom/plugins/$plugin ]] && {
+    git clone https://github.com/zsh-users/$plugin \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$plugin
+  }
+done

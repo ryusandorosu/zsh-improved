@@ -3,7 +3,9 @@ export ZSHREP="$(dirname $(readlink ~/.zshrc))"
 
 # Main settings
 export ZSH="$HOME/.oh-my-zsh"
+source $ZSHREP/init/brew.zsh # TO CHECK MACOS
 source $ZSHREP/init/omz.zsh
+
 [[ "$OS_ID" != Darwin ]] && source $ZSHREP/init/apt.zsh
 [[ "$(whoami)" == root ]] && source $ZSHREP/init/root.zsh
 ZSH_THEME="passion"
@@ -23,8 +25,6 @@ source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
 
 # Custom settings
-source $ZSHREP/init/brew.zsh # TO CHECK MACOS
-
 for file in $ZSHREP/common/*.zsh; do source "$file"; done
 for file in $ZSHREP/common/*/*.zsh; do source "$file"; done
 for file in $ZSHREP/fzf/*.zsh; do source "$file"; done

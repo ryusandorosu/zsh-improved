@@ -1,7 +1,5 @@
 source $ZSHREP/init/definitions.zsh
 common_brew_packages=(
-  zsh-autosuggestions
-  zsh-syntax-highlighting
   bat
   jq
   ripgrep
@@ -12,11 +10,17 @@ common_brew_packages=(
   sd
 )
 
-if [[ "$OS_ID" != Darwin ]] && [[ ! -f $linuxbrew_location/bin/brew ]]; then
 
+if [[ "$OS_ID" != Darwin ]]; then
+
+  if [[ ! -f $linuxbrew_location/bin/brew ]]; then
   NONINTERACTIVE=1 /bin/bash -c "$(
     curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
   )"
+  fi
+
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+  export HOMEBREW_NO_ENV_HINTS=1
 
   linux_brew_packages=(
     yq
