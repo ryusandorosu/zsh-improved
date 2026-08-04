@@ -100,5 +100,5 @@ deploytag() {
     "$1"
     "$verbosity"
   )
-  zsheval "${zsh_cmd[@]}"
+  zsheval "ANSIBLE_FORCE_COLOR=true ${zsh_cmd[@]} | delta"
 }
