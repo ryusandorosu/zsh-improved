@@ -1,5 +1,6 @@
 ### глянуть как будет записываться сочетание клавиш: showkey -a
-### bindkey показывает текущую привязку виджетов zle к сочетаниям клавиш
+### `bindkey` показывает текущую привязку виджетов zle к сочетаниям клавиш
+### man zshzle
 
 kill-to-space() {
   local old_wordchars=$WORDCHARS
@@ -16,6 +17,14 @@ zle -N forward-kill-to-space
 
 bindkey '^W'      backward-kill-to-space    # ctrl+w
 bindkey '^[[3;2~' forward-kill-to-space     # shift+delete
+
+duplicate-last-word() {
+  local -a words
+  words=(${(z)LBUFFER})
+  (( ${#words} >= 1 )) && LBUFFER+="${words[-1]}"
+}
+zle -N duplicate-last-word
+bindkey '^[1' duplicate-last-word           # alt+1
 
 ### redefinitions/reminders:
 
