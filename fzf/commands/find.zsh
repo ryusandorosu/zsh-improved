@@ -20,6 +20,7 @@ ffind() {
   bind_fileinfo "{}" brief
   "${cmd[@]}" \
   | fzf \
+    --multi \
     --prompt "fd> " \
     "${fzfdefaults[@]}" \
     "${filedirinfo[@]}" \
@@ -41,6 +42,7 @@ lfind() {
   bind_fileinfo "{}" brief
   "${cmd[@]}" \
   | fzf \
+    --multi \
     --prompt "locate> " \
     "${fzfdefaults[@]}" \
     "${filedirinfo[@]}" \
