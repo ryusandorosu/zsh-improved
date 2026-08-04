@@ -19,13 +19,3 @@ link_custom_theme_to_omz() {
 for theme in "${custom_themes[@]}"; do
   link_custom_theme_to_omz $theme
 done
-
-[[ ! -d $ZSH/custom/plugins/zsh-syntax-highlighting ]] && {
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-}
-
-[[ ! -d $ZSH/custom/plugins/zsh-autosuggestions ]] && {
-  git clone https://github.com/zsh-users/zsh-autosuggestions \
-  ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-}

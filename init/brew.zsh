@@ -1,5 +1,7 @@
 source $ZSHREP/init/definitions.zsh
 common_brew_packages=(
+  zsh-autosuggestions
+  zsh-syntax-highlighting
   bat
   jq
   ripgrep
