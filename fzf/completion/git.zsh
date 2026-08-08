@@ -33,4 +33,4 @@ _fzf_complete_gsh()    { _fzf_complete_gitls "$@"; }
 _fzf_complete_gg()     { _fzf_complete_gitls "$@"; }
 _fzf_complete_gch()    { _fzf_complete_gitls "$@"; }
 
-_fzf_complete_ggrep()  { _fzf_complete_gitls "$@"; }
+_fzf_complete_ggedit() { _fzf_complete_gitls "$@"; }

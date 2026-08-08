@@ -1,0 +1,14 @@
+[delta]
+  ; necessary
+    detect-dark-light = never
+    dark = true
+  ; fzf-specific behavior
+    color-only                    = false
+    side-by-side                  = false
+    paging                        = never
+  ; defaults override
+    grep-file-style               = bold blue
+    grep-line-number-style        = 238
+    grep-match-line-style         = syntax 237
+    grep-match-word-style         = black bold yellow
+    grep-context-line-style       = syntax dim
