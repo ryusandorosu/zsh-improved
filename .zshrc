@@ -17,9 +17,8 @@ plugins=(
   fzf
   sudo
   extract
-  zsh-autosuggestions
-  zsh-syntax-highlighting
 )
+plugins+=("${zsh_git_plugins[@]}")
 
 source $ZSH/oh-my-zsh.sh
 ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd)
