@@ -100,5 +100,5 @@ deploytag() {
     "$1"
     "$verbosity"
   )
-  zsheval "${zsh_cmd[@]} | delta"
+  zsheval "${zsh_cmd[@]} | delta --config $ZSHREP/configs/gitdelta"
 }
