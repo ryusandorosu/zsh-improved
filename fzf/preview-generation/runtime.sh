@@ -53,27 +53,6 @@ _cmd_delta_grep_context() {
     fi
   "
 }
-# _cmd_delta_grep_context() {
-#   local context=3
-#   print -r -- "
-#     __path=$1
-#     __line=$2
-#     __q={q}
-#     if [[ -n \"\$__q\" ]]; then
-#       rg --json --fixed-strings -C $context -- \"\$__q\" \"\${~__path}\" | delta --config $ZSHREP/configs/rgdelta
-#     else
-#       # _cmd_bat_context is here now
-#       __start=\$(( __line > $context ? __line - $context : 1 ))
-#       __end=\$(( __line + $context ))
-#       bat --color=always \
-#           --style=numbers,changes,header-filename \
-#           --terminal-width=\$FZF_PREVIEW_COLUMNS \
-#           --highlight-line=\$__line \
-#           --line-range=\$__start:\$__end \
-#           \${~__path}
-#     fi
-#   "
-# }
 
 _cmd_bat() {
   local localpath=$1 style=$2
